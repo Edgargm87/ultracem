@@ -1,0 +1,152 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,500;0,700;1,600&display=swap");
+
+@include mat-core();
+
+/* ======== Angular material custom themes ======== */
+$my-custom-primary: mat-palette($mat-green);
+$my-custom-accent: mat-palette($mat-orange, 100, 500, A100);
+$my-custom-warn: mat-palette($mat-lime);
+
+$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+@include angular-material-theme($my-custom-theme);
+
+@font-face {
+    font-family: gotham-black;
+    src: url(assets/fonts/Gotham-Black.otf) format("opentype");
+}
+html {
+    min-height: 100%;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    .container-ultracem {
+        overflow: hidden;
+        .step-one {
+            .l-izquierdo {
+                img {
+                    width: 104%;
+                }
+            }
+            .l-derecho {
+                h2 {
+                    font-family: gotham-black;
+                    margin-bottom: 75px;
+                }
+            }
+            .mat-form-field-appearance-fill .mat-form-field-flex {
+                background-color: #fff;
+            }
+        }
+        .step-two {
+            .alerts-content {
+                margin-bottom: 47px;
+                img {
+                    width: 100%;
+                }
+                a,
+                p {
+                    color: #838383;
+                }
+                p {
+                    font-size: 22px;
+                    font-family: Josefin Sans;
+                    font-weight: 400;
+                    line-height: 22px;
+                    span {
+                        font-weight: 600;
+                    }
+                }
+                .chat {
+                    a {
+                        text-decoration: none;
+                        font-size: 40px;
+                        font-family: Josefin Sans;
+                        font-style: italic;
+                        font-weight: 600;
+                    }
+                    img {
+                        width: 10%;
+                    }
+                }
+            }
+            .spinner {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+        .step-three {
+            height: inherit;
+            .l-derecho {
+                background-color: #eff4f6;
+                .checkp {
+                    label {
+                        white-space: pre-line;
+                    }
+                }
+            }
+            .l-izquierdo {
+                > .row {
+                    height: 100%;
+                    ul {
+                        list-style: none;
+                        li {
+                            font-family: Josefin Sans;
+                            border-left: 2px solid #30b3a7;
+                            color: #30b3a7;
+                            font-weight: 600;
+                            padding-bottom: 35px;
+                            position: relative;
+                            padding-left: 25px;
+                            font-size: 17px;
+                            height: 40px;
+                            box-sizing: content-box;
+                            align-items: center;
+                            display: flex;
+                            &::before {
+                                position: absolute;
+                                content: "";
+                                background-image: url(./assets/icons/check_complete.svg);
+                                background-size: 40px 40px;
+                                display: inline-block;
+                                width: 40px;
+                                height: 40px;
+                                left: -20px;
+                            }
+                            &:last-child{
+                                border: none;
+                            }
+                        }
+                    }
+                }
+                background-image: url(./assets/img/ultracem-form.png);
+            }
+            .mat-form-field-appearance-fill .mat-form-field-flex {
+                background-color: #eff4f6;
+                height: 53px;
+            }
+        }
+
+        button {
+            width: max-content;
+            color: #fff;
+            background-color: #bbce00;
+            font-family: Josefin Sans;
+            font-weight: 600;
+            border-radius: 38px;
+            &.inicio-sesion {
+                border-radius: 38px;
+                height: 60px;
+                padding: 0px 25px;
+                font-size: 35px;
+            }
+        }
+        .mat-form-field-appearance-fill .mat-form-field-flex {
+            background-color: #eff4f6;
+        }
+    }
+}
