@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DatosContactoComponent } from './components/modals/datos-contacto/datos-contacto.component';
+import { CreditService, listaGenerica } from './services/credit.service';
+import { format, parseISO } from 'date-fns'
 
 @Component({
   selector: 'app-root',
@@ -13,12 +15,71 @@ export class AppComponent implements OnInit {
   alto: any;
   ancho: any;
   formInicial: FormGroup;
+  formSolicitudNatural: FormGroup;
+  formSolicitudJuridica: FormGroup;
   natural: boolean = true;
+  tipoRegistro: listaGenerica[] = [];
+  siNo: listaGenerica[] = [];
+  tipoGenero: listaGenerica[] = [];
+  step: number = 1;
+  cargando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _creditService: CreditService
   ) {
+    localStorage.removeItem('TOKEN')
+    this.formSolicitudJuridica = this.fb.group({
+      tipoTercero: ["", [Validators.required]], // Cambia en juridica
+      tipoDocumento: ["", [Validators.required]],
+      documento: ["", [Validators.required]],
+      clienteUltracem: ["", [Validators.required]],
+
+      primerNombre: [""],
+      segundoNombre: [""],
+      primerApellido: [""],
+      segundoApellido: [""],
+      fechaNacimiento: [""],
+      genero: [""],
+
+      nombreCompleto: ["", [Validators.required]], // razon Social
+      celular: ["", [Validators.required]],
+      compraSemanal: ['', [Validators.required]],
+      email: ["", [Validators.required]],
+      antiguedadCompra: ['', [Validators.required]],
+      aceptaTerminos: [false, [Validators.requiredTrue]],
+      aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
+      telefono: ['', [Validators.required]],
+      digitoVerificacion: [''],
+      fechaMatricula: ["", [Validators.required]],
+
+      antiguedadNegocio: [''],
+      numeroSolicitud: [""],
+    });
+    this.formSolicitudNatural = this.fb.group({
+      tipoTercero: ["", [Validators.required]], // Cambia en juridica
+      tipoDocumento: ["", [Validators.required]],
+      documento: ["", [Validators.required]],
+      clienteUltracem: ["", [Validators.required]],
+      primerNombre: ["", [Validators.required]],
+      segundoNombre: [""],
+      primerApellido: ["", [Validators.required]],
+      segundoApellido: [""],
+      nombreCompleto: [""],
+      fechaNacimiento: ["", [Validators.required]],
+      genero: ["", [Validators.required]],
+      celular: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      antiguedadNegocio: ['', [Validators.required]],
+      antiguedadCompra: ['', [Validators.required]],
+      compraSemanal: ['', [Validators.required]],
+      aceptaTerminos: [false, [Validators.requiredTrue]],
+      aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
+      fechaMatricula: [""],
+      digitoVerificacion: [""],
+      numeroSolicitud: [""],
+    });
     this.formInicial = this.fb.group({
       cliente: ['', Validators.required],
       registrar: [{ value: '', disabled: true }, Validators.required],
@@ -31,26 +92,27 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loguear();
     this.formInicial.controls['registrar'].valueChanges.subscribe(registrar => {
-      if (registrar == '1') {
+      if (registrar == 'CC') {
         this.natural = true;
-        this.formInicial.controls['tipoDocumento'].setValue('1')
-      } else {
-        this.formInicial.controls['tipoDocumento'].setValue('2')
+        this.formInicial.controls['tipoDocumento'].setValue(registrar)
+      } else if (registrar == 'NIT') {
+        this.formInicial.controls['tipoDocumento'].setValue(registrar)
         this.natural = false;
       }
     })
     this.formInicial.controls['registrado'].valueChanges.subscribe(registrado => {
-      if (registrado == '1') {
+      if (registrado == 'CC') {
         this.natural = true;
-        this.formInicial.controls['tipoDocumento'].setValue('1')
-      } else {
-        this.formInicial.controls['tipoDocumento'].setValue('2')
+        this.formInicial.controls['tipoDocumento'].setValue('CC')
+      } else if (registrado == 'NIT') {
+        this.formInicial.controls['tipoDocumento'].setValue('NIT')
         this.natural = false;
       }
     })
     this.formInicial.controls['cliente'].valueChanges.subscribe(cliente => {
-      if (cliente == '1') {
+      if (cliente == 'S') {
         this.formInicial.controls['registrar'].setValue('');
         this.formInicial.controls['registrar'].removeValidators(Validators.required);
         this.formInicial.controls['registrar'].updateValueAndValidity();
@@ -67,8 +129,6 @@ export class AppComponent implements OnInit {
         this.formInicial.controls['registrado'].updateValueAndValidity();
         this.formInicial.controls['registrado'].disable({ onlySelf: true })
       }
-      console.log(this.formInicial.controls);
-
     });
   }
 
@@ -81,7 +141,7 @@ export class AppComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(DatosContactoComponent, {
       width: '250px',
-      data: {name: 1, animal: 2}
+      data: { name: 1, animal: 2 }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -95,5 +155,168 @@ export class AppComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  loguear(): void {
+    this._creditService.login().subscribe(res => {
+      localStorage.setItem('TOKEN', res.data.token)
+      this.eresclienteUltracem();
+      this.obtenerTipoRegistro();
+      this.obtenerTipoGenero();
+    });
+  }
+
+  obtenerTipoRegistro() {
+    this._creditService.getTipoRegistro().subscribe(resp => {
+      this.tipoRegistro = resp.data;
+    })
+  }
+
+  obtenerTipoGenero() {
+    this._creditService.getGeneros().subscribe(resp => {
+      this.tipoGenero = resp.data;
+    })
+  }
+
+  eresclienteUltracem(): void {
+    this._creditService.getClienteUltracem().subscribe(resp => {
+      this.siNo = resp.data;
+    })
+  }
+
+  preaprobado(): void {
+    if (this.formInicial.invalid) {
+      return;
+    };
+    this.cargando = true;
+    this._creditService.preaprobado(this.formInicial.value).subscribe(resp => {
+      if (resp.data) {
+        if (this.formInicial.value.tipoDocumento == 'CC') {
+          this.formSolicitudNatural.patchValue({
+            tipoTercero: 'T',
+            tipoDocumento: this.formInicial.value.tipoDocumento,
+            documento: (this.formInicial.value.documento).toString(),
+            clienteUltracem: this.formInicial.value.cliente,
+            primerNombre: resp.data.primerNombre,
+            segundoNombre: resp.data.segundoNombre,
+            primerApellido: resp.data.primerApellido,
+            segundoApellido: resp.data.segundoApellido,
+            nombreCompleto: resp.data.nombreCompleto,
+            fechaNacimiento: resp.data.fechaNacimiento,
+            genero: resp.data.genero,
+            celular: resp.data.celular,
+            email: resp.data.email,
+            antiguedadCompra: resp.data.antiguedadCompra,
+            compraSemanal: resp.data.compraSemanal
+          });
+          this.step = 2;
+        } else {
+          this.formSolicitudJuridica.patchValue({
+            tipoTercero: 'T',
+            tipoDocumento: this.formInicial.value.tipoDocumento,
+            documento: (this.formInicial.value.documento).toString(),
+            clienteUltracem: this.formInicial.value.cliente,
+            nombreCompleto: resp.data.razonSocial,
+            celular: resp.data.celular,
+            email: resp.data.email,
+            compraSemanal: resp.data.compraSemanal,
+            antiguedadCompra: resp.data.antiguedadCompra,
+            telefono: resp.data.telefono,
+            digitoVerificacion: resp.data.digitoVerificacion
+          });
+          this.step = 3;
+        }
+      } else {
+        if (this.formInicial.value.tipoDocumento == 'CC') {
+          this.formSolicitudNatural.patchValue({
+            tipoTercero: 'T',
+            tipoDocumento: this.formInicial.value.tipoDocumento,
+            documento: (this.formInicial.value.documento).toString(),
+            clienteUltracem: this.formInicial.value.cliente
+          });
+          this.step = 2;
+        } else {
+          this.formSolicitudJuridica.patchValue({
+            tipoTercero: 'T',
+            tipoDocumento: this.formInicial.value.tipoDocumento,
+            documento: (this.formInicial.value.documento).toString(),
+            clienteUltracem: this.formInicial.value.cliente,
+            digitoVerificacion: this.calcularDigitoVerificacion(this.formInicial.value.tipoDocumento)
+          });
+          this.step = 3;
+        }
+      }
+      this.cargando = false;
+    })
+  }
+
+  SolicitudNUltracem(): void {
+    if (this.formSolicitudNatural.invalid) {
+      return;
+    }
+    let form = { ...this.formSolicitudNatural.value }
+    form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
+    delete form.fechaMatricula
+    this._creditService.solicitudUltracem(form).subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
+  SolicitudJUltracem(): void {
+    if (this.formSolicitudJuridica.invalid) {
+      return;
+    }
+    let form = { ...this.formSolicitudJuridica.value }
+    form.antiguedadNegocio = 0;
+    form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
+    this._creditService.solicitudUltracem(form).subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
+  calcularDigitoVerificacion(data: any): any {
+    let vpri; let x; let y; let z;
+
+    // Se limpia el Nit
+    data = data.replace(/\s/g, ''); // Espacios
+    data = data.replace(/,/g, ''); // Comas
+    data = data.replace(/\./g, ''); // Puntos
+    data = data.replace(/-/g, ''); // Guiones
+
+    // Se valida el nit
+    if (isNaN(data)) {
+      console.log('El nit/cédula \'' + data + '\' no es válido(a).');
+      return '';
+    };
+
+    // Procedimiento
+    vpri = new Array(16);
+    z = data.length;
+
+    vpri[1] = 3;
+    vpri[2] = 7;
+    vpri[3] = 13;
+    vpri[4] = 17;
+    vpri[5] = 19;
+    vpri[6] = 23;
+    vpri[7] = 29;
+    vpri[8] = 37;
+    vpri[9] = 41;
+    vpri[10] = 43;
+    vpri[11] = 47;
+    vpri[12] = 53;
+    vpri[13] = 59;
+    vpri[14] = 67;
+    vpri[15] = 71;
+
+    x = 0;
+    y = 0;
+    for (let i = 0; i < z; i++) {
+      y = (data.substr(i, 1));
+      x += (y * vpri[z - i]);
+    }
+
+    y = x % 11;
+    return (y > 1) ? 11 - y : y;
   }
 }

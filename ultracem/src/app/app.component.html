@@ -1,5 +1,5 @@
 <div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
-  <div class="row step-one" *ngIf="false">
+  <div class="row step-one" *ngIf="step == 1 && !cargando">
     <div class="col-lg-4 l-izquierdo">
       <img src="assets/img/ultracem-home.png" alt="imagen ultracem home">
     </div>
@@ -18,35 +18,31 @@
               <mat-label>Eres cliente de Ultracem ?</mat-label>
               <mat-select formControlName="cliente"  [compareWith]="compareObjects">
                 <mat-option value="">Selecciona</mat-option>
-                <mat-option value="1">SI</mat-option>
-                <mat-option value="2">NO</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cómo quieres registrarte ?</mat-label>
-              <mat-select formControlName="registrar">
+              <mat-select formControlName="registrar"   [compareWith]="compareObjects">
                 <mat-option value="">Selecciona</mat-option>
-                <mat-option value="1">Persona Natural</mat-option>
-                <mat-option value="2">Persona Jurídica</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
-              <mat-select  formControlName="registrado">
+              <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
                 <mat-option value="">Selecciona</mat-option>
-                <mat-option value="1">Persona Natural</mat-option>
-                <mat-option value="2">Persona Jurídica</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Tipo de documento</mat-label>
-              <mat-select formControlName="tipoDocumento">
-                <mat-option value="1">CC</mat-option>
-                <mat-option value="2">NIT</mat-option>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.codigoOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
@@ -55,13 +51,13 @@
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
-            <button [disabled]="formInicial.invalid" mat-raised-button>Siguiente paso </button>
+            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button>Siguiente paso </button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="cargando">
     <div class="col-lg-6 alerts-content">
       <img src="../assets/img/loading.svg" alt="cargando ultracem">
     </div>
@@ -109,7 +105,7 @@
       </p>
     </div>
   </div>
-  <div class="row step-three" *ngIf="true">
+  <div class="row step-three" *ngIf="step == 2 && !cargando">
     <div class="col-lg-4 l-izquierdo">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
@@ -125,51 +121,50 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <form class="col-11">
+        <form class="col-11" [formGroup]="formSolicitudNatural">
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer nombre</mat-label>
-              <input matInput>
+              <input matInput formControlName="primerNombre">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo nombre (opcional)</mat-label>
-              <input matInput>
+              <input matInput formControlName="segundoNombre">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer apellido</mat-label>
-              <input matInput>
+              <input matInput formControlName="primerApellido">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo apellido (opcional)</mat-label>
-              <input matInput>
+              <input matInput formControlName="segundoApellido">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput [matDatepicker]="picker2">
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Genero</mat-label>
-              <mat-select>
-                <mat-option value="1">Masculino</mat-option>
-                <mat-option value="2">Femenino</mat-option>
-                <mat-option value="3">Otro</mat-option>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
-              <input matInput>
+              <input matInput formControlName="celular">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
@@ -182,36 +177,36 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
-              <input matInput>
+              <input matInput formControlName="antiguedadNegocio" type="number">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Antigüedad compras? (meses)</mat-label>
-              <input matInput>
+              <input matInput formControlName="antiguedadCompra" type="number">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput>
+              <input matInput formControlName="compraSemanal" type="number">
             </mat-form-field>
             <section class="col-lg-6 checkp">
               <p>
-                <mat-checkbox>Autorizo que la información entregada sea
+                <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
                   consultada en centrales de riesgos. </mat-checkbox>
               </p>
               <p>
-                <mat-checkbox> Acepto los términos y condiciones.</mat-checkbox>
+                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button (click)="openDialog()">Solicitar</button>
+            <button mat-raised-button [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  <div class="row step-three" *ngIf="false">
+  <div class="row step-three" *ngIf="step == 3 && !cargando">
     <div class="col-lg-4 l-izquierdo">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
@@ -228,15 +223,15 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <form class="col-11">
+        <form class="col-11" [formGroup]="formSolicitudJuridica">
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Razón social</mat-label>
-              <input matInput>
+              <input matInput formControlName="nombreCompleto">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de matrícula</mat-label>
-              <input matInput [matDatepicker]="picker2">
+              <input matInput [matDatepicker]="picker2" formControlName="fechaMatricula">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -244,21 +239,21 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Teléfono</mat-label>
-              <input matInput>
+              <input matInput formControlName="telefono">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
-              <input matInput>
+              <input matInput formControlName="celular">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput>
+              <input matInput formControlName="compraSemanal" type="number">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
@@ -271,20 +266,20 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Antigüedad  compras? (meses)</mat-label>
-              <input matInput>
+              <input matInput formControlName="antiguedadCompra" type="number">
             </mat-form-field>
             <section class="col-lg-6 checkp">
               <p>
-                <mat-checkbox>Autorizo que la información entregada sea
+                <mat-checkbox  formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
                   consultada en centrales de riesgos. </mat-checkbox>
               </p>
               <p>
-                <mat-checkbox> Acepto los términos y condiciones.</mat-checkbox>
+                <mat-checkbox  formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button (click)="openDialog()">Solicitar</button>
+            <button mat-raised-button [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
