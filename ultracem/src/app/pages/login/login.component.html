@@ -1,0 +1,28 @@
+<div class="container-ultracem" >
+  <div class="row step-one" >
+    <div class="col-lg-4 l-izquierdo">
+      <img src="assets/img/ultracem-home.png" alt="imagen ultracem home">
+    </div>
+    <div class="col-lg-8 l-derecho  align-self-center">
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formInicial">
+            <div class="row justify-content-center">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="email" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row justify-content-center">
+                <mat-form-field class="col-lg-6" appearance="fill">
+                  <mat-label>Password</mat-label>
+                  <input type="password" matInput formControlName="password">
+                </mat-form-field>
+              </div>
+            <div class="row justify-content-center">
+              <button [disabled]="formInicial.invalid" mat-raised-button>Continuar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
