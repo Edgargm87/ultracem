@@ -1,16 +1,17 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DatosContactoComponent } from './components/modals/datos-contacto/datos-contacto.component';
-import { CreditService, listaGenerica } from './services/credit.service';
-import { format, parseISO } from 'date-fns'
 
+import { DatosContactoComponent } from 'src/app/components/modals/datos-contacto/datos-contacto.component';
+import { listaGenerica, CreditService } from 'src/app/services/credit.service';
+import { format, parseISO } from 'date-fns'
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-solicitud',
+  templateUrl: './solicitud.component.html',
+  styleUrls: ['./solicitud.component.scss']
 })
-export class AppComponent implements OnInit {
+export class solicitudComponent implements OnInit {
+
   title = 'ultracem';
   alto: any;
   ancho: any;
