@@ -12,12 +12,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { CreditService } from './services/credit.service';
+import { MainComponent } from './pages/main/main.component';
+import { ListSolicitudComponent } from './pages/main/list-solicitud/list-solicitud.component';
+import { DatoComplementarioPnaturalComponent } from './pages/main/dato-complementario-pnatural/dato-complementario-pnatural.component';
+import { TimerlineComponent } from './pages/main/list-solicitud/timerline/timerline.component';
+import { DirectionsComponent } from './components/modals/directions/directions.component';
+import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    solicitudComponent
+    solicitudComponent,
+    MainComponent,
+    ListSolicitudComponent,
+    DatoComplementarioPnaturalComponent,
+    TimerlineComponent,
+    DirectionsComponent,
+    DatoComplementarioPjuridicaComponent
   ],
   imports: [
     BrowserModule,
