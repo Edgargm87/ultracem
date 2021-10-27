@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import { GenericService } from 'src/app/services/generic.service';
 import { DirectionsComponent } from '../../../components/modals/directions/directions.component';
+import { CargoPublicoComponent } from '../../../components/modals/cargo-publico/cargo-publico.component';
 
 @Component({
   selector: 'app-dato-complementario-pnatural',
@@ -92,6 +93,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
   ngOnInit(): void {
    this.getListados();
+   this.openModalCargoPublico('T');
   }
 
   noCambios(){
@@ -122,6 +124,15 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
     const dialogRef = this.dialog.open(DirectionsComponent, {
       // width: '250px',
       data: { name: 1, animal: 2 }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  openModalCargoPublico(tipo:String){
+    const dialogRef = this.dialog.open(CargoPublicoComponent, {
+      data: { tipo: tipo }
     });
 
     dialogRef.afterClosed().subscribe(result => {

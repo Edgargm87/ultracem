@@ -18,6 +18,7 @@ import { DatoComplementarioPnaturalComponent } from './pages/main/dato-complemen
 import { TimerlineComponent } from './pages/main/list-solicitud/timerline/timerline.component';
 import { DirectionsComponent } from './components/modals/directions/directions.component';
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
+import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-publico.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-compleme
     DatoComplementarioPnaturalComponent,
     TimerlineComponent,
     DirectionsComponent,
-    DatoComplementarioPjuridicaComponent
+    DatoComplementarioPjuridicaComponent,
+    CargoPublicoComponent
   ],
   imports: [
     BrowserModule,

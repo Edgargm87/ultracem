@@ -1,5 +1,9 @@
 @import "../../../../styles/vars/exports";
-
+h5 {
+  color: $green-light;
+  text-transform: capitalize;
+  font-size: 2em;
+}
 .item-request {
   padding: 1.2em;
   border: 5px solid $green-light;
@@ -22,7 +26,7 @@
   }
 
   h5 {
-    color: $color-inputs;
+    color: $green-light;
     font-size: 1em;
     text-transform: capitalize;
   }

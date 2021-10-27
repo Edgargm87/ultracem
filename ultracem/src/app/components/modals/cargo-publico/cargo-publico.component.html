@@ -1,0 +1,64 @@
+<h2 mat-dialog-title class="text-center">
+    Datos de la persona expuesta política y públicamente
+</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 ">
+  <div class="row">
+    <div class="bg-white col l12">
+      <div class="row justify-start ">
+        <div class="col-sm-12 col-lg-12">
+
+          <form  [formGroup]="formModal">
+              <div class="row mt-2">
+                <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control" placeholder="Correo electrónico"
+                      formControlName="cargo" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control"  placeholder="Contraseña"
+                      formControlName="entidad">
+                  </div>
+              </div>
+              <div class="row mt-2">
+                <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control" placeholder="Correo electrónico"
+                      formControlName="cargo" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control"  placeholder="Contraseña"
+                      formControlName="entidad">
+                  </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control" placeholder="Correo electrónico"
+                      formControlName="cargo" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control"  placeholder="Contraseña"
+                      formControlName="entidad">
+                  </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control" placeholder="Correo electrónico"
+                      formControlName="cargo" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6 ">
+                    <input type="text" class="form-control"  placeholder="Contraseña"
+                      formControlName="entidad">
+                  </div>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button>
+  <button mat-button [mat-dialog-close]="[]" class="color_fintra text-white">Guardar </button>
+</mat-dialog-actions>
