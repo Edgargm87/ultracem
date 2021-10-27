@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   formInicial: FormGroup;
   formSolicitudNatural: FormGroup;
   formSolicitudJuridica: FormGroup;
+  formSolicitudRepresentante: FormGroup;
   natural: boolean = true;
   tipoRegistro: listaGenerica[] = [];
   siNo: listaGenerica[] = [];
@@ -55,6 +56,29 @@ export class AppComponent implements OnInit {
       fechaMatricula: ["", [Validators.required]],
 
       antiguedadNegocio: [''],
+      numeroSolicitud: [""],
+    });
+    this.formSolicitudRepresentante = this.fb.group({
+      tipoTercero: ["R", [Validators.required]],
+      tipoDocumento: ["CC", [Validators.required]],
+      documento: ["", [Validators.required]],
+      clienteUltracem: ["N"],
+      primerNombre: ["", [Validators.required]],
+      segundoNombre: [""],
+      primerApellido: ["", [Validators.required]],
+      segundoApellido: [""],
+      nombreCompleto: [""],
+      fechaNacimiento: [""],
+      genero: ["", [Validators.required]],
+      celular: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      antiguedadNegocio: [0],
+      antiguedadCompra: [0],
+      compraSemanal: [0],
+      aceptaTerminos: [false, [Validators.requiredTrue]],
+      aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
+      fechaMatricula: [""],
+      digitoVerificacion: [""],
       numeroSolicitud: [""],
     });
     this.formSolicitudNatural = this.fb.group({
@@ -250,6 +274,17 @@ export class AppComponent implements OnInit {
     })
   }
 
+  SolicitudRepresentante(): void {
+    if (this.formSolicitudRepresentante.invalid) {
+      return;
+    }
+    let form = { ...this.formSolicitudRepresentante.value }
+    form.documento = (this.formSolicitudRepresentante.value.documento).toString();
+    this._creditService.solicitudUltracem(form).subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
   SolicitudNUltracem(): void {
     if (this.formSolicitudNatural.invalid) {
       return;
@@ -270,7 +305,12 @@ export class AppComponent implements OnInit {
     form.antiguedadNegocio = 0;
     form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
     this._creditService.solicitudUltracem(form).subscribe(resp => {
+      this.formSolicitudRepresentante.patchValue({
+        numeroSolicitud: (resp.data.numeroSolicitud).toString()
+      });
+      this.step = 4;
       console.log(resp);
+      console.log('representante', this.formSolicitudRepresentante.value);
     });
   }
 

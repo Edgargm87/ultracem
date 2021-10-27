@@ -285,4 +285,95 @@
       </div>
     </div>
   </div>
+  <div class="row step-three" *ngIf="step == 4 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de representante legal</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudRepresentante">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.codigoOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Número de documento</mat-label>
+              <input type="number" matInput formControlName="documento">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional)</mat-label>
+              <input matInput formControlName="segundoNombre">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo apellido (opcional)</mat-label>
+              <input matInput formControlName="segundoApellido">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Genero</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <button mat-raised-button [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
