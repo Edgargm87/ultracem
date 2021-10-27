@@ -1,0 +1,16 @@
+@import "../../../../styles/vars/exports";
+
+.btn-solicitar,
+.btn-solicitar[disabled] {
+  background: $green-light;
+  // opacity: 1;
+  color: white;
+}
+
+.btn_atras {
+  width: 4em;
+  position: absolute;
+  top: 1em;
+  opacity: 0.3;
+  cursor: pointer;
+}

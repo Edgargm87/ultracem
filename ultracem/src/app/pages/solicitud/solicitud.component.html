@@ -1,0 +1,379 @@
+<div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
+  <div class="row step-one" *ngIf="step == 1 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <img src="assets/img/ultracem-home.png" alt="imagen ultracem home">
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-center">Únete y sé parte de los ferreteros que se están beneficiando de la alianza
+            Ultracem/Fintra
+            Logistics</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formInicial">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Eres cliente de Ultracem ?</mat-label>
+              <mat-select formControlName="cliente"  [compareWith]="compareObjects">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Cómo quieres registrarte ?</mat-label>
+              <mat-select formControlName="registrar"   [compareWith]="compareObjects">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
+              <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.codigoOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Número de <span *ngIf="natural">documento</span> <span *ngIf="!natural">NIT</span></mat-label>
+              <input type="number" matInput formControlName="documento">
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center">
+            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button>Siguiente paso </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="cargando">
+    <div class="col-lg-6 alerts-content">
+      <img src="../assets/img/loading.svg" alt="cargando ultracem">
+    </div>
+    <div class="col-lg-7 spinner">
+      <div class="row justify-content-center">
+        <div class="col-lg-2 content-spinner">
+          <mat-spinner [color]="'accent'"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+    <div class="col-lg-5 alerts-content">
+      <img src="assets/img/error.svg" alt="cargando ultracem">
+      <p class="text-center mt-3">Por favor comuníquese con nosotros a nuestra línea:</p>
+      <div class="d-flex chat justify-content-center align-items-center">
+        <img src="assets/icons/asesora.svg" alt="">
+        <a href="#">
+          +575 3782828
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+    <div class="col-lg-5 alerts-content">
+      <img src="assets/img/rechazado.svg" alt="cargando ultracem">
+      <p class="text-center mt-3">En este momento no podemos procesar tu solicitud de crédito.
+        Si deseas conocer más información, comunícate:</p>
+      <div class="d-flex chat justify-content-center align-items-center">
+        <img src="assets/icons/asesora.svg" alt="">
+        <a href="#">
+          +575 3782828
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+    <div class="col-lg-7 alerts-content">
+      <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
+      <div class="row justify-content-center my-4">
+        <button mat-raised-button class="inicio-sesion">Iniciar sesión</button>
+      </div>
+      <p class="text-center mt-3">Para completar tu crédito, inicia sesión con tu
+        <span> usuario (correo registrado) y contraseña (cedula registrada)</span>
+      </p>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 2 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de la empresa</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudNatural">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional)</mat-label>
+              <input matInput formControlName="segundoNombre">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo apellido (opcional)</mat-label>
+              <input matInput formControlName="segundoApellido">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Genero</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
+              <input matInput formControlName="antiguedadNegocio" type="number">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Antigüedad compras? (meses)</mat-label>
+              <input matInput formControlName="antiguedadCompra" type="number">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Compras semanales en cemento ($) </mat-label>
+              <input matInput formControlName="compraSemanal" type="number">
+            </mat-form-field>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <button mat-raised-button [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 3 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS DE LA EMPRESA</span></li>
+          <li><span>REPRESENTANTE LEGAL</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de la empresa</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudJuridica">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Razón social</mat-label>
+              <input matInput formControlName="nombreCompleto">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de matrícula</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="fechaMatricula">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="telefono">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Compras semanales en cemento ($) </mat-label>
+              <input matInput formControlName="compraSemanal" type="number">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Antigüedad  compras? (meses)</mat-label>
+              <input matInput formControlName="antiguedadCompra" type="number">
+            </mat-form-field>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox  formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox  formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <button mat-raised-button [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 4 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de representante legal</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudRepresentante">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.codigoOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Número de documento</mat-label>
+              <input type="number" matInput formControlName="documento">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional)</mat-label>
+              <input matInput formControlName="segundoNombre">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo apellido (opcional)</mat-label>
+              <input matInput formControlName="segundoApellido">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Genero</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <button mat-raised-button [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

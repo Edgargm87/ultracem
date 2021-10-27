@@ -1,0 +1,168 @@
+@import "../../../../../styles/vars/exports";
+
+.horizontal-timeline {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 2em;
+}
+
+.horizontal-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  //   margin-right: 70px;
+  width: 100px;
+
+  &:last-child .circle-step::before {
+    display: none;
+  }
+
+  span {
+    // width: 50%;
+    margin-top: 10px;
+    font-size: .72rem;
+    text-align: center;
+    width: 100px;
+  }
+
+  img {
+    width: 34px;
+  }
+}
+
+.circle-step {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-top: 1em;
+  position: relative;
+  z-index: 200;
+}
+
+.line-step {
+  width: 150%;
+  height: 2px;
+  background: #dadada;
+  transform: translateY(56px);
+  z-index: 10;
+
+  &:last-child {
+    display: none;
+  }
+}
+
+@mixin color-step($color) {
+  background: rgba($color, .9);
+  border: 2px solid darken($color, 12%);
+}
+
+
+.current span {
+  color: $blue-semi-light;
+}
+
+.visited span {
+  color: $green-light;
+}
+
+.future span {
+  color: #dadada;
+}
+
+
+.current .circle-step {
+  @include color-step($blue-semi-light)
+}
+
+.visited .circle-step {
+  @include color-step($green-light)
+}
+
+.future .circle-step {
+  @include color-step(#dadada)
+}
+
+
+
+
+@media (max-width: 768.98px) {
+
+  .horizontal-timeline {
+    margin-top: 1.5em;
+  }
+
+  .circle-step {
+
+
+    &::before {
+      width: 10px;
+
+    }
+  }
+
+}
+
+@media (max-width: 575.98px) {
+
+
+  .horizontal-step {
+    width: 0;
+  }
+
+  .current {
+    img {
+      width: 50px;
+    }
+
+    .circle-step {
+      display: none;
+    }
+  }
+
+  .visited,
+  .future {
+    display: none;
+  }
+
+  .line-step {
+    display: none;
+  }
+
+
+}
+
+
+.centered-content {
+  margin: auto;
+  text-align: center;
+}
+
+
+.custom-step {
+  position: absolute;
+  left: 12.5%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.custom-global-css{
+  margin-top: 100px;
+}
+
+.image-step{
+  position: absolute; top:-120px; transform: translateX(-50%);
+  left: 50%;
+}
+
+
+:host ::ng-deep aw-wizard-navigation-bar ul.steps-indicator li a .label{
+  font-size: 12px !important;
+  text-transform: capitalize;
+}

@@ -80,4 +80,8 @@ export class CreditService {
   solicitudUltracem(form: any): Observable<any> {
     return this._http.post(this.infoApp.urlApi + 'credito/formulario-solicitud-ultracem', form).pipe(map(res => res));
   }
+
+  solicitudes(url:string): Observable<any> {
+    return this._http.get(this.infoApp.urlApi + url).pipe(map(res => res));
+  }
 }
