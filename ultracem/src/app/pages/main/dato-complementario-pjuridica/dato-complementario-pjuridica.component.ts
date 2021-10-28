@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DirectionsComponent } from 'src/app/components/modals/directions/directions.component';
 import { CreditService } from 'src/app/services/credit.service';
 import { GenericService } from 'src/app/services/generic.service';
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-dato-complementario-pjuridica',
@@ -12,8 +13,8 @@ import { GenericService } from 'src/app/services/generic.service';
 })
 export class DatoComplementarioPjuridicaComponent implements OnInit {
 
-  
- 
+
+
   title = 'ultracem';
   alto: any;
   ancho: any;
@@ -30,24 +31,30 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   formTab4: FormGroup;
   Listdepartamentos: any[]=[];
   ListNivelEstudio: any[]=[];
+  public departamentosResidencia: any[]=[];
+  public ciudades: any[] = [];
+  public ciudadesResidencia: any[] = [];
+  public barrios: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
     private _creditService: CreditService,
-    private _generic: GenericService
+    private _generic: GenericService,
   ) {
 
     this.formTab1=this.fb.group({
-      nacionalidad: ["Colombia", [Validators.required]],
-      departamentoNacionalidad: ["", [Validators.required]],
-      ciudadNacionalidad: ["", [Validators.required]],
-      departamentoResidencia: ["", [Validators.required]],
-      ciudadResidencia: ["", [Validators.required]],
-      barrioResidencia: ["", [Validators.required]],
-      direccionResidencia: ["", [Validators.required]],
-      tipoVivienda: ["", [Validators.required]],
-      nivelEstudio: ["", [Validators.required]],
+      departamentoNegocio: ['', [Validators.required]],
+      ciudadNegocio: ['', [Validators.required]],
+      barrioNegocio: ['', [Validators.required]],
+      direccionNegocio: ['', [Validators.required]],
+      telefonoNegocio: ['', [Validators.required]],
+      activos: ['', [Validators.required]],
+      ventasMensuales: ['', [Validators.required]],
+      declarante: ['', [Validators.required]],
+      recurso: ['tab-nit-dato-negocio'],
+      viveNegocio: ['', [Validators.required]],
+      numeroSolicitud: ['', [Validators.required]],
     })
     this.formTab2=this.fb.group({
       departamentoNegocio: ["", [Validators.required]],
@@ -61,7 +68,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       ventasMensuales: ["", [Validators.required]],
     })
     this.formTab3=this.fb.group({
-     
+
       pPrimerNombre: ["", [Validators.required]],
       pSegundoNombre: ["", [Validators.required]],
       pPrimerApellido: ["", [Validators.required]],
@@ -92,6 +99,21 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
   ngOnInit(): void {
    this.getListados();
+
+  }
+  /**
+   * @description: Selecciona ciudad
+   */
+  public seleccionCiudad(evento: MatSelectChange, params: string): void {
+    const codigo: string = evento.value;
+    this.getCiudades(codigo, params);
+  }
+  /**
+   * @description: Selecciona barrios
+   */
+  public seleccionBarrios(evento: MatSelectChange): void {
+    const codigo: string = evento.value;
+    this.getBarrios(codigo);
   }
 
   noCambios(){
@@ -109,7 +131,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     let url="generic/qry/departamentos/CO";
     this._generic.getData(url).subscribe(resp => {
       this.Listdepartamentos = resp;
-
+      this.departamentosResidencia = resp;
     })
     url="generic/qry/consulta-lista-generica/NIVEL-ESTUDIO";
     this._generic.getData(url).subscribe(resp => {
@@ -118,15 +140,50 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     })
   }
 
-  openModalDirection(){
-    const dialogRef = this.dialog.open(DirectionsComponent, {
-      // width: '250px',
-      data: { name: 1, animal: 2 }
-    });
+  public onGuardar(): void {
+    let url: string = 'formulario-solicitud-tabs';
+    const datos: any = this.formTab1.getRawValue();
+    this._generic.posData(url, datos).subscribe(console.log);
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  /**
+   * @description: Carga las ciudades
+   */
+  private getCiudades(codigo: string, params: string): void {
+    if (params === 'NA') {
+      let url: string = `generic/qry/ciudades/CO/${codigo}`;
+      this._generic.getData(url).subscribe((rest) => {
+       this.ciudades = rest;
+      })
+    }else {
+      let url: string = `generic/qry/ciudades/CO/${codigo}`;
+      this._generic.getData(url).subscribe((rest) => {
+       this.ciudadesResidencia = rest;
+      })
+    }
+  }
+
+  private getBarrios(codigo: string): void {
+    let url: string = `generic/qry/barrios/${codigo}`;
+    this._generic.getData(url).subscribe((rest) => {
+      this.barrios = rest;
+    })
+
+  }
+
+  openModalDirection(){
+    const codigo: string = this.formTab1.controls['ciudadNegocio'].value;
+
+      const dialogRef = this.dialog.open(DirectionsComponent, {
+        // width: '250px',
+        data: { codigo: codigo, valido: true },
+        disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+        this.formTab1.controls['direccionNegocio'].setValue(res);
+      })
+
   }
 
   siguienteTab(){
@@ -137,5 +194,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   }
 
   //borrar
+
 
 }

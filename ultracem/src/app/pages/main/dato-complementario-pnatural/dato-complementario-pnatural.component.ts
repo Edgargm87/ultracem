@@ -147,7 +147,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   getListadosBarrios(departamento: string, ciudad: string, type:number) {
     let url = `generic/qry/barrios/${ciudad}`;
     this._generic.getData(url).subscribe(resp => {
-     
+
       switch (type) {
         case 1:
           this.ListBarrios = resp;
