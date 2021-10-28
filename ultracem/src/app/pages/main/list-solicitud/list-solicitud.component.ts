@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utilities.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class ListSolicitudComponent implements OnInit {
   list: any=[];
   infoauth: any={};
   cedula:string='';
-  constructor(private _utilityService: UtilityService) { }
+  constructor(private _utilityService: UtilityService, private router: Router,) { }
 
   ngOnInit(): void {
     
@@ -27,6 +28,16 @@ export class ListSolicitudComponent implements OnInit {
       let respuesta:any= resp;
       this.list=respuesta.data;
     })
+  }
+  gestion(x: number,type:string){
+    if(type=='CC'){
+      let url=`/main/personanatural/${x}`;
+      this.router.navigateByUrl(url);
+    }else{
+      let url=`/main/personajuridica/${x}`;
+      this.router.navigateByUrl(url);
+    }
+  
   }
 
 }

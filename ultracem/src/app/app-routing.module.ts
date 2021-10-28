@@ -24,11 +24,11 @@ const routes: Routes = [
     component: ListSolicitudComponent
   },
   {
-    path: 'main/personanatural',
+    path: 'main/personanatural/:codigoSolicitud',
     component: DatoComplementarioPnaturalComponent
   },
   {
-    path: 'main/personajuridica',
+    path: 'main/personajuridica/:codigoSolicitud',
     component: DatoComplementarioPjuridicaComponent
   },
   {
