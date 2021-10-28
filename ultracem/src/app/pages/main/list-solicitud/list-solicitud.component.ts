@@ -8,18 +8,20 @@ import { UtilityService } from 'src/app/services/utilities.service';
 })
 export class ListSolicitudComponent implements OnInit {
   list: any=[];
-  cedula: number=0;
-
+  infoauth: any={};
+  cedula:string='';
   constructor(private _utilityService: UtilityService) { }
 
   ngOnInit(): void {
+    
+    this.infoauth= JSON.parse(localStorage.getItem('infoauth')+'');
+    this.cedula= this.infoauth.nit;
     this.solicitudes() 
-    this.cedula=parseInt(localStorage.getItem('infoauth')+'');
   }
 
   
   solicitudes() {
-    
+    console.log(this.cedula);
     let url= `generic/qry/cre-solicitudes-cliente/${this.cedula}`;
     this._utilityService.getQuery(url,true).subscribe(resp => {
       let respuesta:any= resp;
