@@ -14,7 +14,7 @@ import { CargoPublicoComponent } from '../../../components/modals/cargo-publico/
 })
 export class DatoComplementarioPnaturalComponent implements OnInit {
 
- 
+
   title = 'ultracem';
   alto: any;
   ancho: any;
@@ -62,7 +62,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       ventasMensuales: ["", [Validators.required]],
     })
     this.formTab3=this.fb.group({
-     
+
       pPrimerNombre: ["", [Validators.required]],
       pSegundoNombre: ["", [Validators.required]],
       pPrimerApellido: ["", [Validators.required]],

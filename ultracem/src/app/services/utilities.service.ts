@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class UtilityService {
   server: string = environment.urlApi;
   notoken: string = 'notoken';
+
 
   constructor(private _httpClient: HttpClient) { }
 

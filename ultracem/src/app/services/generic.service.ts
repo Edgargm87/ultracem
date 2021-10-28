@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UtilityService } from './utilities.service';
 
@@ -7,14 +7,14 @@ import { UtilityService } from './utilities.service';
   providedIn: 'root'
 })
 export class GenericService {
-
+  public seleccionDireccion: Subject<{ valor: any }> = new Subject<{valor: any}>();
   constructor(private _utility: UtilityService) { }
 
 
   posData(url: string, data: any): Observable<any> {
     return this._utility.postQuery(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
 
