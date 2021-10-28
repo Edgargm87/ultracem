@@ -12,7 +12,7 @@ import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-compleme
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent
   },
   {

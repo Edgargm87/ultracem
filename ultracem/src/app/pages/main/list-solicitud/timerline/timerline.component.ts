@@ -8,10 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TimerlineComponent implements OnInit {
   @Input('currentStep') currentStep: number = 0;
   
-  oneStepNumber: number = 0;
-  twoStepNumber: number = 6;
+  oneStepNumber: number = 1;
+  twoStepNumber: number = 2;
   thirdStepNumber: number = 3;
-  fourStepNumber: number = 8;
   constructor() { }
 
   ngOnInit(): void {

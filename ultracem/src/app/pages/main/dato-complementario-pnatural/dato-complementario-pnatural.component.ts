@@ -93,7 +93,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
   ngOnInit(): void {
    this.getListados();
-   this.openModalCargoPublico('T');
+   this.openModalCargoPublico('P');
   }
 
   noCambios(){

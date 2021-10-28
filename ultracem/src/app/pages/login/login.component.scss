@@ -1,8 +1,11 @@
 .input-login {
   border-left: 2px solid #51beed;
+  font-size: 1.5em;
+  padding: 0.3em;
 }
 .titulo{
     color: #51beed;
+    font-size: 3em;
 }
 .fondo_gris{
 background: #EFF4F7;
@@ -10,4 +13,15 @@ background: #EFF4F7;
 }
 .pantallaCompleta{
     min-height: 100vh;
+}
+.btn_login {
+  width: max-content;
+  color: #fff;
+  background-color: #bbce00;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 2em;
+  padding-top: 12px;
+  border-radius: 38px;
+  padding-bottom: 7px;
 }
