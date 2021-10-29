@@ -14,13 +14,14 @@ export class ListSolicitudComponent implements OnInit {
   constructor(private _utilityService: UtilityService, private router: Router,) { }
 
   ngOnInit(): void {
-    
+
     this.infoauth= JSON.parse(localStorage.getItem('infoauth')+'');
-    this.cedula= this.infoauth.nit;
-    this.solicitudes() 
+    // this.cedula= this.infoauth.nit;
+    this.cedula= '900600256';
+    this.solicitudes()
   }
 
-  
+
   solicitudes() {
     console.log(this.cedula);
     let url= `generic/qry/cre-solicitudes-cliente/${this.cedula}`;
@@ -37,7 +38,7 @@ export class ListSolicitudComponent implements OnInit {
       let url=`/main/personajuridica/${x}`;
       this.router.navigateByUrl(url);
     }
-  
+
   }
 
 }

@@ -1,5 +1,4 @@
 <div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
-    {{formTab1.getRawValue() | json}}
     <div class="row step-three" *ngIf="step == 1 && !cargando">
       <div class="col-lg-4 l-izquierdo ">
         <div class="row justify-content-center align-items-center">
@@ -34,7 +33,7 @@
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio del negocio</mat-label>
                 <!-- <input matInput autocomplete="off" formControlName="ciudadNacionalidad"> -->
-                <mat-select formControlName="ciudadNegocio" (selectionChange)="seleccionBarrios($event)">
+                <mat-select formControlName="ciudadNegocio" (selectionChange)="seleccionBarrios($event, 'NA')">
                   <mat-option value="">Selecciona</mat-option>
                   <mat-option [value]="item.codigo"
                               *ngFor="let item of ciudades"
@@ -110,13 +109,19 @@
             </div>
 
             <div class="row justify-content-center">
-              <button class="btn-solicitar btn" [disabled]="!formTab1.valid" (click)="onGuardar()">Solicitar</button>
+              <button class="btn-solicitar btn"
+                      [disabled]="!formTab1.valid"
+                      (click)="onGuardarUno(1)"
+              >
+                Solicitar
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
     <div class="row step-three" *ngIf="step == 2 && !cargando">
+        {{formTab2.getRawValue() | json}}
       <div class="col-lg-4 l-izquierdo">
         <div class="row justify-content-center align-items-center">
           <ul class="col-lg-8">
@@ -141,45 +146,79 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Departamento de residencia</mat-label>
-                <input matInput formControlName="departamentoNegocio">
+                <mat-select formControlName="departamentoResidencia" (selectionChange)="seleccionCiudad($event, 'REP')">
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoRepresentante ">{{item.nombre}}</mat-option>
+                </mat-select>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad o municipio de residencia</mat-label>
-                <input matInput formControlName="ciudadNegocio">
+                <mat-select formControlName="ciudadResidencia" (selectionChange)="seleccionBarrios($event, 'REP')">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigo"
+                              *ngFor="let item of ciudadRepresentante"
+                  >
+                    {{item.nombre}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Barrio</mat-label>
-                <input type="text" matInput formControlName="telefonoNegocio">
+                <mat-select formControlName="barrioResidencia" >
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigo"
+                              *ngFor="let item of barrioRepresentante"
+                  >
+                    {{item.nombre}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Direccion de residencia </mat-label>
-                <input matInput formControlName="direccionNegocio" type="text">
+                <input matInput formControlName="direccionResidencia" type="text" (keydown)="openModalDirectionRepresentante()">
               </mat-form-field>
             </div>
             <div class="row">
-              <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Ciudad </mat-label>
-                <input matInput formControlName="direccionNegocio" type="text">
-              </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input type="date" matInput formControlName="telefonoNegocio">
+                <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Tipo de vivienda </mat-label>
+                <mat-select formControlName="tipoVivienda">
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion"
+                              *ngFor="let item of tipoVivienda"
+                  >
+                    {{ item.descripcionOpcion}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Tipo de vivienda </mat-label>
-                <input matInput formControlName="direccionNegocio" type="text">
-              </mat-form-field>
-              <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Nivel de estudio</mat-label>
-                <input type="date" matInput formControlName="telefonoNegocio">
+                <mat-select formControlName="nivelEstudio">
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion"
+                              *ngFor="let item of ListNivelEstudio"
+                  >
+                    {{ item.descripcionOpcion}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button [disabled]="formTab2.invalid" (click)="siguienteTab()">Solicitar</button>
+              <button mat-raised-button
+                      [disabled]="formTab2.invalid"
+                      (click)="onGuardarDos(1)"
+              >
+                Solicitar
+              </button>
             </div>
           </form>
         </div>
