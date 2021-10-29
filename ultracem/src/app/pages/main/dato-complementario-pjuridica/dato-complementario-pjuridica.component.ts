@@ -8,6 +8,7 @@ import {MatSelectChange} from "@angular/material/select";
 import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs/operators";
 import Swal from "sweetalert2";
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-dato-complementario-pjuridica',
@@ -38,6 +39,12 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   public ciudades: any[] = [];
   public ciudadesResidencia: any[] = [];
   public barrios: any[] = [];
+  public tipoVivienda: any[] = [];
+  public departamentoRepresentante: any[] =[];
+  public ciudadRepresentante: any[] =[];
+  public ciudadReferencia: any[] =[];
+  public barrioRepresentante: any[] =[];
+  public barrioReferencia: any[] =[];
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +73,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       barrioResidencia: ["", [Validators.required]],
       direccionResidencia: ["", [Validators.required]],
       fechaNacimiento: ["", [Validators.required]],
-      telefonoNegocio: ["", [Validators.required]],
       nivelEstudio: ["", [Validators.required]],
       tipoVivienda: ["", [Validators.required]],
       numeroSolicitud: ['', [Validators.required]],
@@ -104,6 +110,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     route.params.pipe(take(1)).subscribe((params) => {
       const numeroSolicitud: string = params.codigoSolicitud;
       this.formTab1.controls['numeroSolicitud'].setValue(numeroSolicitud);
+      this.formTab2.controls['numeroSolicitud'].setValue(numeroSolicitud);
     });
   }
 
@@ -121,9 +128,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   /**
    * @description: Selecciona barrios
    */
-  public seleccionBarrios(evento: MatSelectChange): void {
+  public seleccionBarrios(evento: MatSelectChange, params: string): void {
     const codigo: string = evento.value;
-    this.getBarrios(codigo);
+    this.getBarrios(codigo, params);
   }
 
   noCambios(){
@@ -142,12 +149,16 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     this._generic.getData(url).subscribe(resp => {
       this.Listdepartamentos = resp;
       this.departamentosResidencia = resp;
-    })
+      this.departamentoRepresentante = resp;
+    });
     url="generic/qry/consulta-lista-generica/NIVEL-ESTUDIO";
     this._generic.getData(url).subscribe(resp => {
       this.ListNivelEstudio = resp;
-
-    })
+    });
+    url = 'generic/qry/consulta-lista-generica/TIPO-VIVIENDA';
+    this._generic.getData(url).subscribe(resp => {
+      this.tipoVivienda = resp;
+    });
   }
 
   public onGuardarUno(key: number): void {
@@ -168,10 +179,10 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     } = datos;
 
     const formulario = {
-      departamentoNegocio: departamentoNegocio,
-      ciudadNegocio: ciudadNegocio,
-      barrioNegocio: String(barrioNegocio),
-      direccionNegocio: direccionNegocio,
+      departamentoResidencia: departamentoNegocio,
+      ciudadResidencia: ciudadNegocio,
+      barrioResidencia: String(barrioNegocio),
+      direccionResidencia: direccionNegocio,
       telefonoNegocio: telefonoNegocio,
       activos: Number(activos),
       ventasMensuales: Number(ventasMensuales),
@@ -202,34 +213,33 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     let url: string = 'credito/tk/formulario-solicitud-tabs';
     const datos: any = this.formTab2.getRawValue();
     const {
-      departamentoNegocio,
-      ciudadNegocio,
-      barrioNegocio,
-      direccionNegocio,
-      telefonoNegocio,
-      activos,
-      ventasMensuales,
-      declarante,
-      recurso,
-      viveNegocio,
+      departamentoResidencia,
+      ciudadResidencia,
+      barrioResidencia,
+      direccionResidencia,
+      fechaNacimiento,
+      nivelEstudio,
+      tipoVivienda,
       numeroSolicitud,
+      recurso,
+
     } = datos;
 
     const formulario = {
-      departamentoNegocio: departamentoNegocio,
-      ciudadNegocio: ciudadNegocio,
-      barrioNegocio: String(barrioNegocio),
-      direccionNegocio: direccionNegocio,
-      telefonoNegocio: telefonoNegocio,
-      activos: Number(activos),
-      ventasMensuales: Number(ventasMensuales),
-      declarante: declarante,
+      departamentoResidencia: departamentoResidencia,
+      ciudadResidencia: ciudadResidencia,
+      barrioResidencia: String(barrioResidencia),
+      direccionResidencia: direccionResidencia,
+      nivelEstudio: nivelEstudio,
+      tipoVivienda: tipoVivienda,
       recurso: recurso,
-      viveNegocio: viveNegocio,
       numeroSolicitud: numeroSolicitud,
+      fechaNacimiento: format(fechaNacimiento, 'yyyy-MM-dd')
     }
 
-    this._generic.posData(url, formulario).subscribe((res: any) => {
+    console.log(formulario);
+
+    /*this._generic.posData(url, formulario).subscribe((res: any) => {
       if (res) {
         if (res.status === 200) {
           Swal.fire(
@@ -243,46 +253,89 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
           });
         }
       }
-    });
+    });*/
   }
 
   /**
    * @description: Carga las ciudades
    */
   private getCiudades(codigo: string, params: string): void {
-    if (params === 'NA') {
-      let url: string = `generic/qry/ciudades/CO/${codigo}`;
-      this._generic.getData(url).subscribe((rest) => {
-       this.ciudades = rest;
-      })
-    }else {
-      let url: string = `generic/qry/ciudades/CO/${codigo}`;
-      this._generic.getData(url).subscribe((rest) => {
-       this.ciudadesResidencia = rest;
-      })
+    let url: string = '';
+    switch (params) {
+      case 'NA':
+        url = `generic/qry/ciudades/CO/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.ciudades = rest;
+        });
+        break;
+      case 'REP':
+        url= `generic/qry/ciudades/CO/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.ciudadRepresentante = rest;
+        });
+        break;
+      case 'REF':
+        url= `generic/qry/ciudades/CO/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.ciudadReferencia = rest;
+        });
+        break;
     }
+
   }
 
-  private getBarrios(codigo: string): void {
-    let url: string = `generic/qry/barrios/${codigo}`;
-    this._generic.getData(url).subscribe((rest) => {
-      this.barrios = rest;
-    })
+  private getBarrios(codigo: string, params: string): void {
+    let url: string = '';
+    switch (params) {
+      case 'NA':
+        url = `generic/qry/barrios/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.barrios = rest;
+        });
+      break;
+      case 'REP':
+        url = `generic/qry/barrios/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.barrioRepresentante = rest;
+        });
+        break;
+      case 'REF':
+        url = `generic/qry/barrios/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.barrioReferencia = rest;
+        });
+    }
 
   }
 
   openModalDirection(){
-    const codigo: string = this.formTab1.controls['ciudadNegocio'].value;
+    let codigo: string = '';
+    codigo = this.formTab1.controls['ciudadNegocio'].value;
 
-      const dialogRef = this.dialog.open(DirectionsComponent, {
-        // width: '250px',
-        data: { codigo: codigo, valido: true },
-        disableClose: false
-      });
+    const dialogRef = this.dialog.open(DirectionsComponent, {
+      // width: '250px',
+      data: { codigo: codigo, valido: true },
+      disableClose: false
+    });
 
-      dialogRef.afterClosed().subscribe((res) => {
-        this.formTab1.controls['direccionNegocio'].setValue(res);
-      })
+    dialogRef.afterClosed().subscribe((res) => {
+      this.formTab1.controls['direccionNegocio'].setValue(res);
+    })
+
+  }
+  openModalDirectionRepresentante(){
+    let codigo: string = '';
+    codigo = this.formTab2.controls['ciudadResidencia'].value;
+
+    const dialogRef = this.dialog.open(DirectionsComponent, {
+      // width: '250px',
+      data: { codigo: codigo, valido: true },
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.formTab2.controls['direccionResidencia'].setValue(res);
+    })
 
   }
 
