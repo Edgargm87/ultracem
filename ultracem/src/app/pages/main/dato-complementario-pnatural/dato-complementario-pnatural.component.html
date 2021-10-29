@@ -178,13 +178,13 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Dirección </mat-label>
-              <input matInput formControlName="direccionNegocio" type="text" (keydown)="openModalDirection()">
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text" (keydown)="openModalDirection()">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Télefono</mat-label>
-              <input type="text" matInput formControlName="telefonoNegocio">
+              <input type="text" autocomplete="off" matInput formControlName="telefonoNegocio">
             </mat-form-field>
           </div>
           <div class="row ">
@@ -219,13 +219,13 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Activos ($) </mat-label>
-              <input matInput formControlName="activos" type="number">
+              <input matInput autocomplete="off" formControlName="activos" type="number">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Ventas mensuales ($)</mat-label>
-              <input type="email" matInput formControlName="ventasMensuales">
+              <input type="email" autocomplete="off" matInput formControlName="ventasMensuales">
             </mat-form-field>
 
           </div>
@@ -262,27 +262,27 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer nombre</mat-label>
-              <input matInput formControlName="pPrimerNombre" type="text">
+              <input matInput autocomplete="off" formControlName="pPrimerNombre" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo nombre</mat-label>
-              <input matInput formControlName="pSegundoNombre" type="text">
+              <input matInput autocomplete="off" formControlName="pSegundoNombre" type="text">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer apellido</mat-label>
-              <input matInput formControlName="pPrimerApellido" type="text">
+              <input matInput autocomplete="off" formControlName="pPrimerApellido" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo Apellido</mat-label>
-              <input type="text" matInput formControlName="pSegundoApellido">
+              <input type="text" autocomplete="off" matInput formControlName="pSegundoApellido">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Telefono</mat-label>
-              <input matInput formControlName="ptelefono" type="text">
+              <input matInput autocomplete="off" formControlName="ptelefono" type="text">
             </mat-form-field>
           </div>
           <div class="row">
@@ -303,11 +303,20 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento </mat-label>
-              <input matInput formControlName="cDepartamento" type="text">
+              <!-- <input matInput formControlName="cDepartamento" type="text"> -->
+              <mat-select formControlName="cDepartamento"
+              (selectionChange)="getListadosCiudades(formTab3.value.cDepartamento,4)">
+              <mat-option value="" disabled>SELECCIONA</mat-option>
+              <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+            </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Ciudad /municipio</mat-label>
-              <input type="text" matInput formControlName="cMunicipio">
+              <!-- <input type="text" matInput formControlName="cMunicipio"> -->
+              <mat-select formControlName="cMunicipio" >
+              <mat-option value="" disabled>SELECCIONA</mat-option>
+              <mat-option value="{{item.codigo}}" *ngFor="let item of ListCMunicipio ">{{item.nombre}}</mat-option>
+            </mat-select>
             </mat-form-field>
           </div>
           <div class="row">

@@ -1,0 +1,23 @@
+@import "/src/styles/vars/exports";
+.form-control:focus {
+    color: #212529;
+    background-color: #fff !important;
+    border-color: $green-light !important;
+    outline: 0;
+    box-shadow:none !important;
+}
+
+.texto{
+    padding: 2em;
+}
+.btn_siguiente {
+    width: max-content;
+    color: #fff;
+    background-color: #bbce00;
+    font-family: Josefin Sans;
+    font-weight: 600;
+    font-size: 2em;
+    padding-top: 12px;
+    border-radius: 38px;
+    padding-bottom: 7px;
+  }

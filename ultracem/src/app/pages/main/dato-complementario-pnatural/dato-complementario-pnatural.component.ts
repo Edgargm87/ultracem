@@ -7,7 +7,7 @@ import { GenericService } from 'src/app/services/generic.service';
 import { DirectionsComponent } from '../../../components/modals/directions/directions.component';
 import { CargoPublicoComponent } from '../../../components/modals/cargo-publico/cargo-publico.component';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dato-complementario-pnatural',
@@ -41,12 +41,14 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   codigoSolicitud: any;
   ListCiudadesNegocio: any;
   ListBarriosNegocio: any;
+  ListCMunicipio: any;
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
     private _activatedRoute: ActivatedRoute,
-    private _generic: GenericService
+    private _generic: GenericService,
+    private router: Router,
   ) {
 
     this.formTab1 = this.fb.group({
@@ -56,16 +58,16 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       departamentoResidencia: ["", [Validators.required]],
       ciudadResidencia: ["", [Validators.required]],
       barrioResidencia: ["", [Validators.required]],
-      direccionResidencia: ["Cl 23 #14-11", [Validators.required]],
+      direccionResidencia: ["", [Validators.required]],
       tipoVivienda: ["", [Validators.required]],
       nivelEstudio: ["", [Validators.required]],
-      viveEnNegocio:["", [Validators.required]],
+      viveEnNegocio: ["", [Validators.required]],
     })
     this.formTab2 = this.fb.group({
       departamentoNegocio: ["", [Validators.required]],
       ciudadNegocio: ["", [Validators.required]],
       barrioNegocio: ["", [Validators.required]],
-      direccionNegocio:  ["Cl 23 #14-11", [Validators.required]],
+      direccionNegocio: ["Cl 23 #14-11", [Validators.required]],
       telefonoNegocio: ["", [Validators.required]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],
@@ -135,8 +137,11 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
         case 2:
           this.ListCiudadesResidencia = resp;
           break;
-          case 3:
-          this.ListCiudadesNegocio= resp;
+        case 3:
+          this.ListCiudadesNegocio = resp;
+          break;
+        case 4:
+          this.ListCMunicipio = resp
           break;
         default:
           break;
@@ -144,7 +149,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
     })
   }
-  getListadosBarrios(departamento: string, ciudad: string, type:number) {
+  getListadosBarrios(departamento: string, ciudad: string, type: number) {
     let url = `generic/qry/barrios/${ciudad}`;
     this._generic.getData(url).subscribe(resp => {
 
@@ -162,13 +167,17 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   }
 
   openModalDirection() {
+    const codigo: string = this.formTab1.controls['ciudadResidencia'].value;
+
     const dialogRef = this.dialog.open(DirectionsComponent, {
       // width: '250px',
-      data: { name: 1, animal: 2 }
+      data: { codigo: codigo, valido: true },
+      disableClose: false
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.formTab1.controls['direccionResidencia'].setValue(res);
+    })
   }
 
   openModalCargoPublico(tipo: String) {
@@ -187,54 +196,57 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       case 1:
         data = {
           "recurso": "tab-cc-dato-natural",
-          "numeroSolicitud":this.codigoSolicitud,
+          "numeroSolicitud": this.codigoSolicitud,
           "nacionalidad": this.formTab1.value.nacionalidad,
-          "departamentoNacimiento":this.formTab1.value.departamentoNacionalidad,
-          "ciudadNacimiento":this.formTab1.value.ciudadNacionalidad,
-          "departamentoResidencia":this.formTab1.value.departamentoResidencia,
-          "ciudadResidencia":this.formTab1.value.ciudadResidencia,
-          "barrioResidencia":this.formTab1.value.barrioResidencia,
-          "direccionResidencia":this.formTab1.value.direccionResidencia,
-          "nivelEstudio":this.formTab1.value.nivelEstudio,
-          "tipoVivienda":this.formTab1.value.tipoVivienda,
-          "viveEnNegocio":this.formTab1.value.viveEnNegocio
+          "departamentoNacimiento": this.formTab1.value.departamentoNacionalidad,
+          "ciudadNacimiento": this.formTab1.value.ciudadNacionalidad,
+          "departamentoResidencia": this.formTab1.value.departamentoResidencia,
+          "ciudadResidencia": this.formTab1.value.ciudadResidencia,
+          "barrioResidencia": this.formTab1.value.barrioResidencia,
+          "direccionResidencia": this.formTab1.value.direccionResidencia,
+          "nivelEstudio": this.formTab1.value.nivelEstudio,
+          "tipoVivienda": this.formTab1.value.tipoVivienda,
+          "viveEnNegocio": this.formTab1.value.viveEnNegocio
         }
         break;
       case 2:
         data = {
           "recurso": "tab-cc-dato-negocio",
-          "numeroSolicitud":this.codigoSolicitud,
+          "numeroSolicitud": this.codigoSolicitud,
           "departamentoNegocio": this.formTab2.value.departamentoNegocio,
-          "ciudadNegocio":this.formTab2.value.ciudadNegocio,
+          "ciudadNegocio": this.formTab2.value.ciudadNegocio,
           "barrioNegocio": this.formTab2.value.barrioNegocio,
           "direccionNegocio": this.formTab2.value.direccionNegocio,
           "telefonoNegocio": this.formTab2.value.telefonoNegocio,
           "camaraComercio": this.formTab2.value.camaraComercio,
           "declarante": this.formTab2.value.declarante,
           "activos": parseInt(this.formTab2.value.activos),
-          "ventasMensuales":parseInt(this.formTab2.value.ventasMensuales),
+          "ventasMensuales": parseInt(this.formTab2.value.ventasMensuales),
         }
         break;
       case 3:
+        url="credito/formulario-solicitud-tabs-ref";
         data = {
-          "recurso": "tab-agregar-referencia",
-          "numeroSolicitud": "185039",
-          "identificacion": "124590056",
-          "primerNombre": "DIGNA",
-          "segundoNombre": "MARIA",
-          "primerApellido": "MONTES",
-          "segundoApellido": "",
-          "nombreCompleto": "DIGNA MARIA MONTES",
-          "tipo": "1",
-          "parentesco": "",
-          "telefono": "30056894",
-          "celular": "3005689574",
-          "codigoPais": "",
-          "codigoDepartamento": "",
-          "codigoCiudad": "",
-          "codigoBarrio": "1",
-          "direccion": "",
-          "antiguedad": 1.5
+          "detalle": [
+            {
+              "recurso": "tab-referencia-personal",
+              "numeroSolicitud": this.codigoSolicitud,
+              "primerNombre": this.formTab3.value.pPrimerNombre,
+              "segundoNombre": this.formTab3.value.pSegundoNombre,
+              "primerApellido": this.formTab3.value.pPrimerApellido,
+              "segundoApellido": this.formTab3.value.pSegundoApellido,
+              "telefono": this.formTab3.value.ptelefono
+            },
+            {
+              "recurso": "tab-referencia-comercial",
+              "numeroSolicitud": this.codigoSolicitud,
+              "nombreCompleto": this.formTab3.value.cRazonSocial,
+              "codigoDepartamento": this.formTab3.value.cDepartamento,
+              "codigoCiudad": this.formTab3.value.cMunicipio,
+              "telefono": this.formTab3.value.cCelular,
+              "antiguedad": parseInt(this.formTab3.value.cAntiguedad)
+            }
+          ]
         }
         break;
       default:
@@ -253,8 +265,11 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
               'success'
             ).then(resultado => {
               if (resultado) {
-                this.step==key+1;
-                if(this.step==4){}
+                this.step = key + 1;
+                if (this.step == 4) {
+                  let url=`/main/legal/${this.codigoSolicitud}`;
+                  this.router.navigateByUrl(url);
+                 }
               }
             });
 
