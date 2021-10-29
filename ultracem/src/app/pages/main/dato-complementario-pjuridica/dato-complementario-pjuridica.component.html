@@ -239,7 +239,7 @@
           <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
         </div> -->
         <div class="row justify-content-center">
-          <div class="col-lg-11 mt-5">
+          <div class="col-lg-11 mt-3">
             <h2 class="text-start">Referencia comercial</h2>
           </div>
         </div>
@@ -248,31 +248,83 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Razon social</mat-label>
-                <input matInput formControlName="cRazonSocial">
+                <input matInput formControlName="nombreCompleto">
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Teléfono /celular</mat-label>
-                <input matInput formControlName="cCelular">
+                <input matInput formControlName="telefono">
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Departamento </mat-label>
-                <input matInput formControlName="cDepartamento" type="text">
+                <mat-select formControlName="codigoDepartamento" (selectionChange)="seleccionCiudad($event, 'REF-UNO')">
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoReferenciaUno ">{{item.nombre}}</mat-option>
+                </mat-select>
+                <input matInput formControlName="codigoDepartamento" type="text">
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad /municipio</mat-label>
-                <input type="text" matInput  formControlName="cMunicipio">
+                <mat-select formControlName="codigoCiudad" >
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option value="{{item.codigo}}" *ngFor="let item of ciudadReferenciaUno ">{{item.nombre}}</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antiguedad de ser cliente (meses) </mat-label>
-                <input matInput formControlName="cAntiguedad" type="text">
+                <input matInput formControlName="antiguedad" type="text">
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-11 ">
+            <h2 class="text-start">Referencia comercial</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <form class="col-11" [formGroup]="formTab4">
+            <div class="row">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Razon social</mat-label>
+                <input matInput formControlName="nombreCompleto">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Teléfono /celular</mat-label>
+                <input matInput formControlName="telefono">
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Departamento </mat-label>
+                <mat-select formControlName="codigoDepartamento" (selectionChange)="seleccionCiudad($event, 'REF-DOS')">
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoReferenciaDos ">{{item.nombre}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Ciudad /municipio</mat-label>
+                <mat-select formControlName="codigoCiudad" >
+                  <mat-option value="" disabled>Selecciona</mat-option>
+                  <mat-option value="{{item.codigo}}" *ngFor="let item of ciudadReferenciaDos ">{{item.nombre}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Antiguedad de ser cliente (meses) </mat-label>
+                <input matInput formControlName="antiguedad" type="text">
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button [disabled]="formTab3.invalid" (click)="siguienteTab()">Solicitar</button>
+              <button mat-raised-button [disabled]="formTab3.invalid && formTab4.invalid"
+                      (click)="onGuardarTres(1)"
+              >
+                Solicitar
+              </button>
             </div>
           </form>
         </div>
