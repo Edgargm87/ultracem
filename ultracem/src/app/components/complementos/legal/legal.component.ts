@@ -25,4 +25,8 @@ export class LegalComponent implements OnInit {
     this.ancho = window.innerWidth + 'px';
   }
 
+  siguiente(){
+    this.step+=1;
+  }
+
 }

@@ -20,7 +20,6 @@ import { DirectionsComponent } from './components/modals/directions/directions.c
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
 import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-publico.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatSlideToggleModule,
     BrowserAnimationsModule,
     SharedModule,
     ReactiveFormsModule,
