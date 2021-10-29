@@ -76,7 +76,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       nivelEstudio: ["", [Validators.required]],
       tipoVivienda: ["", [Validators.required]],
       numeroSolicitud: ['', [Validators.required]],
-      recurso: ['tab-nit-dato-responsable'],
+      recurso: ['tab-nit-dato-representante'],
     })
     this.formTab3=this.fb.group({
 
@@ -239,7 +239,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
     console.log(formulario);
 
-    /*this._generic.posData(url, formulario).subscribe((res: any) => {
+    this._generic.posData(url, formulario).subscribe((res: any) => {
       if (res) {
         if (res.status === 200) {
           Swal.fire(
@@ -253,7 +253,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
           });
         }
       }
-    });*/
+    });
   }
 
   /**
