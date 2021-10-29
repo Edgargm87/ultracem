@@ -5,6 +5,9 @@ import { DirectionsComponent } from 'src/app/components/modals/directions/direct
 import { CreditService } from 'src/app/services/credit.service';
 import { GenericService } from 'src/app/services/generic.service';
 import {MatSelectChange} from "@angular/material/select";
+import {ActivatedRoute} from "@angular/router";
+import {take} from "rxjs/operators";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-dato-complementario-pjuridica',
@@ -41,6 +44,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     public dialog: MatDialog,
     private _creditService: CreditService,
     private _generic: GenericService,
+    private route: ActivatedRoute
   ) {
 
     this.formTab1=this.fb.group({
@@ -57,15 +61,16 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       numeroSolicitud: ['', [Validators.required]],
     })
     this.formTab2=this.fb.group({
-      departamentoNegocio: ["", [Validators.required]],
-      ciudadNegocio: ["", [Validators.required]],
-      barrioNegocio: ["", [Validators.required]],
-      direccionNegocio: ["", [Validators.required]],
+      departamentoResidencia: ["", [Validators.required]],
+      ciudadResidencia: ["", [Validators.required]],
+      barrioResidencia: ["", [Validators.required]],
+      direccionResidencia: ["", [Validators.required]],
+      fechaNacimiento: ["", [Validators.required]],
       telefonoNegocio: ["", [Validators.required]],
-      camaraComercio: ["", [Validators.required]],
-      declarante: ["", [Validators.required]],
-      activos: ["", [Validators.required]],
-      ventasMensuales: ["", [Validators.required]],
+      nivelEstudio: ["", [Validators.required]],
+      tipoVivienda: ["", [Validators.required]],
+      numeroSolicitud: ['', [Validators.required]],
+      recurso: ['tab-nit-dato-responsable'],
     })
     this.formTab3=this.fb.group({
 
@@ -95,6 +100,11 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
     this.alto = window.innerHeight + 'px';
     this.ancho = window.innerWidth + 'px';
+
+    route.params.pipe(take(1)).subscribe((params) => {
+      const numeroSolicitud: string = params.codigoSolicitud;
+      this.formTab1.controls['numeroSolicitud'].setValue(numeroSolicitud);
+    });
   }
 
   ngOnInit(): void {
@@ -140,10 +150,100 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     })
   }
 
-  public onGuardar(): void {
-    let url: string = 'formulario-solicitud-tabs';
+  public onGuardarUno(key: number): void {
+    let url: string = 'credito/tk/formulario-solicitud-tabs';
     const datos: any = this.formTab1.getRawValue();
-    this._generic.posData(url, datos).subscribe(console.log);
+    const {
+      departamentoNegocio,
+      ciudadNegocio,
+      barrioNegocio,
+      direccionNegocio,
+      telefonoNegocio,
+      activos,
+      ventasMensuales,
+      declarante,
+      recurso,
+      viveNegocio,
+      numeroSolicitud,
+    } = datos;
+
+    const formulario = {
+      departamentoNegocio: departamentoNegocio,
+      ciudadNegocio: ciudadNegocio,
+      barrioNegocio: String(barrioNegocio),
+      direccionNegocio: direccionNegocio,
+      telefonoNegocio: telefonoNegocio,
+      activos: Number(activos),
+      ventasMensuales: Number(ventasMensuales),
+      declarante: declarante,
+      recurso: recurso,
+      viveNegocio: viveNegocio,
+      numeroSolicitud: numeroSolicitud,
+    }
+
+    this._generic.posData(url, formulario).subscribe((res: any) => {
+      if (res) {
+        if (res.status === 200) {
+          Swal.fire(
+            '¡Información!',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(resultado => {
+            if (resultado) {
+              this.step == key + 1;
+            }
+          });
+        }
+      }
+
+    });
+  }
+  public onGuardarDos(key: number): void {
+    let url: string = 'credito/tk/formulario-solicitud-tabs';
+    const datos: any = this.formTab2.getRawValue();
+    const {
+      departamentoNegocio,
+      ciudadNegocio,
+      barrioNegocio,
+      direccionNegocio,
+      telefonoNegocio,
+      activos,
+      ventasMensuales,
+      declarante,
+      recurso,
+      viveNegocio,
+      numeroSolicitud,
+    } = datos;
+
+    const formulario = {
+      departamentoNegocio: departamentoNegocio,
+      ciudadNegocio: ciudadNegocio,
+      barrioNegocio: String(barrioNegocio),
+      direccionNegocio: direccionNegocio,
+      telefonoNegocio: telefonoNegocio,
+      activos: Number(activos),
+      ventasMensuales: Number(ventasMensuales),
+      declarante: declarante,
+      recurso: recurso,
+      viveNegocio: viveNegocio,
+      numeroSolicitud: numeroSolicitud,
+    }
+
+    this._generic.posData(url, formulario).subscribe((res: any) => {
+      if (res) {
+        if (res.status === 200) {
+          Swal.fire(
+            '¡Información!',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(resultado => {
+            if (resultado) {
+              this.step == key + 1;
+            }
+          });
+        }
+      }
+    });
   }
 
   /**
