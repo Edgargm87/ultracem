@@ -117,6 +117,12 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   ngOnInit(): void {
    this.getListados();
 
+
+    this.route.params.pipe(take(1)).subscribe(res => {
+      const codigo:string = res.codigoSolicitud;
+      this.getEstados(codigo);
+    });
+
   }
   /**
    * @description: Selecciona ciudad
@@ -181,10 +187,10 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     } = datos;
 
     const formulario = {
-      departamentoResidencia: departamentoNegocio,
-      ciudadResidencia: ciudadNegocio,
-      barrioResidencia: String(barrioNegocio),
-      direccionResidencia: direccionNegocio,
+      departamentoNegocio: departamentoNegocio,
+      ciudadNegocio: ciudadNegocio,
+      barrioNegocio: String(barrioNegocio),
+      direccionNegocio: direccionNegocio,
       telefonoNegocio: telefonoNegocio,
       activos: Number(activos),
       ventasMensuales: Number(ventasMensuales),
@@ -202,8 +208,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             `Se guardo el registro con éxito`,
             'success'
           ).then(resultado => {
-            if (resultado) {
-              this.step == key + 1;
+            if (resultado.isConfirmed) {
+              this.step = res.data.stepFormulario;
             }
           });
         }
@@ -247,8 +253,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             `Se guardo el registro con éxito`,
             'success'
           ).then(resultado => {
-            if (resultado) {
-              this.step == key + 1;
+            if (resultado.isConfirmed) {
+              this.step = res.data.stepFormulario;
             }
           });
         }
@@ -297,9 +303,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             '¡Información!',
             `Se guardo el registro con éxito`,
             'success'
-          ).then(resultado => {
-            if (resultado) {
-               this.step == key + 1;
+          ).then(result => {
+            if (result.isConfirmed) {
+               this.step = res.data.stepFormulario;
             }
           });
         }
@@ -394,6 +400,16 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       this.formTab2.controls['direccionResidencia'].setValue(res);
     })
 
+  }
+  /**
+   * @description: carga el estado del formulario
+   */
+  public getEstados(codigo: string): void {
+    let url: string = '';
+    url= `generic/qry/consulta-step-formulario/${codigo}`;
+    this._generic.getData(url).subscribe((res: any) => {
+      this.step = res.stepFormulario;
+    });
   }
 
   siguienteTab(){
