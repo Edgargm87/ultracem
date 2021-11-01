@@ -16,8 +16,8 @@ export class ListSolicitudComponent implements OnInit {
   ngOnInit(): void {
 
     this.infoauth= JSON.parse(localStorage.getItem('infoauth')+'');
-    // this.cedula= this.infoauth.nit;
-    this.cedula= '900600256';
+    this.cedula= this.infoauth.nit;
+    // this.cedula= '900600256';
     this.solicitudes()
   }
 
