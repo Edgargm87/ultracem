@@ -9,6 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {format} from "date-fns";
+import {ReferenciasJuridicaInterfaces} from "../../../interfaces/referencias-juridica.interfaces";
 
 @Component({
   selector: 'app-dato-complementario-pjuridica',
@@ -42,7 +43,10 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   public tipoVivienda: any[] = [];
   public departamentoRepresentante: any[] =[];
   public ciudadRepresentante: any[] =[];
-  public ciudadReferencia: any[] =[];
+  public departamentoReferenciaUno: any[] =[];
+  public departamentoReferenciaDos: any[] =[];
+  public ciudadReferenciaUno: any[] =[];
+  public ciudadReferenciaDos: any[] =[];
   public barrioRepresentante: any[] =[];
   public barrioReferencia: any[] =[];
 
@@ -79,28 +83,22 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       recurso: ['tab-nit-dato-representante'],
     })
     this.formTab3=this.fb.group({
-
-      pPrimerNombre: ["", [Validators.required]],
-      pSegundoNombre: ["", [Validators.required]],
-      pPrimerApellido: ["", [Validators.required]],
-      pSegundoApellido: ["", [Validators.required]],
-      ptelefono: ["", [Validators.required]],
-      cRazonSocial: ["", [Validators.required]],
-      cCelular: ["", [Validators.required]],
-      cDepartamento: ["", [Validators.required]],
-      cMunicipio: ["", [Validators.required]],
-      cAntiguedad: ["", [Validators.required]],
+      recurso:            ['tab-referencia-comercial'],
+      numeroSolicitud:    ['', [Validators.required]],
+      nombreCompleto:     ['', [Validators.required]],
+      codigoDepartamento: ['', [Validators.required]],
+      codigoCiudad:       ['', [Validators.required]],
+      telefono:           ['', [Validators.required]],
+      antiguedad:         ['', [Validators.required]],
     })
     this.formTab4=this.fb.group({
-      nacionalidad: ["Colombia", [Validators.required]],
-      departamentoNacionalidad: ["", [Validators.required]],
-      ciudadNacionalidad: ["", [Validators.required]],
-      departamentoResidencia: ["", [Validators.required]],
-      ciudadResidencia: ["", [Validators.required]],
-      barrioResidencia: ["", [Validators.required]],
-      direccionResidencia: ["", [Validators.required]],
-      tipoVivienda: ["", [Validators.required]],
-      nivelEstudio: ["", [Validators.required]],
+      recurso:            ['tab-referencia-comercial'],
+      numeroSolicitud:    ['', [Validators.required]],
+      nombreCompleto:     ['', [Validators.required]],
+      codigoDepartamento: ['', [Validators.required]],
+      codigoCiudad:       ['', [Validators.required]],
+      telefono:           ['', [Validators.required]],
+      antiguedad:         ['', [Validators.required]],
     })
 
 
@@ -111,11 +109,19 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       const numeroSolicitud: string = params.codigoSolicitud;
       this.formTab1.controls['numeroSolicitud'].setValue(numeroSolicitud);
       this.formTab2.controls['numeroSolicitud'].setValue(numeroSolicitud);
+      this.formTab3.controls['numeroSolicitud'].setValue(numeroSolicitud);
+      this.formTab4.controls['numeroSolicitud'].setValue(numeroSolicitud);
     });
   }
 
   ngOnInit(): void {
    this.getListados();
+
+
+    this.route.params.pipe(take(1)).subscribe(res => {
+      const codigo:string = res.codigoSolicitud;
+      this.getEstados(codigo);
+    });
 
   }
   /**
@@ -150,6 +156,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       this.Listdepartamentos = resp;
       this.departamentosResidencia = resp;
       this.departamentoRepresentante = resp;
+      this.departamentoReferenciaUno = resp;
+      this.departamentoReferenciaDos = resp;
     });
     url="generic/qry/consulta-lista-generica/NIVEL-ESTUDIO";
     this._generic.getData(url).subscribe(resp => {
@@ -179,10 +187,10 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     } = datos;
 
     const formulario = {
-      departamentoResidencia: departamentoNegocio,
-      ciudadResidencia: ciudadNegocio,
-      barrioResidencia: String(barrioNegocio),
-      direccionResidencia: direccionNegocio,
+      departamentoNegocio: departamentoNegocio,
+      ciudadNegocio: ciudadNegocio,
+      barrioNegocio: String(barrioNegocio),
+      direccionNegocio: direccionNegocio,
       telefonoNegocio: telefonoNegocio,
       activos: Number(activos),
       ventasMensuales: Number(ventasMensuales),
@@ -200,8 +208,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             `Se guardo el registro con éxito`,
             'success'
           ).then(resultado => {
-            if (resultado) {
-              this.step == key + 1;
+            if (resultado.isConfirmed) {
+              this.step = res.data.stepFormulario;
             }
           });
         }
@@ -237,8 +245,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       fechaNacimiento: format(fechaNacimiento, 'yyyy-MM-dd')
     }
 
-    console.log(formulario);
-
     this._generic.posData(url, formulario).subscribe((res: any) => {
       if (res) {
         if (res.status === 200) {
@@ -247,8 +253,59 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             `Se guardo el registro con éxito`,
             'success'
           ).then(resultado => {
-            if (resultado) {
-              this.step == key + 1;
+            if (resultado.isConfirmed) {
+              this.step = res.data.stepFormulario;
+            }
+          });
+        }
+      }
+    });
+  }
+  /**
+   * @description: Almacena las referencias comerciales
+   */
+  public onGuardarTres(key: number): void {
+    let url: string = 'credito/formulario-solicitud-tabs-ref';
+    const datosUno: ReferenciasJuridicaInterfaces = this.formTab3.getRawValue();
+    const datosDos: ReferenciasJuridicaInterfaces = this.formTab4.getRawValue();
+
+    const formularioUno = {
+      recurso: datosUno.recurso,
+      numeroSolicitud: datosUno.numeroSolicitud,
+      nombreCompleto: datosUno.nombreCompleto,
+      codigoDepartamento: datosUno.codigoDepartamento,
+      codigoCiudad: datosUno.codigoCiudad,
+      telefono: datosUno.telefono,
+      antiguedad: Number(datosUno.antiguedad)
+    };
+
+    const formularioDos = {
+      recurso: datosDos.recurso,
+      numeroSolicitud: datosDos.numeroSolicitud,
+      nombreCompleto: datosDos.nombreCompleto,
+      codigoDepartamento: datosDos.codigoDepartamento,
+      codigoCiudad: datosDos.codigoCiudad,
+      telefono: datosDos.telefono,
+      antiguedad: Number(datosDos.antiguedad)
+    };
+
+    const formulario: any = {
+        detalle: [
+          formularioUno,
+          formularioDos
+        ]
+    };
+
+    this._generic.posData(url, formulario).subscribe((res: any) => {
+      if (res) {
+        if (res.status === 200) {
+          Swal.fire(
+            '¡Información!',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(result => {
+            if (result.isConfirmed) {
+               this.step = res.data.stepFormulario;
             }
           });
         }
@@ -274,10 +331,16 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
           this.ciudadRepresentante = rest;
         });
         break;
-      case 'REF':
+      case 'REF-UNO':
         url= `generic/qry/ciudades/CO/${codigo}`;
         this._generic.getData(url).subscribe((rest) => {
-          this.ciudadReferencia = rest;
+          this.ciudadReferenciaUno = rest;
+        });
+        break;
+        case 'REF-DOS':
+        url= `generic/qry/ciudades/CO/${codigo}`;
+        this._generic.getData(url).subscribe((rest) => {
+          this.ciudadReferenciaDos = rest;
         });
         break;
     }
@@ -337,6 +400,16 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       this.formTab2.controls['direccionResidencia'].setValue(res);
     })
 
+  }
+  /**
+   * @description: carga el estado del formulario
+   */
+  public getEstados(codigo: string): void {
+    let url: string = '';
+    url= `generic/qry/consulta-step-formulario/${codigo}`;
+    this._generic.getData(url).subscribe((res: any) => {
+      this.step = res.stepFormulario;
+    });
   }
 
   siguienteTab(){

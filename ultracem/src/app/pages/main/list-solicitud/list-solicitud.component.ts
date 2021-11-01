@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { UtilityService } from 'src/app/services/utilities.service';
 
 @Component({
@@ -11,7 +11,10 @@ export class ListSolicitudComponent implements OnInit {
   list: any=[];
   infoauth: any={};
   cedula:string='';
-  constructor(private _utilityService: UtilityService, private router: Router,) { }
+  constructor(
+    private _utilityService: UtilityService,
+    private router: Router,
+    ) { }
 
   ngOnInit(): void {
 
@@ -19,6 +22,8 @@ export class ListSolicitudComponent implements OnInit {
     this.cedula= this.infoauth.nit;
     // this.cedula= '900600256';
     this.solicitudes()
+
+
   }
 
 
@@ -40,5 +45,7 @@ export class ListSolicitudComponent implements OnInit {
     }
 
   }
+
+
 
 }
