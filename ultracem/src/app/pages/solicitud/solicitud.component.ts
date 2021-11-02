@@ -110,7 +110,7 @@ export class solicitudComponent implements OnInit {
       registrar: [{ value: '', disabled: true }, Validators.required],
       registrado: [{ value: '', disabled: true }, Validators.required],
       tipoDocumento: ['', Validators.required],
-      documento: ['', Validators.required],
+      documento: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)] ],
     })
     this.alto = window.innerHeight + 'px';
     this.ancho = window.innerWidth + 'px';
@@ -130,9 +130,18 @@ export class solicitudComponent implements OnInit {
     this.formInicial.controls['registrado'].valueChanges.subscribe(registrado => {
       if (registrado == 'CC') {
         this.natural = true;
-        this.formInicial.controls['tipoDocumento'].setValue('CC')
+        this.formInicial.controls['tipoDocumento'].setValue('CC');
+        this.formInicial.controls['documento'].addValidators(Validators.minLength(5));
+        this.formInicial.controls['documento'].addValidators(Validators.maxLength(10));
+        this.formInicial.controls['documento'].removeValidators(Validators.minLength(9));
+        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(9));
       } else if (registrado == 'NIT') {
-        this.formInicial.controls['tipoDocumento'].setValue('NIT')
+        this.formInicial.controls['tipoDocumento'].setValue('NIT');
+        // this.formInicial.controls['documento'].addValidators(Validators.minLength(9));
+        // this.formInicial.controls['documento'].addValidators(Validators.maxLength(9));
+        //this.formInicial.controls['documento'].removeValidators(Validators.minLength(5));
+        // this.formInicial.controls['documento'].removeValidators(Validators.maxLength(10));
+
         this.natural = false;
       }
     })
@@ -360,5 +369,29 @@ export class solicitudComponent implements OnInit {
 
     y = x % 11;
     return (y > 1) ? 11 - y : y;
+  }
+  /**
+   * @description: Validacion de caracteres minimos
+   */
+  public validacionCampoMinimo(field: string) {
+    return this.formInicial.controls[field].hasError('minlength');
+  }
+  /**
+   * @description: Validacion de caracteres minimos
+   */
+  public validacionCampoMinimoJuridico(field: string, valid: boolean) {
+    return this.formInicial.controls[field].hasError('minlength') && valid;
+  }
+  /**
+   * @description: Validacion de caracteres maximos
+   */
+  public validacionCampoMaximo(field: string) {
+    return this.formInicial.controls[field].hasError('maxlength');
+  }
+  /**
+   * @description: Validacion de solo numeros
+   */
+  public validacionSoloNumero(field: string) {
+    return this.formInicial.controls[field].hasError('pattern');
   }
 }
