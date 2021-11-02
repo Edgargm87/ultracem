@@ -280,6 +280,7 @@ export class solicitudComponent implements OnInit {
       return;
     }
     let form = { ...this.formSolicitudRepresentante.value }
+    form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
     form.documento = (this.formSolicitudRepresentante.value.documento).toString();
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);

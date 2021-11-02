@@ -359,6 +359,14 @@
                 Email is <strong>required</strong>
               </mat-error> -->
             </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="row">
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
