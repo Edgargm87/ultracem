@@ -11,36 +11,54 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Clientes PEP</h2>
         </div>
       </div>
+      <section class="h-75">
+        <form [formGroup]="formTab1">
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto texto">
+              ¿Ha ocupado
+              cargos
+              públicos?
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta1" formControlName="pregunta1"
+                (change)="openModalCargoPublico('P',formTab1.value.pregunta1)">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto texto">
+              ¿Es familiar de
+              persona
+              expuesta
+              política y
+              públicamente?
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta2" formControlName="pregunta2"
+                (change)="openModalCargoPublico('F',formTab1.value.pregunta2)">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto texto">
+              ¿Desarrolla actividades y profesiones no financieras designadas (APNFD)?
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </form>
+      </section>
+
       <div class="row justify-content-center">
-        <div class="col-lg-10">
-          ¿Ha ocupado
-          cargos
-          públicos?
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          ¿Es familiar de
-          persona
-          expuesta
-          política y
-          públicamente?
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente()">Solicitar</button>
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(1)">Siguiente</button>
       </div>
     </div>
   </div>
@@ -55,92 +73,105 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Declaración FATCA</h2>
         </div>
       </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          He permanecido más de
-          183 días en el último año,
-          o 183 días durante los
-          últimos 3 años, dentro de
-          territorio de los Estados
-          Unidos.
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          Soy poseedor de la tarjeta
-          verde o "Green Card" de
-          los Estados Unidos
-          (Tarjeta de Residencia)
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          Recibo cualquier pago de
-          intereses, dividendos,
-          rentas, salarios,honorarios, primas,
-          anualidades,
-          compensaciones,
-          remuneraciones,
-          emolumentos y otras
-          ganancias fijas u
-          ocasionales ingresos
-          (Ingresos FDAP**), si
-          dicho pago proviene de
-          fuentes dentro de los
-          Estados Unidos.
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          Recibo cualquier ingreso
-          bruto procedente de la
-          venta u otra disposición de
-          cualquier propiedad que
-          puede producir intereses o
-          dividendos cuya fuente se
-          encuentre dentro de los
-          Estados Unidos.
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-11">
-          <strong>NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en Obligatio Tributario
-            U.S</strong>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          ¿Es extranjero residente?
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <div class="col-lg-10">
-          ¿Obligado tributario U.S?
-        </div>
-        <div class="col-lg-1">
-          <mat-slide-toggle></mat-slide-toggle>
-        </div>
+      <section class="h-75">
+        <form [formGroup]="formTab2">
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              He permanecido más de
+              183 días en el último año,
+              o 183 días durante los
+              últimos 3 años, dentro de
+              territorio de los Estados
+              Unidos.
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta1" formControlName="pregunta1">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              Soy poseedor de la tarjeta
+              verde o "Green Card" de
+              los Estados Unidos
+              (Tarjeta de Residencia)
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta2" formControlName="pregunta2">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              Recibo cualquier pago de
+              intereses, dividendos,
+              rentas, salarios,honorarios, primas,
+              anualidades,
+              compensaciones,
+              remuneraciones,
+              emolumentos y otras
+              ganancias fijas u
+              ocasionales ingresos
+              (Ingresos FDAP**), si
+              dicho pago proviene de
+              fuentes dentro de los
+              Estados Unidos.
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              Recibo cualquier ingreso
+              bruto procedente de la
+              venta u otra disposición de
+              cualquier propiedad que
+              puede producir intereses o
+              dividendos cuya fuente se
+              encuentre dentro de los
+              Estados Unidos.
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta4" formControlName="pregunta4">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-11">
+              <strong>NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en Obligatio Tributario
+                U.S</strong>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              ¿Es extranjero residente?
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta5" formControlName="pregunta5">
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-10 texto">
+              ¿Obligado tributario U.S?
+            </div>
+            <div class="col-lg-1">
+              <mat-slide-toggle name="pregunta6" formControlName="pregunta6">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </form>
+      </section>
+      <div class="row justify-content-center">
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(2)">Siguiente</button>
       </div>
     </div>
   </div>
@@ -155,15 +186,112 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Operaciones en moneda extranjera</h2>
         </div>
       </div>
+      <section class="h-75">
+        <form [formGroup]="formTab3">
+          <div class="row justify-content-center mt-4">
+            <mat-form-field class="col-6" appearance="fill">
+              <mat-label> ¿Realiza operaciones con criptomonedad?</mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="pregunta1">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-5" appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
+              <mat-label> Tipo de operación </mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="pregunta2">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
+                  {{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="pregunta3">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-5" appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
+              <mat-label> Tipo de operación</mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="pregunta4">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
+                  {{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </section>
+      <div class="row justify-content-center">
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Siguiente</button>
+      </div>
     </div>
   </div>
   <div class="row step-three" *ngIf="step == 4">
+    <div class="col-lg-4 l-izquierdo ">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li (click)="step=5"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=6"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3"><span>REFERENCIA</span></li>
+          <li (click)="step=4"><span>LEGALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Declaración origen de bienes o fondos</h2>
+        </div>
+      </div>
+      <section class="h-75">
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-11 texto texto">
+            1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-11 texto texto">
+            <form  [formGroup]="formTab4">
+              <textarea class="w-100" class="clasetextArea" placeholder="Escribe aquí"  formControlName="descripcion"></textarea>
+            </form>
+
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-11 texto texto">
+            2. Declaro que los recursos que entregue a FINTRA LOGISTICS S.A,S no provienen de ninguna actividad ílicita
+            de las contempladas en el código penal colombiano o en cualquier norma que lo modifique o adicione, ni
+            efectuaré transacciones destinadas a tales actividades. Quien suscribe la siguiente declaración obrando en
+            nombre propio de manera voluntaria dando certeza que todo lo aquí consignado es totalmente cierto, realizo
+            la siguiente declaración de fuente de fondos a FINTRA LOGISTICS S.A,S con el proposito que se pueda dar
+            cumplimiento al respecto en la circular externa No 007 del año 1996 expedida por la Superfinanciera. El
+            estatuto órganico del sistema financiero (Decreto 663 de 1993), La ley 190 de 1995 "Estatuto anticorrupción
+            demás normas legales concordantes para abono de cuotas, abonos extraordinarios, cancelación de los créditos
+            y demás operaciones activas que se me otorguen.
+          </div>
+        </div>
+      </section>
+      <div class="row justify-content-center">
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 5">
     <div class="col-lg-4 l-izquierdo ">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
@@ -174,13 +302,125 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
-          <h2 class="text-start">Operaciones en moneda extranjera</h2>
+          <h2 class="text-start">
+            Autorización de datos personales
+          </h2>
         </div>
+      </div>
+      <section style="
+      height: 33em;
+      overflow-y: auto;
+      overflow-x: hidden;
+  ">
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-11 texto texto">
+            Los datos personales adicionales para el estudio técnico del riesgo asegurable y reasegurable se tratarán
+            observando las Leyes 1581 de 2012 y 1266 de 2008 según el caso.
+            Con la firma de este documento se entiende que el titular de los datos autoriza de manera expresa e
+            inequívoca a FINTRA LOGISTICS S.A,S, para mantener y manejar la información que se ha incorporado en las
+            bases de datos manejadas por la empresa, y especialmente para permitir su recolección, almacenamiento, uso,
+            supresión, procesamiento, compilación, tratamiento, actualización, para compartir y disponer de dichos datos
+            siendo tratados con la finalidad de gestión administrativa de la entidad, así como la gestión de carácter
+            comercial o envío de comunicaciones comerciales sobre nuestros productos y/o servicios, notarías, listas
+            OFAC y de terrorismo, abogados, etc./ Cumplimiento de decisiones judiciales, disposiciones administrativas y
+            legales, fiscales y regulatoria/Cumplimiento de Sistema Autocontrol y Gestión Integral del Riesgo Integral
+            de LA/FT. Transmisión de información y datos personales en procesos de auditorías/facturación. Los datos de
+            las personas que por virtud de un contrato adquiere FINTRA LOGISTICS S.A,S, son compilados, almacenados,
+            consultados y transmitidos para efectuar todas las actividades tendientes, efectuar las gestiones
+            pertinentes para el desarrollo de la etapa precontractual, contractual y poscontractual con FINTRA LOGISTICS
+            S.A,S, El Titular podrá ejercer en cualquier momento los derechos que le asisten, en especial: Conocer la
+            información, solicitar la actualización, rectificación y/o supresión o revocar el consentimiento otorgado
+            para el tratamiento de datos personales.
+            La presente autorización se solicita en cumplimiento de la Ley 1581 de 2012, reglamentada por el Decreto
+            1377 de 2013 y se expide para qué FINTRA LOGISTICS S.A,S., trate los datos personales recolectados de manera
+            leal, lícita, segura y confiable para los fines señalados en el presente documento. </div>
+        </div>
+      </section>
+      <div class="row justify-content-center mt-3">
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(5)">Acepto</button>
       </div>
     </div>
   </div>
-
+  <div class="row step-three" *ngIf="step == 6">
+    <div class="col-lg-4 l-izquierdo ">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3"><span>REFERENCIA</span></li>
+          <li (click)="step=4"><span>LEGALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">
+            Cláusulas anticorrupción y antilavado
+          </h2>
+        </div>
+      </div>
+      <section style="
+      height: 33em;
+      overflow-y: auto;
+      overflow-x: hidden;
+  ">
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-11 texto texto">
+            FINTRA LOGISTICS S.A,S., sólo contratará con quienes mantengan los más altos estándares de honestidad, ética
+            y profesionalismo en la gestión de sus negocios. En tal sentido, FINTRA LOGISTICS S.A,S Podrá investigar
+            cualquier indicio, denuncia, sugerencia o evidencia que pudiera llevar a suponer que EL CLIENTE esté
+            involucrado en prácticas prohibidas o indebidas de corrupción. Las partes acuerdan que, durante la vigencia
+            del presente contrato, cumplirán y adoptarán medidas razonables para asegurarse que sus accionistas,
+            directivos, ejecutivos, empleados, contratistas, subcontratistas, agentes u otros terceros sujetos a su
+            control o a su influencia determinante, cumplan con las disposiciones siguientes:
+            i. Con la suscripción de contratos, EL CLIENTE, se adhiere, conoce, acepta, y se compromete a cumplir el
+            Código de Conducta y la Política para la Prevención del Delito de Corrupción, lavado de Activos, la
+            Financiación del Terrorismo y financiación de la proliferación de armas de destrucción masiva (LA/FT/FPDMA)
+            de FINTRA LOGISTICS S.A,S., así como, no vulnerar o intentar vulnerar el sistema o modelo de prevención que
+            se ha implementado en FINTRA LOGISTICS S.A,S.
+            ii. Las partes con relación a funcionarios públicos a nivel internacional o nacional, no deberán en forma
+            directa o indirecta o inclusive a través de terceros:
+            a) Dar o recibir soborno, entendiéndose como tal a cualquier oferta, regalo, pago, promesa o autorización de
+            pago, de cualquier dinero o cualquier cosa de valor, para el uso o beneficio propio o de cualquier otra
+            persona o entidad, con el fin de (i) influir sobre cualquier acto, omisión o decisión del funcionario
+            público en el desarrollo de sus funciones, (ii) inducir al funcionario público a hacer o dejar de hacer
+            cualquier acto en violación de su obligación legal, (iii) obtener cualquier ventaja indebida, o (iv) inducir
+            al funcionario público a utilizar su influencia con algún organismo del gobierno para afectar o influir en
+            cualquier acto o decisión de tal gobierno u organismo, con el fin de ayudar en forma indebida a obtener o
+            retener negocios o cualquier otra ventaja indebida. La prohibición señalada en el párrafo anterior se hace
+            extensiva a los familiares hasta el cuarto grado de consanguinidad y segundo de afinidad.
+            b) Realizar tráfico de influencias, entendiéndose como tal al ofrecimiento o requerimiento de ejercer
+            influencia inapropiada, real o supuesta, sobre un funcionario público, a fin de obtener un beneficio o
+            ventaja indebida para el instigador del acto o para cualquier otra persona.
+            iii. EL CLIENTE, se obliga a ejecutar la Política para la Prevención de Delito de Corrupción, lavado de
+            Activos, la Financiación del Terrorismo y financiación de la proliferación de armas de destrucción masiva
+            (LA/FT/FPDMA) de FINTRA LOGISTICS S.A,S., y cumplir plenamente con todas las leyes y reglamentos aplicables.
+            iv. EL CLIENTE, se obliga además a que ni él, ni sus propietarios, accionistas, funcionarios, empleados y
+            otras personas que trabajan para ella directa o indirectamente, incluyendo, pero no limitado a sus
+            contratistas y subcontratistas, realicen actos coercitivos indebidos, otorguen incentivos indebidos,
+            presenten ofertas indebidas, practiquen chantaje o violencia; para obtener algún tipo de ventaja
+            contractual. EL CLIENTE además se obliga a tomar todas las medidas razonables para asegurar que ni él ni las
+            personas antes indicadas pudieran practicar los actos señalados.
+            v. EL CLIENTE, se obliga a informar oportunamente a FINTRA LOGISTICS S.A,S., a través de la línea de ética
+            de la compañía que se encuentra en la página web de la empresa, www.fintra.co, de cualquier acto indebido
+            descrito en el presente numeral, en la medida que tome o tenga conocimiento o tenga motivos razonables para
+            creer que ocurrió.
+            vi.EL CLIENTE será el único responsable de asegurar el cumplimiento de las normas anticorrupción y de las
+            normas LA/FT/FPADM por parte de cualquiera de sus propietarios, accionistas, funcionarios, empleados,
+            miembros, representantes, contratistas y subcontratistas. En ese sentido, EL CLIENTE se obliga a informar a
+            sus accionistas, socios, directores, ejecutivos, funcionarios, abogados, asesores, representantes, agentes,
+            representantes legales, apoderados, asesores y personal en general, acerca de la obligación de cumplimiento
+            de las normas.
+          </div>
+        </div>
+      </section>
+      <div class="row justify-content-center mt-3">
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(6)">Acepto</button>
+      </div>
+    </div>
+  </div>
 </div>

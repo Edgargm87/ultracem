@@ -11,7 +11,7 @@ import { UtilityService } from 'src/app/services/utilities.service';
 export class CargoPublicoComponent implements OnInit {
   formModal_F: FormGroup;
   formModal_P: FormGroup;
-  titulo: string='';
+  titulo: string = '';
 
 
   constructor(private fb: FormBuilder,
@@ -19,29 +19,30 @@ export class CargoPublicoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any, private _Service: UtilityService) {
 
     this.formModal_F = this.fb.group({
-      relacion: [''],
-      nombre: [''],
-      tipoID: [''],
-      documento: [''],
-      nacionalidad: [''],
-      entidad: [''],
-      vinculadoActualmente: [''],
+      tipo: data.tipo,
+      relacion: ['' ,[Validators.required]],
+      nombre: ['', [Validators.required]],
+      tipoID: ['',[Validators.required]],
+      documento: ['',[Validators.required]],
+      nacionalidad: ['',[Validators.required]],
+      entidad: ['',[Validators.required]],
+      vinculadoActualmente: ['',[Validators.required]],
       fechaVinculado: [''],
     })
     this.formModal_P = this.fb.group({
-      cargo: [''],
-      entidad: [''],
-      vinculadoActualmente: [''],
+      tipo: data.tipo,
+      cargo: ['',[Validators.required]],
+      entidad: ['',[Validators.required]],
+      vinculadoActualmente: ['',[Validators.required]],
       fechaVinculado: [''],
     })
   }
 
   ngOnInit(): void {
-alert(this.data.tipo)
-    if(this.data.tipo=='P'){
-      this.titulo="Datos del cargo publico";
-    }else{
-      this.titulo="Datos de persona expuesta política y públicamente";
+    if (this.data.tipo == 'P') {
+      this.titulo = "Datos del cargo publico";
+    } else {
+      this.titulo = "Datos de persona expuesta política y públicamente";
     }
   }
 
