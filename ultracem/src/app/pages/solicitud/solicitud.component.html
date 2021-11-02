@@ -47,7 +47,15 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Número de <span *ngIf="natural">documento</span> <span *ngIf="!natural">NIT</span></mat-label>
-              <input type="number" matInput formControlName="documento">
+              <input type="text" matInput formControlName="documento">
+              <mat-error *ngIf="validacionCampoMinimo('documento') || validacionCampoMaximo('documento')">
+                <mat-error *ngIf="validacionCampoMinimo('documento')">La longitud mínima es de 5</mat-error>
+                <mat-error *ngIf="validacionCampoMaximo('documento')">La longitud maxima es de 10</mat-error>
+              </mat-error>
+              <!--<mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">
+                <mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">La longitud mínima es de 9 digitos</mat-error>
+              </mat-error>-->
+              <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores numéricos</mat-error>
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
