@@ -27,7 +27,7 @@ export class CreditService {
   getClienteUltracem(): Observable<any> {
     return this._http.get(this.infoApp.urlApi + 'generic/qry/consulta-lista-generica/cliente-ultracem', { 'headers': this.headers }).pipe(map(res => res));
   }
-  
+
   /**
    * Regresa los tipos de genero
    * @returns retorna un observable con los disferente tipos de genero
@@ -52,6 +52,10 @@ export class CreditService {
     return this._http.get(this.infoApp.urlApi + 'generic/qry/consulta-lista-generica/tipo-cliente', { 'headers': this.headers }).pipe(map(res => res));
   }
 
+  getDocuments(tipoDocumento: string, nSolicitud: number): Observable<any> {
+    return this._http.get(this.infoApp.urlApi + 'generic/qry/documentos-reque/32/' + nSolicitud + '/' + tipoDocumento, { 'headers': this.headers }).pipe(map(res => res));
+  }
+
   /**
    * Servicio POST para iniciar sesión y obtener token
    * @returns Retorna un observable que devuelve el token
@@ -59,11 +63,11 @@ export class CreditService {
   login(): Observable<any> {
     return this._http.post(this.infoApp.urlApi + 'private/iniciar-sesion', { userName: this.infoApp.userName, password: this.infoApp.password }).pipe(map(res => res));
   }
-/**
- * Servicio POST nos devuelve la información del cliente en caso de estar en la base de datos de ultracem
- * @param form recibe el documento y tipo de documento
- * @returns Observable con la información del cliente en caso de que exista
- */
+  /**
+   * Servicio POST nos devuelve la información del cliente en caso de estar en la base de datos de ultracem
+   * @param form recibe el documento y tipo de documento
+   * @returns Observable con la información del cliente en caso de que exista
+   */
   preaprobado(form: any): Observable<any> {
     let body = {
       tipoDocumento: form.tipoDocumento,
@@ -81,7 +85,7 @@ export class CreditService {
     return this._http.post(this.infoApp.urlApi + 'credito/formulario-solicitud-ultracem', form).pipe(map(res => res));
   }
 
-  solicitudes(url:string): Observable<any> {
+  solicitudes(url: string): Observable<any> {
     return this._http.get(this.infoApp.urlApi + url).pipe(map(res => res));
   }
 }
