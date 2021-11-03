@@ -1,10 +1,12 @@
+@import "../../../../styles/vars/exports";
+
 .color_fondo {
   background-color: #eff4f6 !important;
 }
 
 .btn_siguiente {
   color: #fff;
-  background-color: #bbce00;
+  background-color: $blue-primary;
   font-family: Josefin Sans;
   font-weight: 600;
   font-size: 1.6em;
