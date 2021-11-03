@@ -303,6 +303,7 @@ export class solicitudComponent implements OnInit {
     let form = { ...this.formSolicitudNatural.value }
     form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
     delete form.fechaMatricula
+    
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);
     });
@@ -312,6 +313,7 @@ export class solicitudComponent implements OnInit {
     if (this.formSolicitudJuridica.invalid) {
       return;
     }
+
     let form = { ...this.formSolicitudJuridica.value }
     form.antiguedadNegocio = 0;
     form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
@@ -319,6 +321,7 @@ export class solicitudComponent implements OnInit {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
+      
       this.step = 4;
       console.log(resp);
       console.log('representante', this.formSolicitudRepresentante.value);

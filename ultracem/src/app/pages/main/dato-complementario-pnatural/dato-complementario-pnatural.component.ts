@@ -252,7 +252,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       default:
         break;
     }
-    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._generic
       .posData(url, data)
       .subscribe((response: any) => {
