@@ -19,6 +19,7 @@ import { TimerlineComponent } from './pages/main/list-solicitud/timerline/timerl
 import { DirectionsComponent } from './components/modals/directions/directions.component';
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
 import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-publico.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-p
     TimerlineComponent,
     DirectionsComponent,
     DatoComplementarioPjuridicaComponent,
-    CargoPublicoComponent
+    CargoPublicoComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
