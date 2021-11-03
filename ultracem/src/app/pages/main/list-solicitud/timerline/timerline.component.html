@@ -1,56 +1,43 @@
-<div class="horizontal-timeline" >
-    <div class="horizontal-step"
-      [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
-      <img [src]="getImage(0,'/assets/images/Icon_Llenar Formulario.svg')" alt="">
-      <div class="circle-step">
-        <div class="line-step"></div>
-      </div>
-      <span>
-        Llena el formulario 
-      </span>
+<div class="horizontal-timeline">
+  <div class="horizontal-step"
+    [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
+    <img [src]="getImage(1,'/assets/images/Icon_Llenar Formulario.svg')" alt="">
+    <div class="circle-step">
+      <div class="line-step"></div>
     </div>
-    <div class="line-step"></div>
-    <div class="horizontal-step"
-      [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
-      <img [src]="getImage(3,'/assets/images/Icon_Aprobación en Proceso.svg')" alt="">
-      <div class="circle-step">
-        <div class="line-step"></div>
-      </div>
-      <span>
-        Crédito aprobado
-        en proceso 
-  
-      </span>
-    </div>
-    <div class="line-step"></div>
-    <div class="horizontal-step"
-      [ngClass]="{'current': twoStepNumber == currentStep, 'visited': twoStepNumber <  currentStep, 'future': twoStepNumber > currentStep }">
-      <img [src]="getImage(6,'/assets/images/Icon_Adjuntar Documentos.svg')" alt="">
-      <div class="circle-step">
-        <div class="line-step"></div>
-      </div>
-      <span>
-        Adjunta y  firma  tus  documentos 
-  
-      </span>
-    </div>
-  
-    <div class="line-step"></div>
-    <div class="horizontal-step"
-      [ngClass]="{'current': fourStepNumber == currentStep, 'visited': fourStepNumber <  currentStep, 'future': fourStepNumber > currentStep }">
-      <img [src]="getImage(8,'/assets/images/Icon_Crédito Validacion.svg')" alt="">
-      <div class="circle-step">
-        <div class="line-step"></div>
-      </div>
-      <span>
-        Crédito
-        en validación
-      </span>
-    </div>
-    
+    <span>
+      Llena el formulario
+    </span>
   </div>
-  
-  <!-- <aw-wizard class="custom-global-css" [navBarLayout]="'small'" [defaultStepIndex]="2">
+  <div class="line-step"></div>
+  <div class="horizontal-step"
+    [ngClass]="{'current': twoStepNumber == currentStep, 'visited': twoStepNumber <  currentStep, 'future': twoStepNumber > currentStep }">
+    <img [src]="getImage(2,'/assets/images/Icon_Adjuntar Documentos.svg')" alt="">
+    <div class="circle-step">
+      <div class="line-step"></div>
+    </div>
+    <span>
+      Adjunta y firma tus documentos
+
+    </span>
+  </div>
+
+  <div class="line-step"></div>
+  <div class="horizontal-step"
+    [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
+    <img [src]="getImage(3,'/assets/images/Icon_Crédito Validacion.svg')" alt="">
+    <div class="circle-step">
+      <div class="line-step"></div>
+    </div>
+    <span>
+      Crédito
+      en validación
+    </span>
+  </div>
+
+</div>
+
+<!-- <aw-wizard class="custom-global-css" [navBarLayout]="'small'" [defaultStepIndex]="2">
     <aw-wizard-step stepTitle="Llena el formulario" style="position: relative; display: block !important;">
       <img [src]="getImage(1,'/assets/images/Icon_Llenar Formulario.svg')" class="image-step" >
     </aw-wizard-step>
@@ -64,4 +51,3 @@
       <img [src]="getImage(4,'/assets/images/Icon_Crédito Desembolsado.svg')" class="image-step" >
     </aw-wizard-step>
   </aw-wizard> -->
-  

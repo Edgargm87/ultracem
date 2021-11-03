@@ -1,8 +1,13 @@
+
+@import "/src/styles/vars/exports";
 .input-login {
-  border-left: 2px solid #51beed;
+  border-left: 2px solid $blue-primary;
+  font-size: 1.5em;
+  padding: 0.3em;
 }
 .titulo{
-    color: #51beed;
+    color: $blue-primary;
+    font-size: 3em;
 }
 .fondo_gris{
 background: #EFF4F7;
@@ -10,4 +15,25 @@ background: #EFF4F7;
 }
 .pantallaCompleta{
     min-height: 100vh;
+}
+.btn_login { 
+  // width: max-content;
+  // color: #fff;
+  // background-color: $$blue-primary;
+  // font-family: Josefin Sans;
+  // font-weight: 600;
+  // font-size: 2em;
+  // padding-top: 12px;
+  // border-radius: 38px;
+  // padding-bottom: 7px;
+
+  color: #fff;
+  background-color:$blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
 }

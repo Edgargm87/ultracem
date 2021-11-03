@@ -1,4 +1,4 @@
-<div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
+<div class="container-fluid container-ultracem color_fondo" [ngStyle]="{'height': alto, 'width': ancho}">
 
   <div class="row step-three" *ngIf="step == 1 && !cargando">
     <div class="col-lg-4 l-izquierdo ">
@@ -11,10 +11,10 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho">
-      <div class="row">
+    <div class="col-lg-8 l-derecho align-self-center">
+      <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
-      </div>
+      </div> -->
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Datos complementarios</h2>
@@ -28,10 +28,11 @@
               <input matInput autocomplete="off" formControlName="nacionalidad" (change)="noCambios()">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Departamento de Nacionalidad</mat-label>
+              <mat-label>Departamento de nacimiento</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="departamentoNacionalidad"> -->
-              <mat-select formControlName="departamentoNacionalidad">
-                <mat-option value="" disabled>Selecciona</mat-option>
+              <mat-select formControlName="departamentoNacionalidad"
+                (selectionChange)="getListadosCiudades(formTab1.value.departamentoNacionalidad,1)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -41,14 +42,17 @@
               <mat-label>Ciudad / municipio de nacimiento</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="ciudadNacionalidad"> -->
               <mat-select formControlName="ciudadNacionalidad">
-                <mat-option value="">Selecciona</mat-option>
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNacionalidad ">{{item.nombre}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento de residencia</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="departamentoResidencia"> -->
-              <mat-select formControlName="departamentoResidencia">
-                <mat-option value="" disabled>Selecciona</mat-option>
+              <mat-select formControlName="departamentoResidencia"
+                (selectionChange)="getListadosCiudades(formTab1.value.departamentoResidencia,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -56,17 +60,21 @@
           <div class="row">
 
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Ciudad de residencia</mat-label>
+              <mat-label>Ciudad / municipio de residencia</mat-label>
               <!-- <input matInput autocomplete="off"  formControlName="ciudadResidencia"> -->
-              <mat-select formControlName="ciudadResidencia">
-                <mat-option value="">Selecciona</mat-option>
+              <mat-select formControlName="ciudadResidencia"
+                (selectionChange)="getListadosBarrios(formTab1.value.departamentoResidencia,formTab1.value.ciudadResidencia,1)">
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesResidencia ">{{item.nombre}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
 
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Barrio</mat-label>
               <mat-select formControlName="barrioResidencia">
-                <mat-option value="">Selecciona</mat-option>
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarrios ">{{item.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -80,10 +88,10 @@
               <mat-label>Tipo de vivienda</mat-label>
               <!-- <input matInput autocomplete="off"ormControlName="tipoVivienda"> -->
               <mat-select formControlName="tipoVivienda">
-                <mat-option value="" disabled>Selecciona</mat-option>
-                <mat-option value="A">Arrendada</mat-option>
-                <mat-option value="P">Propia</mat-option>
-                <mat-option value="F">Familiar</mat-option>
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="A">ARRENDADA</mat-option>
+                <mat-option value="P">PROPIA</mat-option>
+                <mat-option value="F">FAMILIAR</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -92,15 +100,24 @@
               <mat-label>Nivel de estudio</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="nivelEstudio"> -->
               <mat-select formControlName="nivelEstudio">
-                <mat-option value="" disabled>Selecciona</mat-option>
+                <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListNivelEstudio ">
                   {{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
+              <mat-select formControlName="viveEnNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="row justify-content-center">
-            <button class="btn-solicitar btn" [disabled]="formTab1.invalid">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente" [disabled]="formTab1.invalid"
+              (click)="siguienteTab(1)">Siguiente</button>
           </div>
         </form>
       </div>
@@ -117,10 +134,10 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho">
-      <div class="row">
+    <div class="col-lg-8 l-derecho align-self-center ">
+      <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
-      </div>
+      </div> -->
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Ubicación del negocio</h2>
@@ -129,56 +146,92 @@
       <div class="row justify-content-center">
         <form class="col-11" [formGroup]="formTab2">
           <div class="row">
-            <mat-form-field class="col-lg-4" appearance="fill">
+            <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento</mat-label>
-              <input matInput formControlName="departamentoNegocio">
+              <!-- <input matInput formControlName="departamentoNegocio"> -->
+              <mat-select formControlName="departamentoNegocio"
+                (selectionChange)="getListadosCiudades(formTab2.value.departamentoNegocio,3)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-lg-4" appearance="fill">
-              <mat-label>Ciudad o municipio</mat-label>
-              <input matInput formControlName="ciudadNegocio">
-            </mat-form-field>
-            <mat-form-field class="col-lg-4" appearance="fill">
-              <mat-label>Barrio</mat-label>
-              <input matInput formControlName="barrioNegocio">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio</mat-label>
+              <!-- <input matInput formControlName="ciudadNegocio"> -->
+              <mat-select formControlName="ciudadNegocio" (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
+              <mat-option value="" disabled>SELECCIONA</mat-option>
+              <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}</mat-option>
+            </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Direccion </mat-label>
-              <input matInput formControlName="direccionNegocio" type="text">
+              <mat-label>Barrio</mat-label>
+              <!-- <input matInput formControlName="barrioNegocio"> -->
+              <!-- <mat-form-field class="col-lg-6" appearance="fill"> -->
+                <!-- <mat-label>Ciudad / municipio</mat-label> -->
+                <mat-select formControlName="barrioNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <!-- </mat-form-field> -->
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Telefono</mat-label>
-              <input type="text" matInput formControlName="telefonoNegocio">
+              <mat-label>Dirección </mat-label>
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text" (keydown)="openModalDirection()">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Télefono</mat-label>
+              <input type="text" autocomplete="off" matInput formControlName="telefonoNegocio">
             </mat-form-field>
           </div>
           <div class="row ">
-            <div class="col-lg-11 mt-5">
+            <div class="col-lg-11 ">
               <h2 class="text-start">Información financiera</h2>
             </div>
           </div>
           <div class="row">
-            <mat-form-field class="col-lg-8" appearance="fill">
+            <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>¿Estas registrado en camara de comercio?</mat-label>
-              <input matInput formControlName="camaraComercio">
+              <!-- <input matInput formControlName="camaraComercio"> -->
+              <mat-select formControlName="camaraComercio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-lg-4" appearance="fill">
-              <mat-label>¿Es declarante?</mat-label>
-              <input matInput formControlName="declarante">
+            <mat-form-field class="col-lg-6" appearance="fill" *ngIf="formTab2.value.camaraComercio=='S'">
+              <mat-label>NIT</mat-label>
+              <input matInput formControlName="nit" type="number">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Activos (?) </mat-label>
-              <input matInput formControlName="activos" type="number">
+              <mat-label>¿Es declarante?</mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="declarante">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Ventas mensuales (?)</mat-label>
-              <input type="email" matInput formControlName="ventasMensuales">
+              <mat-label>Activos ($) </mat-label>
+              <input matInput autocomplete="off" formControlName="activos" type="number">
             </mat-form-field>
           </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ventas mensuales ($)</mat-label>
+              <input type="email" autocomplete="off" matInput formControlName="ventasMensuales">
+            </mat-form-field>
+
+          </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formTab2.invalid" (click)="siguienteTab()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente" [disabled]="formTab2.invalid"
+              (click)="siguienteTab(2)">Siguiente</button>
           </div>
         </form>
       </div>
@@ -195,10 +248,10 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho">
-      <div class="row">
+    <div class="col-lg-8 l-derecho align-self-center">
+      <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
-      </div>
+      </div> -->
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Referencia personal</h2>
@@ -209,27 +262,27 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer nombre</mat-label>
-              <input matInput formControlName="pPrimerNombre" type="text">
+              <input matInput autocomplete="off" formControlName="pPrimerNombre" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Segundo nombre</mat-label>
-              <input matInput formControlName="pSegundoNombre" type="text">
+              <mat-label>Segundo nombre (opcional) </mat-label>
+              <input matInput autocomplete="off" formControlName="pSegundoNombre" type="text">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer apellido</mat-label>
-              <input matInput formControlName="pPrimerApellido" type="text">
+              <input matInput autocomplete="off" formControlName="pPrimerApellido" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Segundo Apellido</mat-label>
-              <input type="text" matInput formControlName="pSegundoApellido">
+              <mat-label>Segundo Apellido (opcional)</mat-label>
+              <input type="text" autocomplete="off" matInput formControlName="pSegundoApellido">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Telefono</mat-label>
-              <input matInput formControlName="ptelefono" type="text">
+              <input matInput autocomplete="off" formControlName="ptelefono" type="text">
             </mat-form-field>
           </div>
           <div class="row">
@@ -250,11 +303,20 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento </mat-label>
-              <input matInput formControlName="cDepartamento" type="text">
+              <!-- <input matInput formControlName="cDepartamento" type="text"> -->
+              <mat-select formControlName="cDepartamento"
+              (selectionChange)="getListadosCiudades(formTab3.value.cDepartamento,4)">
+              <mat-option value="" disabled>SELECCIONA</mat-option>
+              <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+            </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Ciudad /municipio</mat-label>
-              <input type="text" matInput  formControlName="cMunicipio">
+              <!-- <input type="text" matInput formControlName="cMunicipio"> -->
+              <mat-select formControlName="cMunicipio" >
+              <mat-option value="" disabled>SELECCIONA</mat-option>
+              <mat-option value="{{item.codigo}}" *ngFor="let item of ListCMunicipio ">{{item.nombre}}</mat-option>
+            </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
@@ -264,52 +326,12 @@
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formTab3.invalid" (click)="siguienteTab()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente" [disabled]="formTab3.invalid"
+              (click)="siguienteTab(3)">Siguiente</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  <div class="row step-three" *ngIf="step == 4 && !cargando">
-    <div class="col-lg-4 l-izquierdo">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIA</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
-      <div class="row">
-        <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
-          <h2 class="text-start">Legal</h2>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <form class="col-11" [formGroup]="formTab4">
 
-          <div class="row">
-
-            <section class="col-lg-12 checkp">
-              <p>
-                <mat-checkbox formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
-                  consultada en centrales de riesgos. </mat-checkbox>
-              </p>
-              <p>
-                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
-              </p>
-            </section>
-          </div>
-          <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formTab4.invalid" (click)="siguienteTab()">Solicitar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>

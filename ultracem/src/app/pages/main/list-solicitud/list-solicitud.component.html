@@ -28,28 +28,26 @@
               {{item.cupoTotal  | currency:'$':'symbol':'0.0-0'}}
             </h2>
           </div>
-
         </div>
       </div>
       <div class="col-md-12 col-sm-12 col-lg-6">
         <div class="row align-items-center">
           <div class="col-lg-12 col-sm-12">
-            <app-timerline [currentStep]="item.stepPortal"></app-timerline>
+            <app-timerline [currentStep]="item.stepFormulario"></app-timerline>
+            <!-- <app-timerline [currentStep]="item."></app-timerline> -->
           </div>
         </div>
         <div class="row justify-content-end">
           <div class="col-lg-3 ">
-            <button  class="btn-solicitar btn" routerLink="/main/personanatural" 
-            >Solicitar</button>
+            <button class="btn-solicitar btn" (click)='gestion(item.numeroSolicitud,item.tipoDocumento)'>Solicitar</button>
           </div>
-        
+
         </div>
       </div>
 
     </div>
     <div style="display: flex; justify-content: center;">
-      <button  class="btn-solicitar btn"
-            >Cargar más</button>
+      <button class="btn-solicitar btn">Cargar más</button>
     </div>
   </div>
 </div>

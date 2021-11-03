@@ -25,6 +25,11 @@ export class solicitudComponent implements OnInit {
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
   cargando: boolean = false;
+  public estadoSolicitud: any = {
+    error: false,
+    rechazado: false,
+    aprobado: false
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -110,7 +115,7 @@ export class solicitudComponent implements OnInit {
       registrar: [{ value: '', disabled: true }, Validators.required],
       registrado: [{ value: '', disabled: true }, Validators.required],
       tipoDocumento: ['', Validators.required],
-      documento: ['', Validators.required],
+      documento: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)] ],
     })
     this.alto = window.innerHeight + 'px';
     this.ancho = window.innerWidth + 'px';
@@ -130,9 +135,18 @@ export class solicitudComponent implements OnInit {
     this.formInicial.controls['registrado'].valueChanges.subscribe(registrado => {
       if (registrado == 'CC') {
         this.natural = true;
-        this.formInicial.controls['tipoDocumento'].setValue('CC')
+        this.formInicial.controls['tipoDocumento'].setValue('CC');
+        this.formInicial.controls['documento'].addValidators(Validators.minLength(5));
+        this.formInicial.controls['documento'].addValidators(Validators.maxLength(10));
+        this.formInicial.controls['documento'].removeValidators(Validators.minLength(9));
+        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(9));
       } else if (registrado == 'NIT') {
-        this.formInicial.controls['tipoDocumento'].setValue('NIT')
+        this.formInicial.controls['tipoDocumento'].setValue('NIT');
+        // this.formInicial.controls['documento'].addValidators(Validators.minLength(9));
+        // this.formInicial.controls['documento'].addValidators(Validators.maxLength(9));
+        //this.formInicial.controls['documento'].removeValidators(Validators.minLength(5));
+        // this.formInicial.controls['documento'].removeValidators(Validators.maxLength(10));
+
         this.natural = false;
       }
     })
@@ -280,6 +294,7 @@ export class solicitudComponent implements OnInit {
       return;
     }
     let form = { ...this.formSolicitudRepresentante.value }
+    form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
     form.documento = (this.formSolicitudRepresentante.value.documento).toString();
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);
@@ -293,8 +308,17 @@ export class solicitudComponent implements OnInit {
     let form = { ...this.formSolicitudNatural.value }
     form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
     delete form.fechaMatricula
+
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          break;
+        case 'APROBADO':
+          this.estadoSolicitud.aprobado = true;
+          break;
+      }
     });
   }
 
@@ -302,6 +326,7 @@ export class solicitudComponent implements OnInit {
     if (this.formSolicitudJuridica.invalid) {
       return;
     }
+
     let form = { ...this.formSolicitudJuridica.value }
     form.antiguedadNegocio = 0;
     form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
@@ -309,6 +334,7 @@ export class solicitudComponent implements OnInit {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
+
       this.step = 4;
       console.log(resp);
       console.log('representante', this.formSolicitudRepresentante.value);
@@ -359,5 +385,29 @@ export class solicitudComponent implements OnInit {
 
     y = x % 11;
     return (y > 1) ? 11 - y : y;
+  }
+  /**
+   * @description: Validacion de caracteres minimos
+   */
+  public validacionCampoMinimo(field: string) {
+    return this.formInicial.controls[field].hasError('minlength');
+  }
+  /**
+   * @description: Validacion de caracteres minimos
+   */
+  public validacionCampoMinimoJuridico(field: string, valid: boolean) {
+    return this.formInicial.controls[field].hasError('minlength') && valid;
+  }
+  /**
+   * @description: Validacion de caracteres maximos
+   */
+  public validacionCampoMaximo(field: string) {
+    return this.formInicial.controls[field].hasError('maxlength');
+  }
+  /**
+   * @description: Validacion de solo numeros
+   */
+  public validacionSoloNumero(field: string) {
+    return this.formInicial.controls[field].hasError('pattern');
   }
 }

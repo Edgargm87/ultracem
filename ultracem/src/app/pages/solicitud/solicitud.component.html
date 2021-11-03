@@ -21,22 +21,24 @@
                 <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Cómo quieres registrarte ?</mat-label>
-              <mat-select formControlName="registrar"   [compareWith]="compareObjects">
-                <mat-option value="">Selecciona</mat-option>
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
-              <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
-                <mat-option value="">Selecciona</mat-option>
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'S'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
+                <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'N'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Cómo quieres registrarte ?</mat-label>
+                <mat-select formControlName="registrar"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
@@ -47,11 +49,19 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Número de <span *ngIf="natural">documento</span> <span *ngIf="!natural">NIT</span></mat-label>
-              <input type="number" matInput formControlName="documento">
+              <input type="text" matInput formControlName="documento">
+              <mat-error *ngIf="validacionCampoMinimo('documento') || validacionCampoMaximo('documento')">
+                <mat-error *ngIf="validacionCampoMinimo('documento')">La longitud mínima es de 5</mat-error>
+                <mat-error *ngIf="validacionCampoMaximo('documento')">La longitud maxima es de 10</mat-error>
+              </mat-error>
+              <!--<mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">
+                <mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">La longitud mínima es de 9 digitos</mat-error>
+              </mat-error>-->
+              <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores numéricos</mat-error>
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
-            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button>Siguiente paso </button>
+            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button class="btn_siguiente" >Siguiente</button>
           </div>
         </form>
       </div>
@@ -69,7 +79,7 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.error">
     <div class="col-lg-5 alerts-content">
       <img src="assets/img/error.svg" alt="cargando ultracem">
       <p class="text-center mt-3">Por favor comuníquese con nosotros a nuestra línea:</p>
@@ -81,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.rechazado">
     <div class="col-lg-5 alerts-content">
       <img src="assets/img/rechazado.svg" alt="cargando ultracem">
       <p class="text-center mt-3">En este momento no podemos procesar tu solicitud de crédito.
@@ -94,11 +104,11 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.aprobado">
     <div class="col-lg-7 alerts-content">
       <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
       <div class="row justify-content-center my-4">
-        <button mat-raised-button class="inicio-sesion">Iniciar sesión</button>
+        <button mat-raised-button class="btn_siguiente"  class="inicio-sesion" routerLink="/">Iniciar sesión</button>
       </div>
       <p class="text-center mt-3">Para completar tu crédito, inicia sesión con tu
         <span> usuario (correo registrado) y contraseña (cedula registrada)</span>
@@ -117,7 +127,7 @@
     <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
-          <h2 class="text-start">Datos de la empresa</h2>
+          <h2 class="text-start">Datos básicos personales</h2>
         </div>
       </div>
       <div class="row justify-content-center">
@@ -200,7 +210,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
@@ -279,7 +289,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
@@ -359,6 +369,14 @@
                 Email is <strong>required</strong>
               </mat-error> -->
             </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="row">
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
@@ -370,7 +388,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
           </div>
         </form>
       </div>
