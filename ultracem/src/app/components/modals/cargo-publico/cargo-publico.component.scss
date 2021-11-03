@@ -3,7 +3,7 @@
 .form-control:focus {
   color: #212529;
   background-color: #fff !important;
-  border-color: green-dark !important;
+  border-color:$blue-primary !important;
   outline: 0;
   box-shadow: none !important;
 }
@@ -13,10 +13,10 @@
 }
 
 .fondo_fintra{
-    background: $green-dark !important;
+    background: $blue-primary !important;
 }
 .color_fintra{
-    color: $green-dark !important;
+    color: $blue-primary !important;
 }
 
 .btn_siguiente {

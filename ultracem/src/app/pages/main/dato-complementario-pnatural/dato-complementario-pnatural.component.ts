@@ -67,7 +67,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       departamentoNegocio: ["", [Validators.required]],
       ciudadNegocio: ["", [Validators.required]],
       barrioNegocio: ["", [Validators.required]],
-      direccionNegocio: ["Cl 23 #14-11", [Validators.required]],
+      direccionNegocio: ["", [Validators.required]],
       telefonoNegocio: ["", [Validators.required]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],

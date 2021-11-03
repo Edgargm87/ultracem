@@ -19,16 +19,16 @@
             </div>
             <div class="row mt-2">
               <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Tipo documento</label>
+                <label for="fechaVinculado">Tipo de documento</label>
                 <!-- <input type="text" class="form-control" placeholder="" formControlName="tipoID" autocomplete="off"> -->
                 <mat-select formControlName="tipoID" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
                   <mat-option value="" disabled>SELECCIONA</mat-option>
-                  <mat-option value="C">Cedula</mat-option>
+                  <mat-option value="C">CC</mat-option>
                   <mat-option value="N">Nit</mat-option>
                 </mat-select>
               </div>
               <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Documento</label>
+                <label for="fechaVinculado">Nª de identificación</label>
                 <input type="text" class="form-control" placeholder="" formControlName="documento">
               </div>
             </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="row mt-2">
               <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Vinculado actualmente</label>
+                <label for="fechaVinculado">¿Estas vinculado actualmente?</label>
                 <!-- <input type="text" class="form-control" placeholder="" formControlName="vinculadoActualmente"
                   autocomplete="off"> -->
                   <mat-select formControlName="vinculadoActualmente" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
@@ -55,7 +55,7 @@
                   </mat-select>
               </div>
               <div class="form-group col-lg-6 " *ngIf="formModal_F.value.vinculadoActualmente=='S'">
-                <label for="fechaVinculado">Fecha desvinculado</label>
+                <label for="fechaVinculado">Fecha de desvinculado</label>
                 <input type="date" class="form-control" placeholder="" formControlName="fechaVinculado">
               </div>
             </div>
@@ -76,15 +76,15 @@
             </div>
             <div class="row mt-2">
               <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Vinculado actualmente</label>
+                <label for="fechaVinculado">¿Estas vinculado actualmente?</label>
                 <mat-select formControlName="vinculadoActualmente" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
                   <mat-option value="" disabled>SELECCIONA</mat-option>
                   <mat-option value="S">SI</mat-option>
                   <mat-option value="N">NO</mat-option>
                 </mat-select>
               </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Fecha desvinculado</label>
+              <div class="form-group col-lg-6 "  *ngIf="formModal_P.value.vinculadoActualmente=='S'">
+                <label for="fechaVinculado">Fecha de desvinculado</label>
                 <input type="date" class="form-control" placeholder="" formControlName="fechaVinculado">
               </div>
             </div>
