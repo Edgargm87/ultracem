@@ -79,7 +79,7 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.error">
     <div class="col-lg-5 alerts-content">
       <img src="assets/img/error.svg" alt="cargando ultracem">
       <p class="text-center mt-3">Por favor comuníquese con nosotros a nuestra línea:</p>
@@ -91,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.rechazado">
     <div class="col-lg-5 alerts-content">
       <img src="assets/img/rechazado.svg" alt="cargando ultracem">
       <p class="text-center mt-3">En este momento no podemos procesar tu solicitud de crédito.
@@ -104,11 +104,11 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="false">
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.aprobado">
     <div class="col-lg-7 alerts-content">
       <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
       <div class="row justify-content-center my-4">
-        <button mat-raised-button class="inicio-sesion">Iniciar sesión</button>
+        <button mat-raised-button class="inicio-sesion" routerLink="/">Iniciar sesión</button>
       </div>
       <p class="text-center mt-3">Para completar tu crédito, inicia sesión con tu
         <span> usuario (correo registrado) y contraseña (cedula registrada)</span>

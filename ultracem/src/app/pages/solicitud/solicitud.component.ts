@@ -25,6 +25,11 @@ export class solicitudComponent implements OnInit {
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
   cargando: boolean = false;
+  public estadoSolicitud: any = {
+    error: false,
+    rechazado: false,
+    aprobado: false
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -306,6 +311,14 @@ export class solicitudComponent implements OnInit {
 
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          break;
+        case 'APROBADO':
+          this.estadoSolicitud.aprobado = true;
+          break;
+      }
     });
   }
 
