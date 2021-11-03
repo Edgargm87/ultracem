@@ -25,6 +25,11 @@ export class solicitudComponent implements OnInit {
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
   cargando: boolean = false;
+  public estadoSolicitud: any = {
+    error: false,
+    rechazado: false,
+    aprobado: false
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -303,9 +308,17 @@ export class solicitudComponent implements OnInit {
     let form = { ...this.formSolicitudNatural.value }
     form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
     delete form.fechaMatricula
-    
+
     this._creditService.solicitudUltracem(form).subscribe(resp => {
       console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          break;
+        case 'APROBADO':
+          this.estadoSolicitud.aprobado = true;
+          break;
+      }
     });
   }
 
@@ -321,7 +334,7 @@ export class solicitudComponent implements OnInit {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
-      
+
       this.step = 4;
       console.log(resp);
       console.log('representante', this.formSolicitudRepresentante.value);
