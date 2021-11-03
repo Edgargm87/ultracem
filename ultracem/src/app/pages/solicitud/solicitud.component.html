@@ -21,22 +21,24 @@
                 <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Cómo quieres registrarte ?</mat-label>
-              <mat-select formControlName="registrar"   [compareWith]="compareObjects">
-                <mat-option value="">Selecciona</mat-option>
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
-              <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
-                <mat-option value="">Selecciona</mat-option>
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'S'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Cómo esta registrado con Ultracem ?</mat-label>
+                <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'N'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Cómo quieres registrarte ?</mat-label>
+                <mat-select formControlName="registrar"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
