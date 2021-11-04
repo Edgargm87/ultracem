@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <h2>Sube tus Documentos</h2>
+    <p>*Recomendaciones: Asegúrate que la información se vea lo más nítida y cerca posible. Suben en PDF los documentos
+        que tengan más de 1 hoja.</p>
+    <div class="main-docs">
+        <ul class="col-lg-11">
+            <li *ngFor="let item of documentos">
+                <div class="row document " [ngClass]="{'upload': item.archivoCargado != 'N'}">
+                    <div class="col-lg-9">
+                        <img src="assets/icons/ICONO_FORMULARIO{{item.archivoCargado == 'N' ? '_GRIS' : '_VERDE'}}.svg"
+                            alt="" [matTooltip]="item.nombreCategoria">
+                        <span>{{item.descripcion}}</span>
+                    </div>
+                    <div class="col-lg-3 group-butons">
+                        <div class="icon subir"></div>
+                        <div class="icon delete"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

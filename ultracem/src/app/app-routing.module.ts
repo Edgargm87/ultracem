@@ -5,6 +5,7 @@ import { ListSolicitudComponent } from './pages/main/list-solicitud/list-solicit
 import { solicitudComponent } from './pages/solicitud/solicitud.component';
 import { DatoComplementarioPnaturalComponent } from './pages/main/dato-complementario-pnatural/dato-complementario-pnatural.component';
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 
 
@@ -33,12 +34,16 @@ const routes: Routes = [
     component: DatoComplementarioPjuridicaComponent
   },
   {
+    path: 'main/documents',
+    component: DocumentsComponent
+  },
+  {
     path: 'main/legal/:codigoSolicitud',
     component: LegalComponent
   },
   {
     path: '',
-    redirectTo: 'app',
+    redirectTo: 'solicitud',
     pathMatch: 'full'
   }
 ];
