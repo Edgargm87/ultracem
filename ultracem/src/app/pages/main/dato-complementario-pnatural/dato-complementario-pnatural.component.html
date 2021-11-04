@@ -219,13 +219,13 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Activos ($) </mat-label>
-              <input matInput autocomplete="off" formControlName="activos" type="number">
+              <input matInput autocomplete="off" formControlName="activos" type="text" (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); ">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Valor total de ventas mensuales ($)</mat-label>
-              <input type="email" autocomplete="off" matInput formControlName="ventasMensuales">
+              <input type="text" autocomplete="off" matInput formControlName="ventasMensuales" (keyup)="formTab2.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab2.value.ventasMensuales)); " >
             </mat-form-field>
 
           </div>

@@ -17,7 +17,7 @@
           <h2 class="text-start">Clientes PEP</h2>
         </div>
       </div>
-      <section >
+      <section>
         <form [formGroup]="formTab1">
           <div class="row justify-content-center mt-4">
             <div class="col-lg-10 texto texto">
@@ -57,7 +57,7 @@
         </form>
       </section>
 
-      <div class="row justify-content-center mt-5" >
+      <div class="row justify-content-center mt-5">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(1)">Acepto</button>
       </div>
     </div>
@@ -79,7 +79,7 @@
           <h2 class="text-start">Declaración FATCA</h2>
         </div>
       </div>
-      <section >
+      <section>
         <form [formGroup]="formTab2">
           <div class="row justify-content-center mt-4">
             <div class="col-lg-10 texto">
@@ -146,7 +146,7 @@
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-11">
-              <strong>NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en Obligatio Tributario
+              <strong>NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en obligatorio tributario
                 U.S</strong>
             </div>
           </div>
@@ -192,11 +192,11 @@
           <h2 class="text-start">Operaciones en moneda extranjera</h2>
         </div>
       </div>
-      <section >
+      <section>
         <form [formGroup]="formTab3">
           <div class="row justify-content-center mt-4">
-            <mat-form-field class="col-6" appearance="fill">
-              <mat-label> ¿Realiza operaciones con criptomonedad?</mat-label>
+            <mat-form-field class="col-5" appearance="fill">
+              <mat-label> ¿Realiza operaciones con criptomoneda?</mat-label>
               <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta1">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
@@ -204,7 +204,7 @@
                 <mat-option value="N">NO</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-5" appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
+            <mat-form-field class="col-6" appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
               <mat-label> Tipo de operación </mat-label>
               <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta2">
@@ -213,18 +213,17 @@
                   {{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <mat-form-field class="col-lg-6" appearance="fill">
+
+            <mat-form-field class="col-lg-5" appearance="fill">
               <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
               <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta3">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="S">SI</mat-option>
-                <mat-option value="N">NO</mat-option>
+                <mat-option value="S">Si</mat-option>
+                <mat-option value="N">No</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-lg-5" appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
+            <mat-form-field class="col-lg-6" appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
               <mat-label> Tipo de operación</mat-label>
               <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta4">
@@ -255,10 +254,10 @@
     <div class="col-lg-8 l-derecho">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
-          <h2 class="text-start">Declaración origen de bienes o fondos</h2>
+          <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
         </div>
       </div>
-      <section >
+      <section>
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
@@ -266,8 +265,9 @@
         </div>
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
-            <form  [formGroup]="formTab4">
-              <textarea class="w-100" class="clasetextArea" placeholder="Escribe aquí"  formControlName="descripcion"></textarea>
+            <form [formGroup]="formTab4">
+              <textarea class="w-100" class="clasetextArea" placeholder="Escribe aquí"
+                formControlName="descripcion"></textarea>
             </form>
 
           </div>
@@ -276,7 +276,10 @@
           <div class="col-lg-11 texto texto">
             2. Declaro que los recursos que entregue a FINTRA LOGISTICS S.A,S no provienen de ninguna actividad ílicita
             de las contempladas en el código penal colombiano o en cualquier norma que lo modifique o adicione, ni
-            efectuaré transacciones destinadas a tales actividades. Quien suscribe la siguiente declaración obrando en
+            efectuaré transacciones destinadas a tales actividades.
+            <br>
+            <br>
+            Quien suscribe la siguiente declaración obrando en
             nombre propio de manera voluntaria dando certeza que todo lo aquí consignado es totalmente cierto, realizo
             la siguiente declaración de fuente de fondos a FINTRA LOGISTICS S.A,S con el proposito que se pueda dar
             cumplimiento al respecto en la circular externa No 007 del año 1996 expedida por la Superfinanciera. El
@@ -286,7 +289,7 @@
           </div>
         </div>
       </section>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
       </div>
     </div>
@@ -319,6 +322,8 @@
           <div class="col-lg-11 texto texto">
             Los datos personales adicionales para el estudio técnico del riesgo asegurable y reasegurable se tratarán
             observando las Leyes 1581 de 2012 y 1266 de 2008 según el caso.
+            <br>
+            <br>
             Con la firma de este documento se entiende que el titular de los datos autoriza de manera expresa e
             inequívoca a FINTRA LOGISTICS S.A,S, para mantener y manejar la información que se ha incorporado en las
             bases de datos manejadas por la empresa, y especialmente para permitir su recolección, almacenamiento, uso,
@@ -334,6 +339,8 @@
             S.A,S, El Titular podrá ejercer en cualquier momento los derechos que le asisten, en especial: Conocer la
             información, solicitar la actualización, rectificación y/o supresión o revocar el consentimiento otorgado
             para el tratamiento de datos personales.
+            <br>
+            <br>
             La presente autorización se solicita en cumplimiento de la Ley 1581 de 2012, reglamentada por el Decreto
             1377 de 2013 y se expide para qué FINTRA LOGISTICS S.A,S., trate los datos personales recolectados de manera
             leal, lícita, segura y confiable para los fines señalados en el presente documento. </div>

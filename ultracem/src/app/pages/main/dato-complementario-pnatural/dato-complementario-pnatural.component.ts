@@ -47,7 +47,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     private _activatedRoute: ActivatedRoute,
-    private _generic: GenericService,
+    public _generic: GenericService,
     private router: Router,
   ) {
 
@@ -67,7 +67,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       departamentoNegocio: ["", [Validators.required]],
       ciudadNegocio: ["", [Validators.required]],
       barrioNegocio: ["", [Validators.required]],
-      direccionNegocio: ["", [Validators.required]],
+      direccionNegocio: ["dfsdfs", [Validators.required]],
       telefonoNegocio: ["", [Validators.required]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],
@@ -220,8 +220,8 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
           "telefonoNegocio": this.formTab2.value.telefonoNegocio,
           "camaraComercio": this.formTab2.value.camaraComercio,
           "declarante": this.formTab2.value.declarante,
-          "activos": parseInt(this.formTab2.value.activos),
-          "ventasMensuales": parseInt(this.formTab2.value.ventasMensuales),
+          "activos": Number(this._generic.enviarNumero(this.formTab2.value.activos)),
+          "ventasMensuales": Number(this._generic.enviarNumero(this.formTab2.value.ventasMensuales)),
         }
         break;
       case 3:
@@ -244,7 +244,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
               "codigoDepartamento": this.formTab3.value.cDepartamento,
               "codigoCiudad": this.formTab3.value.cMunicipio,
               "telefono": this.formTab3.value.cCelular,
-              "antiguedad": parseInt(this.formTab3.value.cAntiguedad)
+              "antiguedad": Number(this.formTab3.value.cAntiguedad)
             }
           ]
         }
@@ -293,6 +293,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   atras() {
 
   }
+
 
   //borrar
 
