@@ -5,7 +5,7 @@ import { DirectionsComponent } from 'src/app/components/modals/directions/direct
 import { CreditService } from 'src/app/services/credit.service';
 import { GenericService } from 'src/app/services/generic.service';
 import {MatSelectChange} from "@angular/material/select";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {take} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {format} from "date-fns";
@@ -54,8 +54,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     private _creditService: CreditService,
-    private _generic: GenericService,
-    private route: ActivatedRoute
+    public _generic: GenericService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
 
     this.formTab1=this.fb.group({
@@ -192,8 +193,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       barrioNegocio: String(barrioNegocio),
       direccionNegocio: direccionNegocio,
       telefonoNegocio: telefonoNegocio,
-      activos: Number(activos),
-      ventasMensuales: Number(ventasMensuales),
+      activos: Number(this._generic.enviarNumero(activos)),
+      ventasMensuales: Number(this._generic.enviarNumero(ventasMensuales)),
       declarante: declarante,
       recurso: recurso,
       viveNegocio: viveNegocio,
@@ -305,7 +306,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             'success'
           ).then(result => {
             if (result.isConfirmed) {
-               this.step = res.data.stepFormulario;
+                 let url=`/main/legal/${datosDos.numeroSolicitud}`;
+                  this.router.navigateByUrl(url);
             }
           });
         }
@@ -404,7 +406,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   /**
    * @description: carga el estado del formulario
    */
-  public getEstados(codigo: string): void {
+  getEstados(codigo: string): void {
     let url: string = '';
     url= `generic/qry/consulta-step-formulario/${codigo}`;
     this._generic.getData(url).subscribe((res: any) => {

@@ -30,7 +30,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   formTab1: FormGroup;
   formTab2: FormGroup;
   formTab3: FormGroup;
-
+  
 
   Listdepartamentos: any[] = [];
   ListNivelEstudio: any[] = [];
@@ -42,6 +42,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   ListCiudadesNegocio: any;
   ListBarriosNegocio: any;
   ListCMunicipio: any;
+  viveNegocioCondicion: boolean=false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,9 +66,12 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
     })
     this.formTab2 = this.fb.group({
       departamentoNegocio: ["", [Validators.required]],
+      departamentoNombreNegocio: [""],
       ciudadNegocio: ["", [Validators.required]],
+      ciudadNombreNegocio: [""],
       barrioNegocio: ["", [Validators.required]],
-      direccionNegocio: ["dfsdfs", [Validators.required]],
+      barrioNombreNegocio: [""],
+      direccionNegocio: ["", [Validators.required]],
       telefonoNegocio: ["", [Validators.required]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],
@@ -98,8 +102,10 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   ngOnInit(): void {
     this._activatedRoute.params.subscribe(param => {
       this.codigoSolicitud = param.codigoSolicitud
+      this.getEstados(this.codigoSolicitud)
     })
     this.getListados();
+
     //  this.openModalCargoPublico('P');
   }
 
@@ -177,6 +183,19 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       this.formTab1.controls['direccionResidencia'].setValue(res);
+    })
+  }
+  openModalDirectionNegocio() {
+    const codigo: string = this.formTab2.controls['ciudadNegocio'].value;
+
+    const dialogRef = this.dialog.open(DirectionsComponent, {
+      // width: '250px',
+      data: { codigo: codigo, valido: true },
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.formTab2.controls['direccionNegocio'].setValue(res);
     })
   }
 
@@ -294,6 +313,35 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
   }
 
+  getEstados(codigo: string): void {
+    let url: string = '';
+    url= `generic/qry/consulta-step-formulario/${codigo}`;
+    this._generic.getData(url).subscribe((res: any) => {
+      this.step = res.stepFormulario;
+      if(this.step==2){
+        this.viveNegocio(codigo);
+      }
+    });
+  }
+
+  viveNegocio(codigo: string): void {
+    let url=`generic/qry/tab-auto-completar-info-negocio/${codigo}`
+    this._generic.getData(url).subscribe((res: any) => {
+      if(res){
+        this.formTab2.controls['departamentoNombreNegocio'].setValue(res.departamento);
+        this.formTab2.controls['departamentoNegocio'].setValue(res.codigoDepartamento);
+        this.formTab2.controls['ciudadNombreNegocio'].setValue(res.ciudad);
+        this.formTab2.controls['ciudadNegocio'].setValue(res.codigoCiudad);
+        this.formTab2.controls['barrioNombreNegocio'].setValue(res.barrio);
+        this.formTab2.controls['barrioNegocio'].setValue(res.codigo_barrio);
+        this.formTab2.controls['direccionNegocio'].setValue(res.direccion);
+        this.viveNegocioCondicion=true;
+      }
+      // departamentoNombreNegocio: [""],
+    
+      // this.formTab2.controls['departamentoNombreNegocio'].setValue(res);
+    });
+  }
 
   //borrar
 

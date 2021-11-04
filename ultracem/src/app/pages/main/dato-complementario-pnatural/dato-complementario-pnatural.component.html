@@ -145,7 +145,7 @@
       </div>
       <div class="row justify-content-center">
         <form class="col-11" [formGroup]="formTab2">
-          <div class="row">
+          <div class="row" *ngIf="viveNegocioCondicion==false">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento</mat-label>
               <!-- <input matInput formControlName="departamentoNegocio"> -->
@@ -158,27 +158,70 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Ciudad / municipio</mat-label>
               <!-- <input matInput formControlName="ciudadNegocio"> -->
-              <mat-select formControlName="ciudadNegocio" (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
-              <mat-option value="" disabled>SELECCIONA</mat-option>
-              <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}</mat-option>
-            </mat-select>
+              <mat-select formControlName="ciudadNegocio"
+                (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="viveNegocioCondicion==false">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Barrio</mat-label>
               <!-- <input matInput formControlName="barrioNegocio"> -->
               <!-- <mat-form-field class="col-lg-6" appearance="fill"> -->
-                <!-- <mat-label>Ciudad / municipio</mat-label> -->
-                <mat-select formControlName="barrioNegocio">
+              <!-- <mat-label>Ciudad / municipio</mat-label> -->
+              <mat-select formControlName="barrioNegocio">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}
+                </mat-option>
               </mat-select>
               <!-- </mat-form-field> -->
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Dirección </mat-label>
-              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text" (keydown)="openModalDirection()">
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text"
+                (keydown)="openModalDirectionNegocio()">
+            </mat-form-field>
+          </div>
+          <div class="row" *ngIf="viveNegocioCondicion==true">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento</mat-label>
+              <input matInput formControlName="departamentoNombreNegocio" readonly>
+              <!-- <mat-select formControlName="departamentoNegocio"
+                (selectionChange)="getListadosCiudades(formTab2.value.departamentoNegocio,3)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio</mat-label>
+              <input matInput formControlName="ciudadNombreNegocio" readonly>
+              <!-- <mat-select formControlName="ciudadNegocio"
+                (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select> -->
+            </mat-form-field>
+          </div>
+          <div class="row" *ngIf="viveNegocioCondicion==true">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Barrio</mat-label>
+              <input matInput formControlName="barrioNombreNegocio" readonly>
+              <!-- <mat-form-field class="col-lg-6" appearance="fill"> -->
+              <!-- <mat-label>Ciudad / municipio</mat-label> -->
+              <!-- <mat-select formControlName="barrioNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select> -->
+              <!-- </mat-form-field> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Dirección </mat-label>
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text" readonly >
             </mat-form-field>
           </div>
           <div class="row">
@@ -219,13 +262,15 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Activos ($) </mat-label>
-              <input matInput autocomplete="off" formControlName="activos" type="text" (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); ">
+              <input matInput autocomplete="off" formControlName="activos" type="text"
+                (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); ">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Valor total de ventas mensuales ($)</mat-label>
-              <input type="text" autocomplete="off" matInput formControlName="ventasMensuales" (keyup)="formTab2.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab2.value.ventasMensuales)); " >
+              <input type="text" autocomplete="off" matInput formControlName="ventasMensuales"
+                (keyup)="formTab2.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab2.value.ventasMensuales)); ">
             </mat-form-field>
 
           </div>
@@ -305,18 +350,18 @@
               <mat-label>Departamento </mat-label>
               <!-- <input matInput formControlName="cDepartamento" type="text"> -->
               <mat-select formControlName="cDepartamento"
-              (selectionChange)="getListadosCiudades(formTab3.value.cDepartamento,4)">
-              <mat-option value="" disabled>SELECCIONA</mat-option>
-              <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
-            </mat-select>
+                (selectionChange)="getListadosCiudades(formTab3.value.cDepartamento,4)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Ciudad /municipio</mat-label>
               <!-- <input type="text" matInput formControlName="cMunicipio"> -->
-              <mat-select formControlName="cMunicipio" >
-              <mat-option value="" disabled>SELECCIONA</mat-option>
-              <mat-option value="{{item.codigo}}" *ngFor="let item of ListCMunicipio ">{{item.nombre}}</mat-option>
-            </mat-select>
+              <mat-select formControlName="cMunicipio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCMunicipio ">{{item.nombre}}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="row">

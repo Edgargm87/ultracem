@@ -72,7 +72,7 @@
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Activos ($)</mat-label>
-                <input matInput autocomplete="off" formControlName="activos" >
+                <input matInput autocomplete="off" formControlName="activos"  (keyup)="formTab1.controls['activos'].setValue(_generic.formatearNumero(formTab1.value.activos)); ">
                 <!-- <mat-select formControlName="tipoVivienda">
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="A">Arrendada</mat-option>
@@ -84,7 +84,7 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ventas mensuales ($)</mat-label>
-                <input matInput autocomplete="off" formControlName="ventasMensuales">
+                <input matInput autocomplete="off" formControlName="ventasMensuales"  (keyup)="formTab1.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab1.value.ventasMensuales)); ">
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>¿Eres declarante?</mat-label>
