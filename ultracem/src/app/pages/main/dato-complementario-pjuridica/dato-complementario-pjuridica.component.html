@@ -109,11 +109,11 @@
             </div>
 
             <div class="row justify-content-center">
-              <button class="btn-solicitar btn"
+              <button mat-raised-button class="btn_siguiente"
                       [disabled]="!formTab1.valid"
                       (click)="onGuardarUno(1)"
               >
-                Solicitar
+                Siguiente
               </button>
             </div>
           </form>
@@ -212,11 +212,11 @@
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button
+              <button mat-raised-button class="btn_siguiente"
                       [disabled]="formTab2.invalid"
                       (click)="onGuardarDos(1)"
               >
-                Solicitar
+                Siguiente
               </button>
             </div>
           </form>
@@ -320,10 +320,10 @@
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button [disabled]="formTab3.invalid && formTab4.invalid"
+              <button mat-raised-button class="btn_siguiente" [disabled]="formTab3.invalid && formTab4.invalid"
                       (click)="onGuardarTres(1)"
               >
-                Solicitar
+                Siguiente
               </button>
             </div>
           </form>
@@ -366,7 +366,7 @@
               </section>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button [disabled]="formTab4.invalid" (click)="siguienteTab()">Solicitar</button>
+              <button mat-raised-button class="btn_siguiente" [disabled]="formTab4.invalid" (click)="siguienteTab()">Siguiente</button>
             </div>
           </form>
         </div>

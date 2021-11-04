@@ -16,15 +16,15 @@
 }
 
 .btn_siguiente {
-  width: max-content;
   color: #fff;
-  background-color: #bbce00;
+  background-color:$blue-primary;
   font-family: Josefin Sans;
   font-weight: 600;
-  font-size: 2em;
+  font-size: 1.6em;
   padding-top: 12px;
-  border-radius: 38px;
-  padding-bottom: 7px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
 }
 
 .color_fondo{

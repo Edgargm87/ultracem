@@ -78,9 +78,9 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
     this.formTab3 = this.fb.group({
 
       pPrimerNombre: ["", [Validators.required]],
-      pSegundoNombre: ["", [Validators.required]],
+      pSegundoNombre: [""],
       pPrimerApellido: ["", [Validators.required]],
-      pSegundoApellido: ["", [Validators.required]],
+      pSegundoApellido: [""],
       ptelefono: ["", [Validators.required]],
       cRazonSocial: ["", [Validators.required]],
       cCelular: ["", [Validators.required]],

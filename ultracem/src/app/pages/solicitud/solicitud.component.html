@@ -61,7 +61,7 @@
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
-            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button>Siguiente paso </button>
+            <button (click)=" preaprobado()" [disabled]="formInicial.invalid" mat-raised-button class="btn_siguiente" >Siguiente</button>
           </div>
         </form>
       </div>
@@ -108,7 +108,7 @@
     <div class="col-lg-7 alerts-content">
       <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
       <div class="row justify-content-center my-4">
-        <button mat-raised-button class="inicio-sesion" routerLink="/">Iniciar sesión</button>
+        <button mat-raised-button class="btn_siguiente"  class="inicio-sesion" routerLink="/">Iniciar sesión</button>
       </div>
       <p class="text-center mt-3">Para completar tu crédito, inicia sesión con tu
         <span> usuario (correo registrado) y contraseña (cedula registrada)</span>
@@ -210,7 +210,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudNatural.invalid" (click)="SolicitudNUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
@@ -289,7 +289,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudJuridica.invalid" (click)="SolicitudJUltracem()">Solicitar</button>
           </div>
         </form>
       </div>
@@ -388,7 +388,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
           </div>
         </form>
       </div>

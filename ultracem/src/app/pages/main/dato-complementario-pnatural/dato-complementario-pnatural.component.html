@@ -28,7 +28,7 @@
               <input matInput autocomplete="off" formControlName="nacionalidad" (change)="noCambios()">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Departamento de Nacionalidad</mat-label>
+              <mat-label>Departamento de nacimiento</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="departamentoNacionalidad"> -->
               <mat-select formControlName="departamentoNacionalidad"
                 (selectionChange)="getListadosCiudades(formTab1.value.departamentoNacionalidad,1)">
@@ -39,7 +39,7 @@
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Ciudad / municipio de Nacionalidad</mat-label>
+              <mat-label>Ciudad / municipio de nacimiento</mat-label>
               <!-- <input matInput autocomplete="off" formControlName="ciudadNacionalidad"> -->
               <mat-select formControlName="ciudadNacionalidad">
                 <mat-option value="">SELECCIONA</mat-option>
@@ -106,7 +106,7 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>¿Vive en el negocio?</mat-label>
+              <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
               <mat-select formControlName="viveEnNegocio">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="S">SI</mat-option>
@@ -117,7 +117,7 @@
 
           <div class="row justify-content-center">
             <button mat-raised-button class="btn_siguiente" [disabled]="formTab1.invalid"
-              (click)="siguienteTab(1)">Solicitar</button>
+              (click)="siguienteTab(1)">Siguiente</button>
           </div>
         </form>
       </div>
@@ -231,7 +231,7 @@
           </div>
           <div class="row justify-content-center">
             <button mat-raised-button class="btn_siguiente" [disabled]="formTab2.invalid"
-              (click)="siguienteTab(2)">Solicitar</button>
+              (click)="siguienteTab(2)">Siguiente</button>
           </div>
         </form>
       </div>
@@ -265,7 +265,7 @@
               <input matInput autocomplete="off" formControlName="pPrimerNombre" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Segundo nombre</mat-label>
+              <mat-label>Segundo nombre (opcional) </mat-label>
               <input matInput autocomplete="off" formControlName="pSegundoNombre" type="text">
             </mat-form-field>
           </div>
@@ -275,7 +275,7 @@
               <input matInput autocomplete="off" formControlName="pPrimerApellido" type="text">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Segundo Apellido</mat-label>
+              <mat-label>Segundo Apellido (opcional)</mat-label>
               <input type="text" autocomplete="off" matInput formControlName="pSegundoApellido">
             </mat-form-field>
           </div>
@@ -327,7 +327,7 @@
           </div>
           <div class="row justify-content-center">
             <button mat-raised-button class="btn_siguiente" [disabled]="formTab3.invalid"
-              (click)="siguienteTab(3)">Solicitar</button>
+              (click)="siguienteTab(3)">Siguiente</button>
           </div>
         </form>
       </div>

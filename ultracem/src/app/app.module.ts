@@ -19,6 +19,7 @@ import { TimerlineComponent } from './pages/main/list-solicitud/timerline/timerl
 import { DirectionsComponent } from './components/modals/directions/directions.component';
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
 import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-publico.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
@@ -34,6 +35,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     DirectionsComponent,
     DatoComplementarioPjuridicaComponent,
     CargoPublicoComponent,
+    DocumentsComponent,
     LegalComponent
   ],
   imports: [

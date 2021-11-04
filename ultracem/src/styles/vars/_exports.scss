@@ -13,6 +13,9 @@ $blue-dark: #347794;
 $green-light: #D5E465;
 $green-dark: #bbce00;
 
+$blue-primary:#111E62;
+$blue-segundary:#0E7860;
+
 $white-light: #E1F2FA;
 
 $danger : #F24444;
@@ -24,7 +27,7 @@ $color-inputs : #707070;
 
 $wz-color-default: #dadada !default;
 $wz-color-current: $blue-semi-light!default;
-$wz-color-done: $green-light !default;
-$wz-color-optional: #38ef38 !default;
-$wz-color-editing: $green-light !default;
+$wz-color-done: $blue-primary !default;
+$wz-color-optional: #111E62 !default;
+$wz-color-editing: $blue-primary !default;
 
