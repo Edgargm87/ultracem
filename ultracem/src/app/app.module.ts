@@ -22,6 +22,7 @@ import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-p
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -38,15 +39,16 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     DocumentsComponent,
     LegalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSlideToggleModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSlideToggleModule,
+        MatAutocompleteModule,
+    ],
   providers: [
     CreditService,
     {
