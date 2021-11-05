@@ -217,7 +217,7 @@
             <mat-form-field class="col-lg-5" appearance="fill">
               <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
               <!-- <input matInput formControlName="declarante"> -->
-              <mat-select formControlName="pregunta3">
+              <mat-select formControlName="pregunta3" (selectionChange)="mostrarMonedaExtranjera()">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="S">Si</mat-option>
                 <mat-option value="N">No</mat-option>
