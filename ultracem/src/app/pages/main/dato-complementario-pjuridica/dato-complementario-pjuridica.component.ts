@@ -63,7 +63,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       ciudadNegocio: ['', [Validators.required]],
       barrioNegocio: ['', [Validators.required]],
       direccionNegocio: ['', [Validators.required]],
-      telefonoNegocio: ['', [Validators.required]],
+      telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       activos: ['', [Validators.required]],
       ventasMensuales: ['', [Validators.required]],
       declarante: ['', [Validators.required]],
@@ -169,53 +169,57 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     });
   }
 
-  public onGuardarUno(key: number): void {
+  public onGuardarUno(): void {
     let url: string = 'credito/tk/formulario-solicitud-tabs';
-    const datos: any = this.formTab1.getRawValue();
-    const {
-      departamentoNegocio,
-      ciudadNegocio,
-      barrioNegocio,
-      direccionNegocio,
-      telefonoNegocio,
-      activos,
-      ventasMensuales,
-      declarante,
-      recurso,
-      viveNegocio,
-      numeroSolicitud,
-    } = datos;
+    if (this.formTab1.valid) {
+      const datos: any = this.formTab1.getRawValue();
+      const {
+        departamentoNegocio,
+        ciudadNegocio,
+        barrioNegocio,
+        direccionNegocio,
+        telefonoNegocio,
+        activos,
+        ventasMensuales,
+        declarante,
+        recurso,
+        viveNegocio,
+        numeroSolicitud,
+      } = datos;
 
-    const formulario = {
-      departamentoNegocio: departamentoNegocio,
-      ciudadNegocio: ciudadNegocio,
-      barrioNegocio: String(barrioNegocio),
-      direccionNegocio: direccionNegocio,
-      telefonoNegocio: telefonoNegocio,
-      activos: Number(activos),
-      ventasMensuales: Number(ventasMensuales),
-      declarante: declarante,
-      recurso: recurso,
-      viveNegocio: viveNegocio,
-      numeroSolicitud: numeroSolicitud,
-    }
-
-    this._generic.posData(url, formulario).subscribe((res: any) => {
-      if (res) {
-        if (res.status === 200) {
-          Swal.fire(
-            '¡Información!',
-            `Se guardo el registro con éxito`,
-            'success'
-          ).then(resultado => {
-            if (resultado.isConfirmed) {
-              this.step = res.data.stepFormulario;
-            }
-          });
-        }
+      const formulario = {
+        departamentoNegocio: departamentoNegocio,
+        ciudadNegocio: ciudadNegocio,
+        barrioNegocio: String(barrioNegocio),
+        direccionNegocio: direccionNegocio,
+        telefonoNegocio: telefonoNegocio,
+        activos: Number(activos),
+        ventasMensuales: Number(ventasMensuales),
+        declarante: declarante,
+        recurso: recurso,
+        viveNegocio: viveNegocio,
+        numeroSolicitud: numeroSolicitud,
       }
 
-    });
+      this._generic.posData(url, formulario).subscribe((res: any) => {
+        if (res) {
+          if (res.status === 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con éxito`,
+              'success'
+            ).then(resultado => {
+              if (resultado.isConfirmed) {
+                this.step = res.data.stepFormulario;
+              }
+            });
+          }
+        }
+      });
+    }else {
+      this.formTab1.markAllAsTouched();
+    }
+
   }
   public onGuardarDos(key: number): void {
     let url: string = 'credito/tk/formulario-solicitud-tabs';

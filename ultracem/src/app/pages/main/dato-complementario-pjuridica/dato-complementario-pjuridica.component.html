@@ -29,6 +29,7 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.departamentoNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio del negocio</mat-label>
@@ -41,6 +42,7 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.ciudadNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -55,10 +57,12 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.barrioNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Dirección de negocio</mat-label>
                 <input matInput autocomplete="off" formControlName="direccionNegocio" (keydown)="openModalDirection()">
+                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -69,10 +73,17 @@
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Telefono del negocio</mat-label>
                 <input matInput autocomplete="off" formControlName="telefonoNegocio">
+                <mat-error *ngIf="(formTab1.controls.telefonoNegocio.dirty || formTab1.controls.telefonoNegocio.touched)">
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.minlength">Longitud mínima son 7.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Activos ($)</mat-label>
                 <input matInput autocomplete="off" formControlName="activos" >
+                <mat-error *ngIf="formTab1.controls.activos.errors">Este campo es requerido.</mat-error>
                 <!-- <mat-select formControlName="tipoVivienda">
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="A">Arrendada</mat-option>
@@ -83,17 +94,18 @@
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Ventas mensuales ($)</mat-label>
+                <mat-label>Valor total de ventas mensuales ($)</mat-label>
                 <input matInput autocomplete="off" formControlName="ventasMensuales">
+                <mat-error *ngIf="formTab1.controls.ventasMensuales.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>¿Eres declarante?</mat-label>
-                <!-- <input matInput autocomplete="off" formControlName="nivelEstudio"> -->
                 <mat-select formControlName="declarante">
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="S">Si</mat-option>
                   <mat-option value="N">No</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.declarante.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -105,13 +117,13 @@
                   <mat-option value="S">Si</mat-option>
                   <mat-option value="N">No</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.viveNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
 
             <div class="row justify-content-center">
               <button mat-raised-button class="btn_siguiente"
-                      [disabled]="!formTab1.valid"
-                      (click)="onGuardarUno(1)"
+                      (click)="onGuardarUno()"
               >
                 Siguiente
               </button>
