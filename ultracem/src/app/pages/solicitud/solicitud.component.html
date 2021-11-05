@@ -115,7 +115,7 @@
       <div class="row justify-content-center my-4">
         <button mat-raised-button class="btn_siguiente"  class="inicio-sesion" routerLink="/">Iniciar sesión</button>
       </div>
-      <p class="text-center mt-3">Para completar tu crédito, inicia sesión con tu
+      <p class="text-center mt-3">Para completar tu solicitud de crédito, inicia sesión con tu
         <span> usuario (correo registrado) y contraseña (cedula registrada)</span>
       </p>
     </div>
@@ -168,7 +168,7 @@
               <mat-error *ngIf="formSolicitudNatural.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Genero</mat-label>
+              <mat-label>Género</mat-label>
               <mat-select formControlName="genero">
                 <mat-option value="">Selecciona</mat-option>
                 <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
@@ -394,7 +394,7 @@
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Genero</mat-label>
+              <mat-label>Género</mat-label>
               <mat-select formControlName="genero">
                 <mat-option value="">Selecciona</mat-option>
                 <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>

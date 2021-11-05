@@ -11,13 +11,12 @@
     padding: 2em;
 }
 .btn_siguiente {
-    width: max-content;
     color: #fff;
-    background-color: #bbce00;
+    background-color:$blue-primary;
     font-family: Josefin Sans;
     font-weight: 600;
-    font-size: 2em;
-    padding-top: 12px;
-    border-radius: 38px;
-    padding-bottom: 7px;
-  }
+    font-size: 1.6em;
+    padding-top: 3px;
+    border-radius: 10px;
+    margin-top: 1em;
+  } 

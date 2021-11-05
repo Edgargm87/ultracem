@@ -40,7 +40,7 @@ export class CargoPublicoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.tipo == 'P') {
-      this.titulo = "Datos del cargo publico";
+      this.titulo = "Datos del cargo público";
     } else {
       this.titulo = "Datos de persona expuesta política y públicamente";
     }

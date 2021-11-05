@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/services/generic.service';
 import Swal from 'sweetalert2';
 import { CargoPublicoComponent } from '../../modals/cargo-publico/cargo-publico.component';
+import { MonedaExtranjeraComponent } from '../../modals/moneda-extranjera/moneda-extranjera.component';
 
 @Component({
   selector: 'app-legal',
@@ -61,6 +62,13 @@ export class LegalComponent implements OnInit {
       pregunta2: [''],
       pregunta3: ['N', [Validators.required]],
       pregunta4: [''],
+      entidad: [""],
+      tipoProducto: [""],
+      numeroProducto: [""],
+      ciudad: [""],
+      pais: [""],
+      moneda: [""],
+      monto: [0]
     })
     this.formTab4 = this.fb.group({
       descripcion: ['', [Validators.required]],
@@ -132,7 +140,7 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 2:
-        debugger;
+
         url = 'credito/tk/formulario-solicitud-tabs';
         data = {
           "recurso": "tab-legal-declaracion-facta",
@@ -152,20 +160,20 @@ export class LegalComponent implements OnInit {
               "recurso": "tab-legal-cripto-moneda",
               "numeroSolicitud": this.codigoSolicitud,
               "valor": this.formTab3.value.pregunta1,
-              "tipoOperacion":this.formTab3.value.pregunta2
+              "tipoOperacion": this.formTab3.value.pregunta2
             },
             {
               "recurso": "tab-legal-moneda-extranjera",
               "numeroSolicitud": this.codigoSolicitud,
               "valor": this.formTab3.value.pregunta3,
               "tipoOperacion": this.formTab3.value.pregunta4,
-              "entidad": "",
-              "tipoProducto": "",
-              "numeroProducto": "",
-              "ciudad": "",
-              "pais": "",
-              "moneda": "",
-              "monto": 0
+              "entidad": this.formTab3.value.entidad,
+              "tipoProducto": this.formTab3.value.tipoProducto,
+              "numeroProducto": this.formTab3.value.numeroProducto+'',
+              "ciudad": this.formTab3.value.ciudad,
+              "pais": this.formTab3.value.pais,
+              "moneda": this.formTab3.value.moneda,
+              "monto": Number(this.formTab3.value.monto)
             }
           ]
 
@@ -191,7 +199,7 @@ export class LegalComponent implements OnInit {
               "recurso": "tab-legal-auto-declaracion",
               "numeroSolicitud": this.codigoSolicitud,
               "valor": "S",
-              "descripcion":"",
+              "descripcion": "",
               "tipoOperacion": "A"
             },
           ]
@@ -204,7 +212,7 @@ export class LegalComponent implements OnInit {
               "recurso": "tab-legal-auto-declaracion",
               "numeroSolicitud": this.codigoSolicitud,
               "valor": "S",
-              "descripcion":"",
+              "descripcion": "",
               "tipoOperacion": "C"
             }
           ]
@@ -213,7 +221,7 @@ export class LegalComponent implements OnInit {
       default:
         break;
     }
-    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._generic
       .posData(url, data)
       .subscribe((response: any) => {
@@ -226,7 +234,7 @@ export class LegalComponent implements OnInit {
               'success'
             ).then(resultado => {
               if (resultado) {
-                this.step=response.data.stepLegal
+                this.step = response.data.stepLegal
               }
             });
 
@@ -247,7 +255,42 @@ export class LegalComponent implements OnInit {
 
       });
   }
+  mostrarMonedaExtranjera() {
+    if(this.formTab3.value.pregunta3=='S'){
+      const dialogRef = this.dialog.open(MonedaExtranjeraComponent, {
 
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result)
+  
+        if (result == undefined) {
+          this.formTab3.controls['pregunta3'].setValue('N');
+          return;
+        }
+        if(result.length==0){
+          this.formTab3.controls['pregunta3'].setValue('N');
+          return;
+        }
+        this.formTab3.controls['entidad'].setValue(result[0].value.entidad)
+        this.formTab3.controls['tipoProducto'].setValue(result[0].value.producto)
+        this.formTab3.controls['numeroProducto'].setValue(result[0].value.numeroProducto)
+        this.formTab3.controls['ciudad'].setValue(result[0].value.ciudad)
+        this.formTab3.controls['pais'].setValue(result[0].value.pais)
+        this.formTab3.controls['moneda'].setValue(result[0].value.moneda)
+        this.formTab3.controls['monto'].setValue(this._generic.enviarNumero(result[0].value.monto))
+      })
+    }else{
+       this.formTab3.controls['entidad'].setValue('')
+        this.formTab3.controls['tipoProducto'].setValue('')
+        this.formTab3.controls['numeroProducto'].setValue('')
+        this.formTab3.controls['ciudad'].setValue('')
+        this.formTab3.controls['pais'].setValue('')
+        this.formTab3.controls['moneda'].setValue('')
+        this.formTab3.controls['monto'].setValue(0)
+    }
+    
+  }
   openModalCargoPublico(tipo: String, valor: boolean) {
     if (
       (valor == false) && (tipo == 'P')
@@ -277,7 +320,7 @@ export class LegalComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (tipo == 'P') {
-        if(result==undefined) {
+        if (result == undefined) {
           this.formTab1.controls['pregunta1'].setValue(false);
           return;
         }
@@ -291,7 +334,7 @@ export class LegalComponent implements OnInit {
         this.formTab1.controls['fechaDesvinculacion'].setValue(result[0].value.fechaVinculado);
       }
       if (tipo == 'F') {
-        if(result==undefined) {
+        if (result == undefined) {
           this.formTab1.controls['pregunta2'].setValue(false);
           return;
         }
@@ -307,7 +350,7 @@ export class LegalComponent implements OnInit {
         this.formTab1.controls['familiar_Entidad'].setValue(result[0].value.entidad)
         this.formTab1.controls['familiar_vinculadoActualmente'].setValue(result[0].value.vinculadoActualmente)
         this.formTab1.controls['familiar_fechaDesvinculacion'].setValue(result[0].value.fechaVinculado)
-        debugger;
+
       }
     });
   }

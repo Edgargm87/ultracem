@@ -24,4 +24,13 @@ export class GenericService {
         return res.data;
       }));
   }
+
+  formatearNumero(value:any){
+    let valor=value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+    return valor;
+  }
+  enviarNumero(value:string){
+    let valor=value.replace(/,/g, '');
+    return valor;
+  }
 }

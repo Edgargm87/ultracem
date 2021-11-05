@@ -22,7 +22,7 @@ import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-p
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { MonedaExtranjeraComponent } from './components/modals/moneda-extranjera/moneda-extranjera.component';
 
 @NgModule({
   declarations: [
@@ -37,18 +37,18 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     DatoComplementarioPjuridicaComponent,
     CargoPublicoComponent,
     DocumentsComponent,
-    LegalComponent
+    LegalComponent,
+    MonedaExtranjeraComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        SharedModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatSlideToggleModule,
-        MatAutocompleteModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatSlideToggleModule,
+  ],
   providers: [
     CreditService,
     {

@@ -1,0 +1,61 @@
+<h2 mat-dialog-title class="text-center">
+  Operación en moneda extranjera
+</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 ">
+  <div class="row">
+    <div class="bg-white col l12">
+      <div class="row justify-start ">
+        <div class="col-sm-12 col-lg-12">
+          <form [formGroup]="formModal">
+            <div class="row mt-2">
+              <div class="form-group col-lg-6 ">
+                <label for="fechaVinculado">Nombre de la entidad</label>
+                <input type="text" class="form-control" formControlName="entidad" autocomplete="off">
+              </div>
+              <div class="form-group col-lg-6 "> 
+                <label for="fechaVinculado">Tipo de producto</label>
+                <input type="text" class="form-control" formControlName="producto">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="form-group col-lg-6 ">
+                <label for="fechaVinculado">Número Producto</label>
+                <input type="number" min="1" max="1000" class="form-control" formControlName="numeroProducto" autocomplete="off">
+              </div>
+              <div class="form-group col-lg-6 ">
+                <label for="fechaVinculado">Ciudad</label>
+                <input type="text" class="form-control" formControlName="ciudad">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="form-group col-lg-6 ">
+                <label for="fechaVinculado">País</label>
+                <input type="text" class="form-control" formControlName="pais"
+                  autocomplete="off">
+              </div>
+              <div class="form-group col-lg-6 ">
+                <label for="fechaVinculado">Moneda</label>
+                <input type="text" class="form-control" formControlName="moneda">
+              </div>
+            </div>
+            <div class="row mt-2">
+                <div class="form-group col-lg-6 ">
+                  <label for="fechaVinculado">Monto</label>
+                  <input type="text" class="form-control" formControlName="monto"  (keyup)="formModal.controls['monto'].setValue(_generic.formatearNumero(formModal.value.monto)); ">
+                </div>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+  <!-- <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button> -->
+  <button [disabled]="formModal.invalid" mat-raised-button class="btn_siguiente fondo_fintra text-white"
+    [mat-dialog-close]="[formModal]">Gurdar</button>
+  <button mat-raised-button class="btn_siguiente bg-gray-400 color-fintra" [mat-dialog-close]="[]">Cancelar</button>
+</mat-dialog-actions>
