@@ -52,7 +52,7 @@ export class solicitudComponent implements OnInit {
       genero: [""],
 
       nombreCompleto: ["", [Validators.required]], // razon Social
-      celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(11), Validators.maxLength(11)]],
+      celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       compraSemanal: ['', [Validators.required]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
       antiguedadCompra: ['', [Validators.required]],
@@ -77,7 +77,7 @@ export class solicitudComponent implements OnInit {
       nombreCompleto: [""],
       fechaNacimiento: ["", Validators.required],
       genero: ["", [Validators.required]],
-      celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(11), Validators.maxLength(11)]],
+      celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
       antiguedadNegocio: [0],
       antiguedadCompra: [0],
@@ -307,6 +307,14 @@ export class solicitudComponent implements OnInit {
       form.documento = (this.formSolicitudRepresentante.value.documento).toString();
       this._creditService.solicitudUltracem(form).subscribe(resp => {
         console.log(resp);
+        switch (resp.data.estado) {
+          case 'RECHAZADO':
+            this.estadoSolicitud.rechazado = true;
+            break;
+          case 'APROBADO':
+            this.estadoSolicitud.aprobado = true;
+            break;
+        }
       });
     }else {
       this.formSolicitudRepresentante.markAllAsTouched();

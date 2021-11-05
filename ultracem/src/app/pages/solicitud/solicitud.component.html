@@ -289,19 +289,19 @@
               <mat-error *ngIf="(formSolicitudJuridica.controls.celular.dirty || formSolicitudJuridica.controls.celular.touched)">
                 <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
-                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.minlength">Longitud mínima son 11.</mat-error>
-                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.minlength">Longitud mínima son 10.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.maxlength">Longitud máxima son 10.</mat-error>
               </mat-error>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="number">
+              <input matInput formControlName="compraSemanal" type="number" autocomplete="off">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off">
               <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -407,8 +407,8 @@
               <mat-error *ngIf="(formSolicitudRepresentante.controls.celular.dirty || formSolicitudRepresentante.controls.celular.touched)">
                 <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
-                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.minlength">Longitud mínima son 11.</mat-error>
-                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.minlength">Longitud mínima son 10.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.maxlength">Longitud máxima son 10.</mat-error>
               </mat-error>
             </mat-form-field>
           </div>
