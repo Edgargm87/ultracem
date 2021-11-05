@@ -21,6 +21,7 @@ export class solicitudComponent implements OnInit {
   formSolicitudRepresentante: FormGroup;
   natural: boolean = true;
   tipoRegistro: listaGenerica[] = [];
+  tipoRegistroJuridico: listaGenerica[] = [];
   siNo: listaGenerica[] = [];
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
@@ -67,17 +68,17 @@ export class solicitudComponent implements OnInit {
     this.formSolicitudRepresentante = this.fb.group({
       tipoTercero: ["R", [Validators.required]],
       tipoDocumento: ["CC", [Validators.required]],
-      documento: ["", [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      documento: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]],
       clienteUltracem: ["N"],
       primerNombre: ["", [Validators.required]],
       segundoNombre: [""],
       primerApellido: ["", [Validators.required]],
       segundoApellido: [""],
       nombreCompleto: [""],
-      fechaNacimiento: [""],
+      fechaNacimiento: ["", Validators.required],
       genero: ["", [Validators.required]],
-      celular: ["", [Validators.required]],
-      email: ["", [Validators.required]],
+      celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(11), Validators.maxLength(11)]],
+      email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
       antiguedadNegocio: [0],
       antiguedadCompra: [0],
       compraSemanal: [0],
@@ -202,12 +203,19 @@ export class solicitudComponent implements OnInit {
       this.eresclienteUltracem();
       this.obtenerTipoRegistro();
       this.obtenerTipoGenero();
+      this.obtenerTipoRegistroJuridico();
     });
   }
 
   obtenerTipoRegistro() {
     this._creditService.getTipoRegistro().subscribe(resp => {
       this.tipoRegistro = resp.data;
+    })
+  }
+
+  obtenerTipoRegistroJuridico(): void {
+    this._creditService.getDocumentsTypes().subscribe(resp => {
+      this.tipoRegistroJuridico = resp.data;
     })
   }
 
@@ -293,15 +301,16 @@ export class solicitudComponent implements OnInit {
   }
 
   SolicitudRepresentante(): void {
-    if (this.formSolicitudRepresentante.invalid) {
-      return;
+    if (this.formSolicitudRepresentante.valid) {
+      let form = { ...this.formSolicitudRepresentante.value }
+      form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
+      form.documento = (this.formSolicitudRepresentante.value.documento).toString();
+      this._creditService.solicitudUltracem(form).subscribe(resp => {
+        console.log(resp);
+      });
+    }else {
+      this.formSolicitudRepresentante.markAllAsTouched();
     }
-    let form = { ...this.formSolicitudRepresentante.value }
-    form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
-    form.documento = (this.formSolicitudRepresentante.value.documento).toString();
-    this._creditService.solicitudUltracem(form).subscribe(resp => {
-      console.log(resp);
-    });
   }
 
   SolicitudNUltracem(): void {

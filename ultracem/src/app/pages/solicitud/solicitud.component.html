@@ -220,14 +220,16 @@
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales"
-                              [matTooltip]="formSolicitudNatural.controls.aceptaConsultaCentrales.errors? 'Este campo es requerido ': ''"
+                              [matTooltip]="formSolicitudNatural.controls.aceptaConsultaCentrales.errors? 'Autorización requerida ': ''"
                 >
                   Autorizo que la información entregada sea
                   consultada en centrales de riesgos.
                 </mat-checkbox>
               </p>
               <p>
-                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+                <mat-checkbox formControlName="aceptaTerminos"
+                              [matTooltip]="formSolicitudNatural.controls.aceptaTerminos.errors? 'Autorización requerida ': ''"
+                > Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>
           </div>
@@ -353,26 +355,26 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Tipo de documento</mat-label>
               <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.codigoOpcion}}</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistroJuridico">{{item.codigoOpcion}}</mat-option>
               </mat-select>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.tipoDocumento.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
-            {{formSolicitudRepresentante.controls.documento.errors | json}}
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Número de documento</mat-label>
               <input type="text" matInput formControlName="documento" autocomplete="off">
               <mat-error *ngIf="(formSolicitudRepresentante.controls.documento.dirty || formSolicitudRepresentante.controls.documento.touched)">
                 <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.pattern">Solo se aceptan números.</mat-error>
-                <!--<mat-error *ngIf="formSolicitudNatural.controls.documento.errors?.minlength">Longitud mínima son 7.</mat-error>
-                <mat-error *ngIf="formSolicitudNatural.controls.documento.errors?.maxlength">Longitud máxima son 11.</mat-error>-->
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.minlength">Longitud mínima son 5.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.maxlength">Longitud máxima son 10.</mat-error>
               </mat-error>
-
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer nombre</mat-label>
-              <input matInput formControlName="primerNombre">
+              <input matInput formControlName="primerNombre" autocomplete="off">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.primerNombre.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo nombre (opcional)</mat-label>
@@ -382,7 +384,8 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer apellido</mat-label>
-              <input matInput formControlName="primerApellido">
+              <input matInput formControlName="primerApellido" autocomplete="off">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.primerApellido.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo apellido (opcional)</mat-label>
@@ -396,16 +399,24 @@
                 <mat-option value="">Selecciona</mat-option>
                 <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.genero.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
-              <input matInput formControlName="celular">
+              <input matInput formControlName="celular" autocomplete="off">
+              <mat-error *ngIf="(formSolicitudRepresentante.controls.celular.dirty || formSolicitudRepresentante.controls.celular.touched)">
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.minlength">Longitud mínima son 11.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.maxlength">Longitud máxima son 11.</mat-error>
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
@@ -416,24 +427,29 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
-              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-              <mat-datepicker #picker2></mat-datepicker>
+              <input matInput [matDatepicker]="picker4"  formControlName="fechaNacimiento" (click)="picker4.open()" (keydown)="picker4.open()" autocomplete="off">
+              <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+              <mat-datepicker #picker4></mat-datepicker>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
           </div>
           <div class="row">
             <section class="col-lg-6 checkp">
               <p>
-                <mat-checkbox formControlName="aceptaConsultaCentrales" >Autorizo que la información entregada sea
+                <mat-checkbox formControlName="aceptaConsultaCentrales"
+                              [matTooltip]="formSolicitudRepresentante.controls.aceptaConsultaCentrales.errors? 'Autorización requerida ': ''"
+                >Autorizo que la información entregada sea
                   consultada en centrales de riesgos. </mat-checkbox>
               </p>
               <p>
-                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+                <mat-checkbox formControlName="aceptaTerminos"
+                              [matTooltip]="formSolicitudRepresentante.controls.aceptaTerminos.errors? 'Autorización requerida ': ''"
+                > Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button class="btn_siguiente"  [disabled]="formSolicitudRepresentante.invalid" (click)="SolicitudRepresentante()">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente"  (click)="SolicitudRepresentante()">Solicitar</button>
           </div>
         </form>
       </div>

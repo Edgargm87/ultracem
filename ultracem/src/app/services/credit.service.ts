@@ -56,6 +56,10 @@ export class CreditService {
     return this._http.get(this.infoApp.urlApi + 'generic/qry/documentos-reque/32/' + nSolicitud + '/' + tipoDocumento, { 'headers': this.headers }).pipe(map(res => res));
   }
 
+  getDocumentsTypes(): Observable<any> {
+    return this._http.get(this.infoApp.urlApi+ 'generic/qry/consulta-lista-generica/TIP-DOC-REP', { 'headers': this.headers }).pipe(map(res => res))
+  }
+
   /**
    * Servicio POST para iniciar sesión y obtener token
    * @returns Retorna un observable que devuelve el token
