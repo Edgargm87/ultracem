@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DatosContactoComponent } from 'src/app/components/modals/datos-contacto/datos-contacto.component';
 import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import { format, parseISO } from 'date-fns'
+import { GenericService } from 'src/app/services/generic.service';
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -35,7 +36,8 @@ export class solicitudComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
-    private _creditService: CreditService
+    private _creditService: CreditService,
+    public _generic: GenericService,
   ) {
     localStorage.removeItem('TOKEN')
     this.formSolicitudJuridica = this.fb.group({
@@ -326,6 +328,8 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudNatural.value }
       form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
       delete form.fechaMatricula
+      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+      // delete form.compraSemanal
 
       this._creditService.solicitudUltracem(form).subscribe(resp => {
         console.log(resp);
@@ -348,6 +352,7 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudJuridica.value }
       form.antiguedadNegocio = 0;
       form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
+      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
       this._creditService.solicitudUltracem(form).subscribe(resp => {
         this.formSolicitudRepresentante.patchValue({
           numeroSolicitud: (resp.data.numeroSolicitud).toString()

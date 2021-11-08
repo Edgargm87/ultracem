@@ -65,7 +65,7 @@
               <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores numéricos</mat-error>
             </mat-form-field>
           </div>
-          <div class="row justify-content-center">
+          <div class="row justify-content-center mt-5">
             <button (click)=" preaprobado()"  mat-raised-button class="btn_siguiente" >Siguiente</button>
           </div>
         </form>
@@ -214,7 +214,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="number">
+              <input matInput formControlName="compraSemanal" type="text"  (keyup)="formSolicitudNatural.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudNatural.value.compraSemanal)); ">
               <mat-error *ngIf="!formSolicitudNatural.controls.compraSemanal.errors && !formSolicitudNatural.controls.compraSemanal.touched ">Este campo es requerido.</mat-error>
             </mat-form-field>
             <section class="col-lg-6 checkp">
@@ -297,7 +297,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="number" autocomplete="off">
+              <input matInput formControlName="compraSemanal" type="text" autocomplete="off" (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); ">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
