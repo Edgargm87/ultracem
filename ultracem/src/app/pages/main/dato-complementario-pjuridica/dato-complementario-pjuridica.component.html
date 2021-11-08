@@ -29,6 +29,7 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.departamentoNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio del negocio</mat-label>
@@ -41,6 +42,7 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.ciudadNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -55,10 +57,12 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.barrioNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Dirección de negocio</mat-label>
                 <input matInput autocomplete="off" formControlName="direccionNegocio" (keydown)="openModalDirection()">
+                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -69,10 +73,17 @@
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Teléfono del negocio</mat-label>
                 <input matInput autocomplete="off" formControlName="telefonoNegocio">
+                <mat-error *ngIf="(formTab1.controls.telefonoNegocio.dirty || formTab1.controls.telefonoNegocio.touched)">
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.minlength">Longitud mínima son 7.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Activos ($)</mat-label>
                 <input matInput autocomplete="off" formControlName="activos"  (keyup)="formTab1.controls['activos'].setValue(_generic.formatearNumero(formTab1.value.activos)); ">
+                <mat-error *ngIf="formTab1.controls.activos.errors">Este campo es requerido.</mat-error>
                 <!-- <mat-select formControlName="tipoVivienda">
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="A">Arrendada</mat-option>
@@ -83,17 +94,18 @@
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Ventas mensuales ($)</mat-label>
+                <mat-label>Valor total de ventas mensuales ($)</mat-label>
                 <input matInput autocomplete="off" formControlName="ventasMensuales"  (keyup)="formTab1.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab1.value.ventasMensuales)); ">
+                <mat-error *ngIf="formTab1.controls.ventasMensuales.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>¿Eres declarante?</mat-label>
-                <!-- <input matInput autocomplete="off" formControlName="nivelEstudio"> -->
                 <mat-select formControlName="declarante">
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="S">Si</mat-option>
                   <mat-option value="N">No</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.declarante.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -105,13 +117,13 @@
                   <mat-option value="S">Si</mat-option>
                   <mat-option value="N">No</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab1.controls.viveNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
 
             <div class="row justify-content-center">
               <button mat-raised-button class="btn_siguiente"
-                      [disabled]="!formTab1.valid"
-                      (click)="onGuardarUno(1)"
+                      (click)="onGuardarUno()"
               >
                 Siguiente
               </button>
@@ -149,6 +161,7 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoRepresentante ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab2.controls.departamentoResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio de residencia</mat-label>
@@ -160,6 +173,7 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab2.controls.ciudadResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -173,19 +187,15 @@
                     {{item.nombre}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab2.controls.barrioResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Direccion de residencia </mat-label>
                 <input matInput formControlName="direccionResidencia" type="text" (keydown)="openModalDirectionRepresentante()">
+                <mat-error *ngIf="formTab2.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
-              <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Tipo de vivienda </mat-label>
                 <mat-select formControlName="tipoVivienda">
@@ -196,9 +206,8 @@
                     {{ item.descripcionOpcion}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab2.controls.tipoVivienda.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
-            </div>
-            <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Nivel de estudio</mat-label>
                 <mat-select formControlName="nivelEstudio">
@@ -209,12 +218,12 @@
                     {{ item.descripcionOpcion}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab2.controls.nivelEstudio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
               <button mat-raised-button class="btn_siguiente"
-                      [disabled]="formTab2.invalid"
-                      (click)="onGuardarDos(1)"
+                      (click)="onGuardarDos()"
               >
                 Siguiente
               </button>
@@ -248,11 +257,18 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Razon social</mat-label>
-                <input matInput formControlName="nombreCompleto">
+                <input matInput formControlName="nombreCompleto" autocomplete="off">
+                <mat-error *ngIf="formTab3.controls.nombreCompleto.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Teléfono /celular</mat-label>
-                <input matInput formControlName="telefono">
+                <input matInput formControlName="telefono" autocomplete="off">
+                <mat-error *ngIf="(formTab3.controls.telefono.dirty || formTab3.controls.telefono.touched)">
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.minlength">Longitud mínima son 7.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -262,6 +278,7 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoReferenciaUno ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab3.controls.codigoDepartamento.errors">Este campo es requerido.</mat-error>
                 <input matInput formControlName="codigoDepartamento" type="text">
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
@@ -270,12 +287,17 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of ciudadReferenciaUno ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab3.controls.codigoCiudad.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antiguedad de ser cliente (meses) </mat-label>
-                <input matInput formControlName="antiguedad" type="text">
+                <input matInput formControlName="antiguedad" type="text" autocomplete="off">
+                <mat-error *ngIf="(formTab3.controls.antiguedad.dirty || formTab3.controls.antiguedad.touched)">
+                  <mat-error *ngIf="formTab3.controls.antiguedad.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.antiguedad.errors?.pattern">Solo se aceptan números.</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
           </form>
@@ -290,11 +312,18 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Razon social</mat-label>
-                <input matInput formControlName="nombreCompleto">
+                <input matInput formControlName="nombreCompleto" autocomplete="off">
+                <mat-error *ngIf="formTab4.controls.nombreCompleto.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Teléfono /celular</mat-label>
-                <input matInput formControlName="telefono">
+                <input matInput formControlName="telefono" autocomplete="off">
+                <mat-error *ngIf="(formTab4.controls.telefono.dirty || formTab4.controls.telefono.touched)">
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.minlength">Longitud mínima son 7.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -304,6 +333,7 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoReferenciaDos ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab4.controls.codigoDepartamento.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad /municipio</mat-label>
@@ -311,17 +341,22 @@
                   <mat-option value="" disabled>Selecciona</mat-option>
                   <mat-option value="{{item.codigo}}" *ngFor="let item of ciudadReferenciaDos ">{{item.nombre}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formTab4.controls.codigoCiudad.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antiguedad de ser cliente (meses) </mat-label>
-                <input matInput formControlName="antiguedad" type="text">
+                <input matInput formControlName="antiguedad" type="text" autocomplete="off">
+                <mat-error *ngIf="(formTab4.controls.antiguedad.dirty || formTab4.controls.antiguedad.touched)">
+                  <mat-error *ngIf="formTab4.controls.antiguedad.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.antiguedad.errors?.pattern">Solo se aceptan números.</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="row justify-content-center">
-              <button mat-raised-button class="btn_siguiente" [disabled]="formTab3.invalid && formTab4.invalid"
-                      (click)="onGuardarTres(1)"
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="onGuardarTres()"
               >
                 Siguiente
               </button>

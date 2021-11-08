@@ -64,7 +64,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       ciudadNegocio: ['', [Validators.required]],
       barrioNegocio: ['', [Validators.required]],
       direccionNegocio: ['', [Validators.required]],
-      telefonoNegocio: ['', [Validators.required]],
+      telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       activos: ['', [Validators.required]],
       ventasMensuales: ['', [Validators.required]],
       declarante: ['', [Validators.required]],
@@ -77,7 +77,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       ciudadResidencia: ["", [Validators.required]],
       barrioResidencia: ["", [Validators.required]],
       direccionResidencia: ["", [Validators.required]],
-      fechaNacimiento: ["", [Validators.required]],
       nivelEstudio: ["", [Validators.required]],
       tipoVivienda: ["", [Validators.required]],
       numeroSolicitud: ['', [Validators.required]],
@@ -89,8 +88,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       nombreCompleto:     ['', [Validators.required]],
       codigoDepartamento: ['', [Validators.required]],
       codigoCiudad:       ['', [Validators.required]],
-      telefono:           ['', [Validators.required]],
-      antiguedad:         ['', [Validators.required]],
+      telefono:           ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      antiguedad:         ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     })
     this.formTab4=this.fb.group({
       recurso:            ['tab-referencia-comercial'],
@@ -98,8 +97,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       nombreCompleto:     ['', [Validators.required]],
       codigoDepartamento: ['', [Validators.required]],
       codigoCiudad:       ['', [Validators.required]],
-      telefono:           ['', [Validators.required]],
-      antiguedad:         ['', [Validators.required]],
+      telefono:           ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      antiguedad:         ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     })
 
 
@@ -170,22 +169,23 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     });
   }
 
-  public onGuardarUno(key: number): void {
+  public onGuardarUno(): void {
     let url: string = 'credito/tk/formulario-solicitud-tabs';
-    const datos: any = this.formTab1.getRawValue();
-    const {
-      departamentoNegocio,
-      ciudadNegocio,
-      barrioNegocio,
-      direccionNegocio,
-      telefonoNegocio,
-      activos,
-      ventasMensuales,
-      declarante,
-      recurso,
-      viveNegocio,
-      numeroSolicitud,
-    } = datos;
+    if (this.formTab1.valid) {
+      const datos: any = this.formTab1.getRawValue();
+      const {
+        departamentoNegocio,
+        ciudadNegocio,
+        barrioNegocio,
+        direccionNegocio,
+        telefonoNegocio,
+        activos,
+        ventasMensuales,
+        declarante,
+        recurso,
+        viveNegocio,
+        numeroSolicitud,
+      } = datos;
 
     const formulario = {
       departamentoNegocio: departamentoNegocio,
@@ -201,118 +201,127 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       numeroSolicitud: numeroSolicitud,
     }
 
-    this._generic.posData(url, formulario).subscribe((res: any) => {
-      if (res) {
-        if (res.status === 200) {
-          Swal.fire(
-            '¡Información!',
-            `Se guardo el registro con éxito`,
-            'success'
-          ).then(resultado => {
-            if (resultado.isConfirmed) {
-              this.step = res.data.stepFormulario;
-            }
-          });
+      this._generic.posData(url, formulario).subscribe((res: any) => {
+        if (res) {
+          if (res.status === 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con éxito`,
+              'success'
+            ).then(resultado => {
+              if (resultado.isConfirmed) {
+                this.step = res.data.stepFormulario;
+              }
+            });
+          }
         }
-      }
-
-    });
-  }
-  public onGuardarDos(key: number): void {
-    let url: string = 'credito/tk/formulario-solicitud-tabs';
-    const datos: any = this.formTab2.getRawValue();
-    const {
-      departamentoResidencia,
-      ciudadResidencia,
-      barrioResidencia,
-      direccionResidencia,
-      fechaNacimiento,
-      nivelEstudio,
-      tipoVivienda,
-      numeroSolicitud,
-      recurso,
-
-    } = datos;
-
-    const formulario = {
-      departamentoResidencia: departamentoResidencia,
-      ciudadResidencia: ciudadResidencia,
-      barrioResidencia: String(barrioResidencia),
-      direccionResidencia: direccionResidencia,
-      nivelEstudio: nivelEstudio,
-      tipoVivienda: tipoVivienda,
-      recurso: recurso,
-      numeroSolicitud: numeroSolicitud,
-      fechaNacimiento: format(fechaNacimiento, 'yyyy-MM-dd')
+      });
+    }else {
+      this.formTab1.markAllAsTouched();
     }
 
-    this._generic.posData(url, formulario).subscribe((res: any) => {
-      if (res) {
-        if (res.status === 200) {
-          Swal.fire(
-            '¡Información!',
-            `Se guardo el registro con éxito`,
-            'success'
-          ).then(resultado => {
-            if (resultado.isConfirmed) {
-              this.step = res.data.stepFormulario;
-            }
-          });
-        }
+  }
+  public onGuardarDos(): void {
+    let url: string = 'credito/tk/formulario-solicitud-tabs';
+    if (this.formTab2.valid) {
+      const datos: any = this.formTab2.getRawValue();
+      const {
+        departamentoResidencia,
+        ciudadResidencia,
+        barrioResidencia,
+        direccionResidencia,
+        nivelEstudio,
+        tipoVivienda,
+        numeroSolicitud,
+        recurso,
+
+      } = datos;
+
+      const formulario = {
+        departamentoResidencia: departamentoResidencia,
+        ciudadResidencia: ciudadResidencia,
+        barrioResidencia: String(barrioResidencia),
+        direccionResidencia: direccionResidencia,
+        nivelEstudio: nivelEstudio,
+        tipoVivienda: tipoVivienda,
+        recurso: recurso,
+        numeroSolicitud: numeroSolicitud,
       }
-    });
+
+      this._generic.posData(url, formulario).subscribe((res: any) => {
+        if (res) {
+          if (res.status === 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con éxito`,
+              'success'
+            ).then(resultado => {
+              if (resultado.isConfirmed) {
+                this.step = res.data.stepFormulario;
+              }
+            });
+          }
+        }
+      });
+    }else {
+      this.formTab2.markAllAsTouched();
+    }
   }
   /**
    * @description: Almacena las referencias comerciales
    */
-  public onGuardarTres(key: number): void {
+  public onGuardarTres(): void {
     let url: string = 'credito/formulario-solicitud-tabs-ref';
-    const datosUno: ReferenciasJuridicaInterfaces = this.formTab3.getRawValue();
-    const datosDos: ReferenciasJuridicaInterfaces = this.formTab4.getRawValue();
+    if (this.formTab3.valid && this.formTab4.valid) {
+      const datosUno: ReferenciasJuridicaInterfaces = this.formTab3.getRawValue();
+      const datosDos: ReferenciasJuridicaInterfaces = this.formTab4.getRawValue();
 
-    const formularioUno = {
-      recurso: datosUno.recurso,
-      numeroSolicitud: datosUno.numeroSolicitud,
-      nombreCompleto: datosUno.nombreCompleto,
-      codigoDepartamento: datosUno.codigoDepartamento,
-      codigoCiudad: datosUno.codigoCiudad,
-      telefono: datosUno.telefono,
-      antiguedad: Number(datosUno.antiguedad)
-    };
+      const formularioUno = {
+        recurso: datosUno.recurso,
+        numeroSolicitud: datosUno.numeroSolicitud,
+        nombreCompleto: datosUno.nombreCompleto,
+        codigoDepartamento: datosUno.codigoDepartamento,
+        codigoCiudad: datosUno.codigoCiudad,
+        telefono: datosUno.telefono,
+        antiguedad: Number(datosUno.antiguedad)
+      };
 
-    const formularioDos = {
-      recurso: datosDos.recurso,
-      numeroSolicitud: datosDos.numeroSolicitud,
-      nombreCompleto: datosDos.nombreCompleto,
-      codigoDepartamento: datosDos.codigoDepartamento,
-      codigoCiudad: datosDos.codigoCiudad,
-      telefono: datosDos.telefono,
-      antiguedad: Number(datosDos.antiguedad)
-    };
+      const formularioDos = {
+        recurso: datosDos.recurso,
+        numeroSolicitud: datosDos.numeroSolicitud,
+        nombreCompleto: datosDos.nombreCompleto,
+        codigoDepartamento: datosDos.codigoDepartamento,
+        codigoCiudad: datosDos.codigoCiudad,
+        telefono: datosDos.telefono,
+        antiguedad: Number(datosDos.antiguedad)
+      };
 
-    const formulario: any = {
-        detalle: [
-          formularioUno,
-          formularioDos
-        ]
-    };
+      const formulario: any = {
+          detalle: [
+            formularioUno,
+            formularioDos
+          ]
+      };
 
-    this._generic.posData(url, formulario).subscribe((res: any) => {
-      if (res) {
-        if (res.status === 200) {
-          Swal.fire(
-            '¡Información!',
-            `Se guardo el registro con éxito`,
-            'success'
-          ).then(result => {
-            if (result.isConfirmed) {
-                 let url=`/main/legal/${datosDos.numeroSolicitud}`;
-                  this.router.navigateByUrl(url);
-            }
-          });
+      this._generic.posData(url, formulario).subscribe((res: any) => {
+        if (res) {
+          if (res.status === 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con éxito`,
+              'success'
+            ).then(result => {
+              if (result.isConfirmed) {
+                 this.step = res.data.stepFormulario;
+              }
+            });
+          }
         }
-      }
-    });
+      });
+    }else {
+      this.formTab3.markAllAsTouched();
+      this.formTab4.markAllAsTouched();
+    }
   }
 
   /**
