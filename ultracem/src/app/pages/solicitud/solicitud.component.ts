@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DatosContactoComponent } from 'src/app/components/modals/datos-contacto/datos-contacto.component';
 import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import { format, parseISO } from 'date-fns'
+import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -340,6 +341,13 @@ export class solicitudComponent implements OnInit {
       });
     }else {
       this.formSolicitudNatural.markAllAsTouched();
+    }
+  }
+
+  onAceptoTerminos(evento: MatCheckboxChange): void {
+    if (evento.checked) {
+      let url:string = 'https://www.google.com.co'
+      window.open(url, '_blank');
     }
   }
 

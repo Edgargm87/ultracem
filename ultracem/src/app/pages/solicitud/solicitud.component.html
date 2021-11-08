@@ -56,13 +56,13 @@
               <input type="text" matInput formControlName="documento" autocomplete="off">
               <mat-error *ngIf="validacionCamposRequerido('documento')">Este campo es requerido.</mat-error>
               <mat-error *ngIf="validacionCampoMinimo('documento') || validacionCampoMaximo('documento')">
-                <mat-error *ngIf="validacionCampoMinimo('documento')">La longitud mínima es de 5</mat-error>
-                <mat-error *ngIf="validacionCampoMaximo('documento')">La longitud maxima es de 10</mat-error>
+                <mat-error *ngIf="validacionCampoMinimo('documento')">La longitud mínima es de 5 digitos</mat-error>
+                <mat-error *ngIf="validacionCampoMaximo('documento')">La longitud maxima es de 10 digitos</mat-error>
               </mat-error>
               <!--<mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">
                 <mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">La longitud mínima es de 9 digitos</mat-error>
               </mat-error>-->
-              <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores numéricos</mat-error>
+              <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores némericos</mat-error>
             </mat-form-field>
           </div>
           <div class="row justify-content-center">
@@ -206,10 +206,12 @@
               <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'">
               <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Antigüedad compras? (meses)</mat-label>
-              <input matInput formControlName="antiguedadCompra" type="number">
-            </mat-form-field>
+            <ng-container *ngIf="!formSolicitudNatural.controls.antiguedadCompra.value.length">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Antigüedad compras? (meses)</mat-label>
+                <input matInput formControlName="antiguedadCompra" type="number">
+              </mat-form-field>
+            </ng-container>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
@@ -220,7 +222,6 @@
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales"
-                              [matTooltip]="formSolicitudNatural.controls.aceptaConsultaCentrales.errors? 'Autorización requerida ': ''"
                 >
                   Autorizo que la información entregada sea
                   consultada en centrales de riesgos.
@@ -228,7 +229,7 @@
               </p>
               <p>
                 <mat-checkbox formControlName="aceptaTerminos"
-                              [matTooltip]="formSolicitudNatural.controls.aceptaTerminos.errors? 'Autorización requerida ': ''"
+                              (change)="onAceptoTerminos($event)"
                 > Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>
