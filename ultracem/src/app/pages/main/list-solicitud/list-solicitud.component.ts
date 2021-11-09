@@ -29,7 +29,7 @@ export class ListSolicitudComponent implements OnInit {
 
 
   solicitudes() {
-    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Cargando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     console.log(this.cedula);
     let url = `generic/qry/cre-solicitudes-cliente/${this.cedula}`;
     this._utilityService.getQuery(url, true).subscribe(resp => {
@@ -38,7 +38,7 @@ export class ListSolicitudComponent implements OnInit {
       this.list = respuesta.data;
     })
   }
-  gestion(x: number, type: string, stepPortal: string,stepFormulario:number) {
+  gestion(x: number, type: string, stepPortal: string, stepFormulario: number) {
     debugger
     switch (stepPortal) {
       case "1":
@@ -56,7 +56,7 @@ export class ListSolicitudComponent implements OnInit {
               let url = `/main/personajuridica/${x}`;
               this.router.navigateByUrl(url);
             }
-          break;
+            break;
         }
 
         break;
@@ -67,10 +67,30 @@ export class ListSolicitudComponent implements OnInit {
       default:
 
 
-      break;
+        break;
     }
+  }
 
-
+  buscarIcono(x: string) {
+  
+    switch (x) {
+      case "1":
+        return "fa-clipboard-list";
+      
+      case "2":
+        return "fa-paste";
+       
+      case "3":
+        return "fa-hourglass-half";
+      
+      case "4":
+        return "fa-persons";
+       
+      default:
+        return "fa-users";
+      
+       
+    }
   }
 
 

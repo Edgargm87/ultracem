@@ -44,6 +44,7 @@ export class LegalComponent implements OnInit {
       familiar_identificacion: "",
       familiar_nacionalidad: "",
       familiar_Entidad: "",
+      familiar_cargo:"",
       familiar_vinculadoActualmente: "",
       familiar_fechaDesvinculacion: "",
       pregunta2: [false],
@@ -128,6 +129,7 @@ export class LegalComponent implements OnInit {
               "identificacion": this.formTab1.value.familiar_identificacion,
               "nacionalidad": this.formTab1.value.familiar_nacionalidad,
               "Entidad": this.formTab1.value.familiar_Entidad,
+              "cargo": this.formTab1.value.familiar_cargo,
               "vinculadoActualmente": this.formTab1.value.familiar_vinculadoActualmente,
               "fechaDesvinculacion": this.formTab1.value.familiar_fechaDesvinculacion
             },
@@ -348,6 +350,7 @@ export class LegalComponent implements OnInit {
         this.formTab1.controls['familiar_identificacion'].setValue(result[0].value.documento)
         this.formTab1.controls['familiar_nacionalidad'].setValue(result[0].value.nacionalidad)
         this.formTab1.controls['familiar_Entidad'].setValue(result[0].value.entidad)
+        this.formTab1.controls['familiar_cargo'].setValue(result[0].value.cargo)
         this.formTab1.controls['familiar_vinculadoActualmente'].setValue(result[0].value.vinculadoActualmente)
         this.formTab1.controls['familiar_fechaDesvinculacion'].setValue(result[0].value.fechaVinculado)
 
