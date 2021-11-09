@@ -24,6 +24,7 @@ export class CargoPublicoComponent implements OnInit {
       nombre: ['', [Validators.required]],
       tipoID: ['',[Validators.required]],
       documento: ['',[Validators.required]],
+      cargo: ['',[Validators.required]],
       nacionalidad: ['',[Validators.required]],
       entidad: ['',[Validators.required]],
       vinculadoActualmente: ['',[Validators.required]],

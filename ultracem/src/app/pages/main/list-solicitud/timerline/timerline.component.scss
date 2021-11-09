@@ -41,13 +41,10 @@
   // margin-top: 1em;
   // position: relative;
   // z-index: 200;
-  width: 10em;
-  height: 9em;
-  position: relative;
-  z-index: 1;
+ 
+  
   border-radius: 62%;
-  margin-top: 1em;
-  position: relative;
+  
   z-index: 200;
   padding: 0em 2.5em 0em 2.5em;
 }
@@ -89,7 +86,7 @@
 }
 
 .visited .circle-step {
-  @include color-step($green-light)
+  @include color-step($blue-primary)
 }
 
 .future .circle-step {

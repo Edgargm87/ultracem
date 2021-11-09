@@ -14,7 +14,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule],
     exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule],
     declarations: [
-        DatosContactoComponent
+        DatosContactoComponent,
+        
     ],
     entryComponents: [DatosContactoComponent],
     providers: [],

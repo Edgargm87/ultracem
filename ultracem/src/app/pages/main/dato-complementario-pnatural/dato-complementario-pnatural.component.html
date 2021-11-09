@@ -89,12 +89,10 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Tipo de vivienda</mat-label>
-              <!-- <input matInput autocomplete="off"ormControlName="tipoVivienda"> -->
+              <!-- <input matInput autocomplete="off"ormControlName="tipoVivienda">  -->
               <mat-select formControlName="tipoVivienda">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="A">ARRENDADA</mat-option>
-                <mat-option value="P">PROPIA</mat-option>
-                <mat-option value="F">FAMILIAR</mat-option>
+                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListTipoVivienda ">{{item.descripcionOpcion}}</mat-option>
               </mat-select>
               <mat-error *ngIf="formTab1.controls.tipoVivienda.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
@@ -252,8 +250,8 @@
               <!-- <input matInput formControlName="camaraComercio"> -->
               <mat-select formControlName="camaraComercio">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="S">SI</mat-option>
-                <mat-option value="N">NO</mat-option>
+                <mat-option value="S">Si</mat-option>
+                <mat-option value="N">No</mat-option>
               </mat-select>
               <mat-error *ngIf="formTab2.controls.camaraComercio.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
@@ -285,8 +283,7 @@
               <mat-label>Activos ($) </mat-label>
               <input matInput autocomplete="off" formControlName="activos" type="text"
                 (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); "
-                matTooltip="Valor total de bienes inmuebles, vehículos, saldos de cuentas bancarias, etc"
-              >
+                matTooltip="Valor total de bienes inmuebles, vehículos, saldos de cuentas bancarias, etc.">
               <mat-error *ngIf="formTab2.controls.activos.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
           </div>
@@ -369,7 +366,7 @@
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Razon social</mat-label>
+              <mat-label>Razón social</mat-label>
               <input matInput formControlName="cRazonSocial" autocomplete="off">
               <mat-error *ngIf="formTab3.controls.cRazonSocial.errors">Este campo es requerido.</mat-error>
             </mat-form-field>

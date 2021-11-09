@@ -8,85 +8,92 @@
         <div class="col-sm-12 col-lg-12" *ngIf="data.tipo=='F'">
           <form [formGroup]="formModal_F">
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Relación</label>
-                <input type="text" class="form-control" placeholder="" formControlName="relacion" autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Nombre</label>
-                <input type="text" class="form-control" placeholder="" formControlName="nombre">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Relación</mat-label>
+                <input matInput type="text" placeholder="" formControlName="relacion" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Cargo</mat-label>
+                <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
+              </mat-form-field>
             </div>
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Tipo de documento</label>
-                <!-- <input type="text" class="form-control" placeholder="" formControlName="tipoID" autocomplete="off"> -->
-                <mat-select formControlName="tipoID" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
+              <mat-form-field class="col-lg-12" appearance="outline">
+                <mat-label>Nombre completo</mat-label>
+                <input matInput type="text" placeholder="" formControlName="nombre" autocomplete="off">
+              </mat-form-field>
+            </div>
+
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Tipo de documento</mat-label>
+                <mat-select formControlName="tipoID">
                   <mat-option value="" disabled>SELECCIONA</mat-option>
                   <mat-option value="C">CC</mat-option>
                   <mat-option value="N">Nit</mat-option>
                 </mat-select>
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Nª de identificación</label>
-                <input type="text" class="form-control" placeholder="" formControlName="documento">
-              </div>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Nª de identificación</mat-label>
+                <input matInput type="text" placeholder="" formControlName="documento" autocomplete="off">
+              </mat-form-field>
             </div>
+
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Nacionalidad</label>
-                <input type="text" class="form-control" placeholder="" formControlName="nacionalidad"
-                  autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Entidad</label>
-                <input type="text" class="form-control" placeholder="" formControlName="entidad">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Nacionalidad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="nacionalidad" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Entidad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+              </mat-form-field>
             </div>
+
+
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">¿Estas vinculado actualmente?</label>
-                <!-- <input type="text" class="form-control" placeholder="" formControlName="vinculadoActualmente"
-                  autocomplete="off"> -->
-                  <mat-select formControlName="vinculadoActualmente" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
-                    <mat-option value="" disabled>SELECCIONA</mat-option>
-                    <mat-option value="S">SI</mat-option>
-                    <mat-option value="N">NO</mat-option>
-                  </mat-select>
-              </div>
-              <div class="form-group col-lg-6 " *ngIf="formModal_F.value.vinculadoActualmente=='S'">
-                <label for="fechaVinculado">Fecha de desvinculado</label>
-                <input type="date" class="form-control" placeholder="" formControlName="fechaVinculado">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>¿Estas vinculado actualmente?</mat-label>
+                <mat-select formControlName="vinculadoActualmente">
+                  <mat-option value="" disabled>SELECCIONA</mat-option>
+                  <mat-option value="S">SI</mat-option>
+                  <mat-option value="N">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_F.value.vinculadoActualmente=='N'">
+                <mat-label>Fecha de desvinculado</mat-label>
+                <input matInput type="date" placeholder="" formControlName="fechaVinculado" autocomplete="off">
+              </mat-form-field>
             </div>
+
           </form>
 
         </div>
         <div class="col-sm-12 col-lg-12" *ngIf="data.tipo=='P'">
           <form [formGroup]="formModal_P">
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Cargo</label>
-                <input type="text" class="form-control" placeholder="" formControlName="cargo" autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Entidad</label>
-                <input type="text" class="form-control" placeholder="" formControlName="entidad">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Cargo</mat-label>
+                <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Entidad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+              </mat-form-field>
             </div>
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">¿Estas vinculado actualmente?</label>
-                <mat-select formControlName="vinculadoActualmente" style="  border: 1px  solid #ced4da !important;  padding: 6px !important;  ">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>¿Estas vinculado actualmente?</mat-label>
+                <mat-select formControlName="vinculadoActualmente">
                   <mat-option value="" disabled>SELECCIONA</mat-option>
                   <mat-option value="S">SI</mat-option>
                   <mat-option value="N">NO</mat-option>
                 </mat-select>
-              </div>
-              <div class="form-group col-lg-6 "  *ngIf="formModal_P.value.vinculadoActualmente=='S'">
-                <label for="fechaVinculado">Fecha de desvinculado</label>
-                <input type="date" class="form-control" placeholder="" formControlName="fechaVinculado">
-              </div>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_P.value.vinculadoActualmente=='N'">
+                <mat-label>Fecha de desvinculado</mat-label>
+                <input matInput type="date" placeholder="" formControlName="fechaVinculado" autocomplete="off">
+              </mat-form-field>
             </div>
           </form>
         </div>
@@ -96,7 +103,9 @@
 </div>
 <mat-dialog-actions align="end">
   <!-- <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button> -->
-  <button *ngIf="data.tipo=='F'" [disabled]="formModal_F.invalid"  mat-raised-button class="btn_siguiente fondo_fintra text-white" [mat-dialog-close]="[formModal_F]" >Gurdar</button>
-  <button *ngIf="data.tipo=='P'" [disabled]="formModal_P.invalid" mat-raised-button class="btn_siguiente fondo_fintra text-white" [mat-dialog-close]="[formModal_P]" >Gurdar</button>
-  <button mat-raised-button class="btn_siguiente bg-gray-400 color-fintra" [mat-dialog-close]="[]" >Cancelar</button>
+  <button *ngIf="data.tipo=='F'" [disabled]="formModal_F.invalid" mat-raised-button
+    class="btn_siguiente fondo_fintra text-white" [mat-dialog-close]="[formModal_F]">Gurdar</button>
+  <button *ngIf="data.tipo=='P'" [disabled]="formModal_P.invalid" mat-raised-button
+    class="btn_siguiente fondo_fintra text-white" [mat-dialog-close]="[formModal_P]">Gurdar</button>
+  <button mat-raised-button class="btn_siguiente bg-gray-400 color-fintra" [mat-dialog-close]="[]">Cancelar</button>
 </mat-dialog-actions>

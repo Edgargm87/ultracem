@@ -1,41 +1,40 @@
 <div class="horizontal-timeline">
   <div class="horizontal-step"
     [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
-  
+
     <div class="circle-step">
-      <span> 
+      <span>
         <i class="fas fa-clipboard-list"></i>
       </span>
     </div>
-    <h6 class="text">Llena el formulario</h6> 
-   
+    <!-- <h6 class="text">Llena el formulario</h6>  -->
+
   </div>
   <div class="line-step"></div>
   <div class="horizontal-step"
     [ngClass]="{'current': twoStepNumber == currentStep, 'visited': twoStepNumber <  currentStep, 'future': twoStepNumber > currentStep }">
-  
+
     <div class="circle-step">
       <span>
         <i class="fas fa-paste"></i>
       </span>
     </div>
-    <h6 class="text">Adjunta y firma tus documentos</h6> 
-    
+    <!-- <h6 class="text">Adjunta y firma tus documentos</h6>  -->
+
 
   </div>
 
   <div class="line-step"></div>
   <div class="horizontal-step"
     [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
-    
-    <div class="circle-step">
+
+    <div class="circle-step" >
       <span>
         <i class="fas fa-hourglass-half"></i>
       </span>
     </div>
-    <h6 class="text">Crédito
-      en validación</h6> 
-    
+    <!-- <h6 class="text"></h6>  -->
+
   </div>
 
 </div>

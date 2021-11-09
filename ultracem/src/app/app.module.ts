@@ -23,6 +23,10 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MonedaExtranjeraComponent } from './components/modals/moneda-extranjera/moneda-extranjera.component';
+import {MatCardModule} from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ import { MonedaExtranjeraComponent } from './components/modals/moneda-extranjera
     ReactiveFormsModule,
     HttpClientModule,
     MatSlideToggleModule,
+    MatCardModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [
     CreditService,

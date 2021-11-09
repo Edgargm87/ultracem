@@ -35,6 +35,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   Listdepartamentos: any[] = [];
   ListNivelEstudio: any[] = [];
   ListCiudades: any[] = [];
+  ListTipoVivienda: any[] = [];
   ListBarrios: any;
   ListCiudadesNacionalidad: any;
   ListCiudadesResidencia: any;
@@ -43,6 +44,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   ListBarriosNegocio: any;
   ListCMunicipio: any;
   viveNegocioCondicion: boolean=false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -130,6 +132,10 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
     url = "generic/qry/consulta-lista-generica/NIVEL-ESTUDIO";
     this._generic.getData(url).subscribe(resp => {
       this.ListNivelEstudio = resp;
+    })
+    url = "generic/qry/consulta-lista-generica/tipo-vivienda";
+    this._generic.getData(url).subscribe(resp => {
+      this.ListTipoVivienda = resp;
     })
   }
 
@@ -319,6 +325,9 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
                 if (this.step == 4) {
                   let url=`/main/legal/${this.codigoSolicitud}`;
                   this.router.navigateByUrl(url);
+                }
+                if(this.step==2){
+                  this.viveNegocio(this.codigoSolicitud);
                 }
               }
             });
