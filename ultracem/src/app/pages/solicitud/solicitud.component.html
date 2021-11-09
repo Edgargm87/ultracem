@@ -68,15 +68,18 @@
               <input type="text" matInput formControlName="documento" autocomplete="off"
                      [matTooltip]="natural? 'Ingresar número de identificación.' : 'Ingresar número sin digito de verificación, ni separador de comas o puntos.'"
               >
-              <mat-error *ngIf="validacionCamposRequerido('documento')">Este campo es requerido.</mat-error>
-              <mat-error *ngIf="validacionCampoMinimo('documento') || validacionCampoMaximo('documento')">
-                <mat-error *ngIf="validacionCampoMinimo('documento')">La longitud mínima es de 5 digitos</mat-error>
-                <mat-error *ngIf="validacionCampoMaximo('documento')">La longitud maxima es de 10 digitos</mat-error>
+              <mat-error *ngIf="(formInicial.controls.documento.dirty || formInicial.controls.documento.touched)">
+                <mat-error *ngIf="formInicial.controls.documento.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formInicial.controls.documento.errors?.pattern">Solo se aceptan números.</mat-error>
+                <ng-container *ngIf="formInicial.controls.registrado.value == 'CC' || formInicial.controls.registrar.value == 'CC'">
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.minlength">Longitud mínima son 5 digitos.</mat-error>
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.maxlength">Longitud máxima son 10 digitos.</mat-error>
+                </ng-container>
+                <ng-container *ngIf="formInicial.controls.registrado.value == 'NIT' || formInicial.controls.registrar.value == 'NIT'">
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.minlength">Longitud mínima son 9 digitos.</mat-error>
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.maxlength">Longitud máxima son 9 digitos.</mat-error>
+                </ng-container>
               </mat-error>
-              <!--<mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">
-                <mat-error *ngIf="validacionCampoMinimoJuridico('documento', true)">La longitud mínima es de 9 digitos</mat-error>
-              </mat-error>-->
-              <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores némericos</mat-error>
             </mat-form-field>
           </div>
           <div class="row justify-content-center mt-5">

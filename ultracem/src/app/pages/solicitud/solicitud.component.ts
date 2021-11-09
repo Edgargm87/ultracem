@@ -134,29 +134,35 @@ export class solicitudComponent implements OnInit {
     this.formInicial.controls['registrar'].valueChanges.subscribe(registrar => {
       if (registrar == 'CC') {
         this.natural = true;
-        this.formInicial.controls['tipoDocumento'].setValue(registrar)
+        this.formInicial.controls['tipoDocumento'].setValue(registrar);
+        /*this.formInicial.controls['documento'].addValidators(Validators.minLength(5));
+        this.formInicial.controls['documento'].addValidators(Validators.maxLength(10));*/
+        /*this.formInicial.controls['documento'].removeValidators(Validators.minLength(9));
+        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(9));*/
+        // this.formInicial.controls['documento'].clearValidators();
+        // this.formInicial.controls['documento'].updateValueAndValidity();
       } else if (registrar == 'NIT') {
-        this.formInicial.controls['tipoDocumento'].setValue(registrar)
+        this.formInicial.controls['tipoDocumento'].setValue(registrar);
+        /*this.formInicial.controls['documento'].addValidators(Validators.minLength(9));
+        this.formInicial.controls['documento'].addValidators(Validators.maxLength(9));*/
+        /*this.formInicial.controls['documento'].removeValidators(Validators.minLength(5));
+        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(10));*/
+        // this.formInicial.controls['documento'].updateValueAndValidity();
         this.natural = false;
       }
     })
     this.formInicial.controls['registrado'].valueChanges.subscribe(registrado => {
       if (registrado == 'CC') {
+        console.log(registrado)
         this.natural = true;
         this.formInicial.controls['tipoDocumento'].setValue('CC');
-        this.formInicial.controls['documento'].addValidators(Validators.minLength(5));
-        this.formInicial.controls['documento'].addValidators(Validators.maxLength(10));
-        this.formInicial.controls['documento'].removeValidators(Validators.minLength(9));
-        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(9));
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10)]);
       } else if (registrado == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue('NIT');
-        // this.formInicial.controls['documento'].addValidators(Validators.minLength(9));
-        // this.formInicial.controls['documento'].addValidators(Validators.maxLength(9));
-        //this.formInicial.controls['documento'].removeValidators(Validators.minLength(5));
-        // this.formInicial.controls['documento'].removeValidators(Validators.maxLength(10));
-
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9)]);
         this.natural = false;
       }
+      this.formInicial.controls['documento'].updateValueAndValidity();
     })
     this.formInicial.controls['cliente'].valueChanges.subscribe(cliente => {
       if (cliente == 'S') {
