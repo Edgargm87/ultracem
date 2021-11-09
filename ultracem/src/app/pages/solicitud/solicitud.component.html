@@ -65,7 +65,7 @@
               <mat-error *ngIf="validacionSoloNumero('documento')">Solo se aceptan valores némericos</mat-error>
             </mat-form-field>
           </div>
-          <div class="row justify-content-center">
+          <div class="row justify-content-center mt-5">
             <button (click)=" preaprobado()"  mat-raised-button class="btn_siguiente" >Siguiente</button>
           </div>
         </form>
@@ -140,23 +140,23 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer nombre</mat-label>
-              <input matInput formControlName="primerNombre" autocomplete="off">
+              <input matInput formControlName="primerNombre" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="formSolicitudNatural.controls.primerNombre.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo nombre (opcional)</mat-label>
-              <input matInput formControlName="segundoNombre" autocomplete="off">
+              <input matInput formControlName="segundoNombre" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Primer apellido</mat-label>
-              <input matInput formControlName="primerApellido" autocomplete="off">
+              <input matInput formControlName="primerApellido" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="formSolicitudNatural.controls.primerApellido.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Segundo apellido (opcional)</mat-label>
-              <input matInput formControlName="segundoApellido" autocomplete="off">
+              <input matInput formControlName="segundoApellido" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
             </mat-form-field>
           </div>
           <div class="row">
@@ -203,20 +203,26 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
-              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'">
-              <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors">Este campo es requerido.</mat-error>
+              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="(formSolicitudNatural.controls.antiguedadNegocio.dirty || formSolicitudNatural.controls.antiguedadNegocio.touched)">
+                <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.pattern">Solo se aceptan números positivos.</mat-error>
+              </mat-error>
             </mat-form-field>
-            <ng-container *ngIf="!formSolicitudNatural.controls.antiguedadCompra.value.length">
+            <ng-container *ngIf="formSolicitudNatural.controls.antiguedadCompra.value">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antigüedad compras? (meses)</mat-label>
-                <input matInput formControlName="antiguedadCompra" type="number">
+                <input matInput formControlName="antiguedadCompra" type="number" [readonly]="existeDatos? existeDatos : existeDatos">
               </mat-form-field>
             </ng-container>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="number">
+              <input matInput formControlName="compraSemanal" type="text"
+                     (keyup)="formSolicitudNatural.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudNatural.value.compraSemanal));"
+                     [readonly]="existeDatos? existeDatos : existeDatos"
+              >
               <mat-error *ngIf="!formSolicitudNatural.controls.compraSemanal.errors && !formSolicitudNatural.controls.compraSemanal.touched ">Este campo es requerido.</mat-error>
             </mat-form-field>
             <section class="col-lg-6 checkp">
@@ -267,7 +273,7 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de matrícula</mat-label>
-              <input matInput [matDatepicker]="picker3" formControlName="fechaMatricula" (click)="picker3.open()" (keydown)="picker3.open()" autocomplete="off">
+              <input matInput [matDatepicker]="picker3" formControlName="fechaMatricula" (click)="picker3.open()" (keydown)="picker3.open()" autocomplete="off" [min]="'1990-01-01'" [max]="fechaMaxima">
               <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
               <mat-datepicker #picker3></mat-datepicker>
               <mat-error *ngIf="formSolicitudJuridica.controls.fechaMatricula.errors">Este campo es requerido.</mat-error>
@@ -298,7 +304,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="number" autocomplete="off">
+              <input matInput formControlName="compraSemanal" type="text" autocomplete="off" (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); ">
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>

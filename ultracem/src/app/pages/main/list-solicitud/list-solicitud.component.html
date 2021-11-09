@@ -1,13 +1,13 @@
-<div class="row ">
+<div class="row" >
   <div class="col-md-12  px-5 py-5">
     <h5>
       Solicitudes
     </h5>
-    <div class="row item-request " *ngFor="let item of list">
-      <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="row item-request shadow" *ngFor="let item of list" (click)='gestion(item.numeroSolicitud,item.tipoDocumento,item.stepPortal,item.stepFormulario)'>
+      <div class="col-md-12 col-sm-12 ">
         <div class="row">
 
-          <div class="col-lg-12 col-sm-12">
+          <div class="col-lg-4 col-sm-12">
             <span>Número de solicitud</span>
             <h2>
               {{item.numeroSolicitud}}
@@ -15,14 +15,14 @@
           </div>
 
 
-          <div class="col-lg-12 col-sm-12">
+          <div class="col-lg-4 col-sm-12">
             <span>Nombre del solicitante</span>
             <h2>
               {{item.nombreCompleto}}
             </h2>
           </div>
 
-          <div class="col-lg-6 col-sm-6">
+          <div class="col-lg-4 col-sm-6">
             <span>Valor total del crédito</span>
             <h2>
               {{item.cupoTotal  | currency:'$':'symbol':'0.0-0'}}
@@ -30,24 +30,24 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 col-sm-12 col-lg-6">
+      <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="row align-items-center">
           <div class="col-lg-12 col-sm-12">
-            <app-timerline [currentStep]="item.stepFormulario"></app-timerline>
+            <app-timerline [currentStep]="item.stepPortal"></app-timerline>
             <!-- <app-timerline [currentStep]="item."></app-timerline> -->
           </div>
         </div>
-        <div class="row justify-content-end">
+        <!-- <div class="row justify-content-end">
           <div class="col-lg-3 ">
-            <button class="btn-solicitar btn" (click)='gestion(item.numeroSolicitud,item.tipoDocumento)'>Completar</button>
+            <button class="btn-solicitar btn" >Completar</button>
           </div>
 
-        </div>
+        </div> -->
       </div>
 
     </div>
-    <div style="display: flex; justify-content: center;">
+    <!-- <div style="display: flex; justify-content: center;">
       <button class="btn-solicitar btn">Cargar más</button>
-    </div>
+    </div> -->
   </div>
 </div>

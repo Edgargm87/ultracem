@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DatosContactoComponent } from 'src/app/components/modals/datos-contacto/datos-contacto.component';
 import { listaGenerica, CreditService } from 'src/app/services/credit.service';
-import { format, parseISO } from 'date-fns'
+import {format, getDate, parseISO} from 'date-fns'
+import { GenericService } from 'src/app/services/generic.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-solicitud',
@@ -27,18 +28,23 @@ export class solicitudComponent implements OnInit {
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
   cargando: boolean = false;
+  existeDatos: boolean = false;
   public estadoSolicitud: any = {
     error: false,
     rechazado: false,
     aprobado: false
   }
 
+  fechaMaxima: any;
+
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
-    private _creditService: CreditService
+    private _creditService: CreditService,
+    public _generic: GenericService,
   ) {
     localStorage.removeItem('TOKEN')
+    this.fechaValida();
     this.formSolicitudJuridica = this.fb.group({
       tipoTercero: ["", [Validators.required]], // Cambia en juridica
       tipoDocumento: ["", [Validators.required]],
@@ -103,7 +109,7 @@ export class solicitudComponent implements OnInit {
       genero: ["", [Validators.required]],
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
-      antiguedadNegocio: ['', [Validators.required]],
+      antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       antiguedadCompra: ['', [Validators.required]],
       compraSemanal: ['', [Validators.required]],
       aceptaTerminos: [false, [Validators.requiredTrue]],
@@ -237,6 +243,7 @@ export class solicitudComponent implements OnInit {
       this.cargando = true;
       this._creditService.preaprobado(this.formInicial.value).subscribe(resp => {
         if (resp.data) {
+          this.existeDatos = true;
           if (this.formInicial.value.tipoDocumento == 'CC') {
             this.formSolicitudNatural.patchValue({
               tipoTercero: 'T',
@@ -248,12 +255,12 @@ export class solicitudComponent implements OnInit {
               primerApellido: resp.data.primerApellido,
               segundoApellido: resp.data.segundoApellido,
               nombreCompleto: resp.data.nombreCompleto,
-              fechaNacimiento: resp.data.fechaNacimiento,
-              genero: resp.data.genero,
+              fechaNacimiento: '',
+              genero: '',
               celular: resp.data.celular,
               email: resp.data.email,
               antiguedadCompra: resp.data.antiguedadCompra,
-              compraSemanal: resp.data.compraSemanal
+              compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
             });
             this.step = 2;
           } else {
@@ -265,7 +272,7 @@ export class solicitudComponent implements OnInit {
               nombreCompleto: resp.data.razonSocial,
               celular: resp.data.celular,
               email: resp.data.email,
-              compraSemanal: resp.data.compraSemanal,
+              compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
               antiguedadCompra: resp.data.antiguedadCompra,
               telefono: resp.data.telefono,
               digitoVerificacion: resp.data.digitoVerificacion
@@ -301,6 +308,11 @@ export class solicitudComponent implements OnInit {
 
   }
 
+  fechaValida(): void {
+    const currentYear = format(new Date(), "yyyy-MM-dd");
+    this.fechaMaxima = currentYear;
+  }
+
   SolicitudRepresentante(): void {
     if (this.formSolicitudRepresentante.valid) {
       let form = { ...this.formSolicitudRepresentante.value }
@@ -327,6 +339,8 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudNatural.value }
       form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
       delete form.fechaMatricula
+      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+      // delete form.compraSemanal
 
       this._creditService.solicitudUltracem(form).subscribe(resp => {
         console.log(resp);
@@ -356,6 +370,7 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudJuridica.value }
       form.antiguedadNegocio = 0;
       form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
+      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
       this._creditService.solicitudUltracem(form).subscribe(resp => {
         this.formSolicitudRepresentante.patchValue({
           numeroSolicitud: (resp.data.numeroSolicitud).toString()

@@ -23,9 +23,10 @@
   span {
     // width: 50%;
     margin-top: 10px;
-    font-size: .72rem;
+    font-size: 5.72rem;
     text-align: center;
     width: 100px;
+    color: #fff;
   }
 
   img {
@@ -34,12 +35,21 @@
 }
 
 .circle-step {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+  // width: 16px;
+  // height: 16px;
+  // border-radius: 50%;
+  // margin-top: 1em;
+  // position: relative;
+  // z-index: 200;
+  width: 10em;
+  height: 9em;
+  position: relative;
+  z-index: 1;
+  border-radius: 62%;
   margin-top: 1em;
   position: relative;
   z-index: 200;
+  padding: 0em 2.5em 0em 2.5em;
 }
 
 .line-step {
@@ -48,6 +58,7 @@
   background: #dadada;
   transform: translateY(56px);
   z-index: 10;
+  margin-top: 2em;
 
   &:last-child {
     display: none;
@@ -60,17 +71,17 @@
 }
 
 
-.current span {
-  color: $blue-semi-light;
-}
+// .current span {
+//   color: $blue-semi-light;
+// }
 
-.visited span {
-  color: $green-light;
-}
+// .visited span {
+//   color: $green-light;
+// }
 
-.future span {
-  color: #dadada;
-}
+// .future span {
+//   color: #dadada;
+// }
 
 
 .current .circle-step {
@@ -85,6 +96,13 @@
   @include color-step(#dadada)
 }
 
+.text {
+  font-size: 1em;
+  color: #32befa;
+  font-weight: 800;
+  text-align: center;
+  width: 100px;
+}
 
 
 
@@ -152,17 +170,19 @@
 }
 
 
-.custom-global-css{
+.custom-global-css {
   margin-top: 100px;
 }
 
-.image-step{
-  position: absolute; top:-120px; transform: translateX(-50%);
+.image-step {
+  position: absolute;
+  top: -120px;
+  transform: translateX(-50%);
   left: 50%;
 }
 
 
-:host ::ng-deep aw-wizard-navigation-bar ul.steps-indicator li a .label{
+:host ::ng-deep aw-wizard-navigation-bar ul.steps-indicator li a .label {
   font-size: 12px !important;
   text-transform: capitalize;
 }
