@@ -76,13 +76,17 @@
                 <mat-error *ngIf="(formTab1.controls.telefonoNegocio.dirty || formTab1.controls.telefonoNegocio.touched)">
                   <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.required ">Este campo es requerido.</mat-error>
                   <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.pattern">Solo se aceptan números.</mat-error>
-                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.minlength">Longitud mínima son 7.</mat-error>
-                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.minlength">Longitud mínima son 7 digitos.</mat-error>
+                  <mat-error *ngIf="formTab1.controls.telefonoNegocio.errors?.maxlength">Longitud máxima son 11 digitos.</mat-error>
                 </mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Activos ($)</mat-label>
-                <input matInput autocomplete="off" formControlName="activos"  (keyup)="formTab1.controls['activos'].setValue(_generic.formatearNumero(formTab1.value.activos)); ">
+                <input matInput autocomplete="off"
+                       formControlName="activos"
+                       (keyup)="formTab1.controls['activos'].setValue(_generic.formatearNumero(formTab1.value.activos)); "
+                       matTooltip="Valor total de bienes inmuebles, vehículos, saldos de cuentas bancarias, etc"
+                >
                 <mat-error *ngIf="formTab1.controls.activos.errors">Este campo es requerido.</mat-error>
                 <!-- <mat-select formControlName="tipoVivienda">
                   <mat-option value="" disabled>Selecciona</mat-option>
@@ -266,8 +270,8 @@
                 <mat-error *ngIf="(formTab3.controls.telefono.dirty || formTab3.controls.telefono.touched)">
                   <mat-error *ngIf="formTab3.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
                   <mat-error *ngIf="formTab3.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
-                  <mat-error *ngIf="formTab3.controls.telefono.errors?.minlength">Longitud mínima son 7.</mat-error>
-                  <mat-error *ngIf="formTab3.controls.telefono.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.minlength">Longitud mínima son 7 digitos.</mat-error>
+                  <mat-error *ngIf="formTab3.controls.telefono.errors?.maxlength">Longitud máxima son 11 digitos.</mat-error>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -321,8 +325,8 @@
                 <mat-error *ngIf="(formTab4.controls.telefono.dirty || formTab4.controls.telefono.touched)">
                   <mat-error *ngIf="formTab4.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
                   <mat-error *ngIf="formTab4.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
-                  <mat-error *ngIf="formTab4.controls.telefono.errors?.minlength">Longitud mínima son 7.</mat-error>
-                  <mat-error *ngIf="formTab4.controls.telefono.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.minlength">Longitud mínima son 7 digitos.</mat-error>
+                  <mat-error *ngIf="formTab4.controls.telefono.errors?.maxlength">Longitud máxima son 11 digitos.</mat-error>
                 </mat-error>
               </mat-form-field>
             </div>

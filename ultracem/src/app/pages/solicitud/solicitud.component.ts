@@ -4,8 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DatosContactoComponent } from 'src/app/components/modals/datos-contacto/datos-contacto.component';
 import { listaGenerica, CreditService } from 'src/app/services/credit.service';
-import { format, parseISO } from 'date-fns'
+import {format, getDate, parseISO} from 'date-fns'
 import { GenericService } from 'src/app/services/generic.service';
+import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -27,11 +28,14 @@ export class solicitudComponent implements OnInit {
   tipoGenero: listaGenerica[] = [];
   step: number = 1;
   cargando: boolean = false;
+  existeDatos: boolean = false;
   public estadoSolicitud: any = {
     error: false,
     rechazado: false,
     aprobado: false
   }
+
+  fechaMaxima: any;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +44,7 @@ export class solicitudComponent implements OnInit {
     public _generic: GenericService,
   ) {
     localStorage.removeItem('TOKEN')
+    this.fechaValida();
     this.formSolicitudJuridica = this.fb.group({
       tipoTercero: ["", [Validators.required]], // Cambia en juridica
       tipoDocumento: ["", [Validators.required]],
@@ -57,7 +62,7 @@ export class solicitudComponent implements OnInit {
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       compraSemanal: ['', [Validators.required]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
-      antiguedadCompra: ['', [Validators.required]],
+      antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
@@ -104,8 +109,8 @@ export class solicitudComponent implements OnInit {
       genero: ["", [Validators.required]],
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
-      antiguedadNegocio: ['', [Validators.required]],
-      antiguedadCompra: ['', [Validators.required]],
+      antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      antiguedadCompra: [0],
       compraSemanal: ['', [Validators.required]],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
@@ -238,6 +243,7 @@ export class solicitudComponent implements OnInit {
       this.cargando = true;
       this._creditService.preaprobado(this.formInicial.value).subscribe(resp => {
         if (resp.data) {
+          this.existeDatos = true;
           if (this.formInicial.value.tipoDocumento == 'CC') {
             this.formSolicitudNatural.patchValue({
               tipoTercero: 'T',
@@ -249,12 +255,12 @@ export class solicitudComponent implements OnInit {
               primerApellido: resp.data.primerApellido,
               segundoApellido: resp.data.segundoApellido,
               nombreCompleto: resp.data.nombreCompleto,
-              fechaNacimiento: resp.data.fechaNacimiento,
-              genero: resp.data.genero,
+              fechaNacimiento: '',
+              genero: '',
               celular: resp.data.celular,
               email: resp.data.email,
               antiguedadCompra: resp.data.antiguedadCompra,
-              compraSemanal: resp.data.compraSemanal
+              compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
             });
             this.step = 2;
           } else {
@@ -266,7 +272,7 @@ export class solicitudComponent implements OnInit {
               nombreCompleto: resp.data.razonSocial,
               celular: resp.data.celular,
               email: resp.data.email,
-              compraSemanal: resp.data.compraSemanal,
+              compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
               antiguedadCompra: resp.data.antiguedadCompra,
               telefono: resp.data.telefono,
               digitoVerificacion: resp.data.digitoVerificacion
@@ -300,6 +306,11 @@ export class solicitudComponent implements OnInit {
       this.formInicial.markAllAsTouched();
     }
 
+  }
+
+  fechaValida(): void {
+    const anioActual = format(new Date(), "yyyy-MM-dd");
+    this.fechaMaxima = anioActual;
   }
 
   SolicitudRepresentante(): void {
@@ -344,6 +355,13 @@ export class solicitudComponent implements OnInit {
       });
     }else {
       this.formSolicitudNatural.markAllAsTouched();
+    }
+  }
+
+  onAceptoTerminos(evento: MatCheckboxChange): void {
+    if (evento.checked) {
+      let url:string = 'https://www.google.com.co'
+      window.open(url, '_blank');
     }
   }
 
