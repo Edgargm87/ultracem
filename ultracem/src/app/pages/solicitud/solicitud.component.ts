@@ -146,7 +146,6 @@ export class solicitudComponent implements OnInit {
     })
     this.formInicial.controls['registrado'].valueChanges.subscribe(registrado => {
       if (registrado == 'CC') {
-        console.log(registrado)
         this.natural = true;
         this.formInicial.controls['tipoDocumento'].setValue('CC');
         this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10)]);
