@@ -11,16 +11,19 @@
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Relación</mat-label>
                 <input matInput type="text" placeholder="" formControlName="relacion" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.relacion.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Cargo</mat-label>
                 <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.cargo.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row mt-2">
               <mat-form-field class="col-lg-12" appearance="outline">
                 <mat-label>Nombre completo</mat-label>
                 <input matInput type="text" placeholder="" formControlName="nombre" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.nombre.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
 
@@ -32,10 +35,17 @@
                   <mat-option value="C">CC</mat-option>
                   <mat-option value="N">Nit</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formModal_F.controls.tipoID.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Nª de identificación</mat-label>
                 <input matInput type="text" placeholder="" formControlName="documento" autocomplete="off">
+                <mat-error *ngIf="(formModal_F.controls.documento.dirty || formModal_F.controls.documento.touched)">
+                  <mat-error *ngIf="formModal_F.controls.documento.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formModal_F.controls.documento.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <!--<mat-error *ngIf="formModal_F.controls.documento.errors?.minlength">Longitud mínima son 5.</mat-error>
+                  <mat-error *ngIf="formModal_F.controls.documento.errors?.maxlength">Longitud máxima son 10.</mat-error>-->
+                </mat-error>
               </mat-form-field>
             </div>
 
@@ -43,10 +53,12 @@
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Nacionalidad</mat-label>
                 <input matInput type="text" placeholder="" formControlName="nacionalidad" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.nacionalidad.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Entidad</mat-label>
                 <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.entidad.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
 
@@ -59,10 +71,18 @@
                   <mat-option value="S">SI</mat-option>
                   <mat-option value="N">NO</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formModal_F.controls.vinculadoActualmente.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_F.value.vinculadoActualmente=='N'">
                 <mat-label>Fecha de desvinculado</mat-label>
-                <input matInput type="date" placeholder="" formControlName="fechaVinculado" autocomplete="off">
+                <input matInput [matDatepicker]="picker3"  formControlName="fechaVinculado"
+                       (click)="picker3.open()"
+                       (keydown)="picker3.open()"
+                       autocomplete="off"
+                       [min]="'1960-01-01'" [max]="fechaMaxima"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
               </mat-form-field>
             </div>
 
@@ -75,10 +95,12 @@
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Cargo</mat-label>
                 <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
+                <mat-error *ngIf="formModal_P.controls.cargo.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Entidad</mat-label>
                 <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+                <mat-error *ngIf="formModal_P.controls.entidad.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row mt-2">
@@ -89,10 +111,18 @@
                   <mat-option value="S">SI</mat-option>
                   <mat-option value="N">NO</mat-option>
                 </mat-select>
+                <mat-error *ngIf="formModal_P.controls.vinculadoActualmente.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_P.value.vinculadoActualmente=='N'">
                 <mat-label>Fecha de desvinculado</mat-label>
-                <input matInput type="date" placeholder="" formControlName="fechaVinculado" autocomplete="off">
+                <input matInput [matDatepicker]="picker2"  formControlName="fechaVinculado"
+                       (click)="picker2.open()"
+                       (keydown)="picker2.open()"
+                       autocomplete="off"
+                       [min]="'1960-01-01'" [max]="fechaMaxima"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
             </div>
           </form>

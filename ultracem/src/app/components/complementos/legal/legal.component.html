@@ -257,7 +257,7 @@
           <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
         </div>
       </div>
-      <section>
+      <section class="scrollPersonalizado">
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
@@ -266,8 +266,11 @@
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             <form [formGroup]="formTab4">
-              <textarea class="w-100" class="clasetextArea" placeholder="Escribe aquí"
-                formControlName="descripcion"></textarea>
+              <mat-form-field class="clasetextArea" appearance="fill">
+                <textarea matInput  placeholder="Escribe aquí"
+                  formControlName="descripcion"></textarea>
+                <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
+              </mat-form-field>
             </form>
 
           </div>

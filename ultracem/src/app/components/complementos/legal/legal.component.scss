@@ -37,3 +37,9 @@
 .clasetextArea:focus-visible{
   outline: -webkit-focus-ring-color auto 0px !important;
 }
+
+.scrollPersonalizado {
+  overflow-y: auto;
+  height: 50%;
+  overflow-x: hidden;
+}
