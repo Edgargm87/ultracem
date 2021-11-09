@@ -135,19 +135,12 @@ export class solicitudComponent implements OnInit {
       if (registrar == 'CC') {
         this.natural = true;
         this.formInicial.controls['tipoDocumento'].setValue(registrar);
-        /*this.formInicial.controls['documento'].addValidators(Validators.minLength(5));
-        this.formInicial.controls['documento'].addValidators(Validators.maxLength(10));*/
-        /*this.formInicial.controls['documento'].removeValidators(Validators.minLength(9));
-        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(9));*/
-        // this.formInicial.controls['documento'].clearValidators();
-        // this.formInicial.controls['documento'].updateValueAndValidity();
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10)]);
+
       } else if (registrar == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue(registrar);
-        /*this.formInicial.controls['documento'].addValidators(Validators.minLength(9));
-        this.formInicial.controls['documento'].addValidators(Validators.maxLength(9));*/
-        /*this.formInicial.controls['documento'].removeValidators(Validators.minLength(5));
-        this.formInicial.controls['documento'].removeValidators(Validators.maxLength(10));*/
-        // this.formInicial.controls['documento'].updateValueAndValidity();
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9)]);
+
         this.natural = false;
       }
     })
