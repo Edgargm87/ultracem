@@ -135,11 +135,11 @@ export class solicitudComponent implements OnInit {
       if (registrar == 'CC') {
         this.natural = true;
         this.formInicial.controls['tipoDocumento'].setValue(registrar);
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]);
 
       } else if (registrar == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue(registrar);
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(9)]);
 
         this.natural = false;
       }
@@ -148,10 +148,10 @@ export class solicitudComponent implements OnInit {
       if (registrado == 'CC') {
         this.natural = true;
         this.formInicial.controls['tipoDocumento'].setValue('CC');
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]);
       } else if (registrado == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue('NIT');
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(9)]);
         this.natural = false;
       }
       this.formInicial.controls['documento'].updateValueAndValidity();
@@ -336,6 +336,7 @@ export class solicitudComponent implements OnInit {
     if (this.formSolicitudNatural.valid) {
       let form = { ...this.formSolicitudNatural.value }
       form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
+      form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       // delete form.compraSemanal
