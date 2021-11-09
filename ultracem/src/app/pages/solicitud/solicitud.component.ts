@@ -62,7 +62,7 @@ export class solicitudComponent implements OnInit {
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       compraSemanal: ['', [Validators.required]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
-      antiguedadCompra: ['', [Validators.required]],
+      antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
@@ -110,7 +110,7 @@ export class solicitudComponent implements OnInit {
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
       antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      antiguedadCompra: ['', [Validators.required]],
+      antiguedadCompra: [0],
       compraSemanal: ['', [Validators.required]],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
@@ -309,8 +309,8 @@ export class solicitudComponent implements OnInit {
   }
 
   fechaValida(): void {
-    const currentYear = format(new Date(), "yyyy-MM-dd");
-    this.fechaMaxima = currentYear;
+    const anioActual = format(new Date(), "yyyy-MM-dd");
+    this.fechaMaxima = anioActual;
   }
 
   SolicitudRepresentante(): void {

@@ -162,7 +162,12 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento" (click)="picker2.open()" (keydown)="picker2.open()" autocomplete="off">
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento"
+                     (click)="picker2.open()"
+                     (keydown)="picker2.open()"
+                     autocomplete="off"
+                     [min]="'1960-01-01'" [max]="fechaMaxima"
+              >
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
               <mat-error *ngIf="formSolicitudNatural.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
@@ -209,7 +214,7 @@
                 <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.pattern">Solo se aceptan números positivos.</mat-error>
               </mat-error>
             </mat-form-field>
-            <ng-container *ngIf="formSolicitudNatural.controls.antiguedadCompra.value">
+            <ng-container *ngIf="formSolicitudNatural.controls.antiguedadCompra.value > 0">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antigüedad compras? (meses)</mat-label>
                 <input matInput formControlName="antiguedadCompra" type="number" [readonly]="existeDatos? existeDatos : existeDatos">
@@ -273,7 +278,7 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de matrícula</mat-label>
-              <input matInput [matDatepicker]="picker3" formControlName="fechaMatricula" (click)="picker3.open()" (keydown)="picker3.open()" autocomplete="off" [min]="'1990-01-01'" [max]="fechaMaxima">
+              <input matInput [matDatepicker]="picker3" formControlName="fechaMatricula" (click)="picker3.open()" (keydown)="picker3.open()" autocomplete="off" [min]="'1960-01-01'" [max]="fechaMaxima">
               <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
               <mat-datepicker #picker3></mat-datepicker>
               <mat-error *ngIf="formSolicitudJuridica.controls.fechaMatricula.errors">Este campo es requerido.</mat-error>
@@ -305,6 +310,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
               <input matInput formControlName="compraSemanal" type="text" autocomplete="off" (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); ">
+              <mat-error *ngIf="formSolicitudJuridica.controls.compraSemanal.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
@@ -320,10 +326,12 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Antigüedad  compras? (meses)</mat-label>
-              <input matInput formControlName="antiguedadCompra" type="number">
-            </mat-form-field>
+            <ng-container *ngIf="formSolicitudJuridica.controls.antiguedadCompra.value > 0 ">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Antigüedad  compras? (meses)</mat-label>
+                <input matInput formControlName="antiguedadCompra" type="number">
+              </mat-form-field>
+            </ng-container>
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox  formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
@@ -434,7 +442,12 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput [matDatepicker]="picker4"  formControlName="fechaNacimiento" (click)="picker4.open()" (keydown)="picker4.open()" autocomplete="off">
+              <input matInput [matDatepicker]="picker4"  formControlName="fechaNacimiento"
+                     (click)="picker4.open()"
+                     (keydown)="picker4.open()"
+                     autocomplete="off"
+                     [min]="'1960-01-01'" [max]="fechaMaxima"
+              >
               <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
               <mat-datepicker #picker4></mat-datepicker>
               <mat-error *ngIf="formSolicitudRepresentante.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
@@ -444,13 +457,12 @@
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales"
-                              [matTooltip]="formSolicitudRepresentante.controls.aceptaConsultaCentrales.errors? 'Autorización requerida ': ''"
                 >Autorizo que la información entregada sea
                   consultada en centrales de riesgos. </mat-checkbox>
               </p>
               <p>
                 <mat-checkbox formControlName="aceptaTerminos"
-                              [matTooltip]="formSolicitudRepresentante.controls.aceptaTerminos.errors? 'Autorización requerida ': ''"
+                              (change)="onAceptoTerminos($event)"
                 > Acepto los términos y condiciones.</mat-checkbox>
               </p>
             </section>

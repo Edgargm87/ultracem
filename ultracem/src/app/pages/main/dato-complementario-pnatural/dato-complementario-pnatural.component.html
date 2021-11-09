@@ -284,7 +284,9 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Activos ($) </mat-label>
               <input matInput autocomplete="off" formControlName="activos" type="text"
-                (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); ">
+                (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); "
+                matTooltip="Valor total de bienes inmuebles, vehículos, saldos de cuentas bancarias, etc"
+              >
               <mat-error *ngIf="formTab2.controls.activos.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
           </div>
