@@ -18,7 +18,7 @@
 
 .texto {
   color: #949798;
-  font-size: 1.2em;
+  font-size: 1.2em !important;
   text-align: justify;
   font-weight: 500;
 }
@@ -36,4 +36,16 @@
 
 .clasetextArea:focus-visible{
   outline: -webkit-focus-ring-color auto 0px !important;
+}
+.texto_canvas{
+  color: #949798;
+  font-size: 17.2px !important;
+  text-align: justify;
+  font-weight: 500;
+  word-break: break-word;
+}
+.icono{
+  font-size: 13px;
+  margin-bottom: 1.3em;
+  color: $blue-primary;
 }
