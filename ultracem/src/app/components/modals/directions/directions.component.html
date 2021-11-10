@@ -12,7 +12,7 @@
               <div class="col-sm-12 col-lg-12" [formGroupName]="'direccion'">
                 <div class="row">
                   <div class="form-group col-lg-3 col-sm-12">
-                    <label for="fechaVinculado">Tipo de via</label>
+                    <label for="fechaVinculado">Tipo de vía</label>
                     <mat-select [formControlName]="'tipo'" class="form-control">
                       <mat-option value="" disabled>Seleccionar</mat-option>
                       <mat-option [value]="item.nombre" *ngFor="let item of vias">
@@ -20,7 +20,7 @@
                     </mat-select>
                   </div>
                   <div class="form-group col-lg-3 col-sm-12">
-                    <label for="fechaVinculado">Via</label>
+                    <label for="fechaVinculado">Vía</label>
                     <input type="text" autocomplete="off" name="viaPrincipal" class="form-control"
                            [formControlName]="'viaPrincipal'">
                   </div>

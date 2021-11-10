@@ -8,45 +8,43 @@
         <div class="col-sm-12 col-lg-12">
           <form [formGroup]="formModal">
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Nombre de la entidad</label>
-                <input type="text" class="form-control" formControlName="entidad" autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 "> 
-                <label for="fechaVinculado">Tipo de producto</label>
-                <input type="text" class="form-control" formControlName="producto">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Nombre de la entidad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Tipo de producto</mat-label>
+                <input matInput type="text" placeholder="" formControlName="producto" autocomplete="off">
+              </mat-form-field>
             </div>
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Número Producto</label>
-                <input type="number" min="1" max="1000" class="form-control" formControlName="numeroProducto" autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Ciudad</label>
-                <input type="text" class="form-control" formControlName="ciudad">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Número producto</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="numeroProducto" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Ciudad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="ciudad" autocomplete="off">
+              </mat-form-field>
             </div>
             <div class="row mt-2">
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">País</label>
-                <input type="text" class="form-control" formControlName="pais"
-                  autocomplete="off">
-              </div>
-              <div class="form-group col-lg-6 ">
-                <label for="fechaVinculado">Moneda</label>
-                <input type="text" class="form-control" formControlName="moneda">
-              </div>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>País</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="pais" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Moneda</mat-label>
+                <input matInput type="text" placeholder="" formControlName="moneda" autocomplete="off">
+              </mat-form-field>
             </div>
             <div class="row mt-2">
-                <div class="form-group col-lg-6 ">
-                  <label for="fechaVinculado">Monto</label>
-                  <input type="text" class="form-control" formControlName="monto"  (keyup)="formModal.controls['monto'].setValue(_generic.formatearNumero(formModal.value.monto)); ">
-                </div>
-              </div>
-
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Monto</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="monto" autocomplete="off"
+                  (keyup)="formModal.controls['monto'].setValue(_generic.formatearNumero(formModal.value.monto)); ">
+              </mat-form-field>
+            </div>
           </form>
-
         </div>
       </div>
     </div>
