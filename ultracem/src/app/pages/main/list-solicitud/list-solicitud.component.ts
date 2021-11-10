@@ -38,12 +38,12 @@ export class ListSolicitudComponent implements OnInit {
       this.list = respuesta.data;
     })
   }
-  gestion(x: number, type: string, stepPortal: string, stepFormulario: number) {
+  gestion(x: number, type: string, stepPortal: string, stepFormulario: string) {
     debugger
     switch (stepPortal) {
       case "1":
         switch (stepFormulario) {
-          case 4:
+          case "4":
             let url = `/main/legal/${x}`;
             this.router.navigateByUrl(url);
             break;
