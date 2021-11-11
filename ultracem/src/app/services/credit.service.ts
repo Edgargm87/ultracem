@@ -15,6 +15,7 @@ export interface listaGenerica {
 })
 export class CreditService {
   infoApp = environment;
+  infoN = 'http://192.168.190.237:8010/api-fintra/api/';
   headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });
@@ -91,5 +92,9 @@ export class CreditService {
 
   solicitudes(url: string): Observable<any> {
     return this._http.get(this.infoApp.urlApi + url).pipe(map(res => res));
+  }
+
+  adjuntarDocumento(data: any): Observable<any> {
+    return this._http.post(this.infoN + 'archivos/guardar/adjuntar-archivo', data);
   }
 }
