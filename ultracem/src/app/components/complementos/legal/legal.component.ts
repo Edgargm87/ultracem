@@ -101,6 +101,10 @@ export class LegalComponent implements OnInit {
     this.ancho = window.innerWidth + 'px';
   }
 
+  preguntasfacta(){
+    
+  }
+
   siguiente(index: any) {
     // this.step += 1;
     let url = '', data = {};
@@ -142,7 +146,7 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 2:
-
+      
         url = 'credito/tk/formulario-solicitud-tabs';
         data = {
           "recurso": "tab-legal-declaracion-facta",
@@ -182,6 +186,9 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 4:
+        if(this.formTab4.value.descripcion==''){
+          return;
+        }
         data = {
           "detalle": [
             {
