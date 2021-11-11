@@ -8,25 +8,12 @@
         <div class="col-sm-12 col-lg-12" *ngIf="data.tipo=='F'">
           <form [formGroup]="formModal_F">
             <div class="row mt-2">
-              <mat-form-field class="col-lg-6" appearance="outline">
-                <mat-label>Relación</mat-label>
-                <input matInput type="text" placeholder="" formControlName="relacion" autocomplete="off">
-                <mat-error *ngIf="formModal_F.controls.relacion.errors">Este campo es requerido.</mat-error>
-              </mat-form-field>
-              <mat-form-field class="col-lg-6" appearance="outline">
-                <mat-label>Cargo</mat-label>
-                <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
-                <mat-error *ngIf="formModal_F.controls.cargo.errors">Este campo es requerido.</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="row mt-2">
               <mat-form-field class="col-lg-12" appearance="outline">
                 <mat-label>Nombre completo</mat-label>
                 <input matInput type="text" placeholder="" formControlName="nombre" autocomplete="off">
                 <mat-error *ngIf="formModal_F.controls.nombre.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
-
             <div class="row mt-2">
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Tipo de documento</mat-label>
@@ -48,12 +35,27 @@
                 </mat-error>
               </mat-form-field>
             </div>
-
             <div class="row mt-2">
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Nacionalidad</mat-label>
                 <input matInput type="text" placeholder="" formControlName="nacionalidad" autocomplete="off">
                 <mat-error *ngIf="formModal_F.controls.nacionalidad.errors">Este campo es requerido.</mat-error>
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Relación</mat-label>
+                <input matInput type="text" placeholder="" formControlName="relacion" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.relacion.errors">Este campo es requerido.</mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Cargo</mat-label>
+                <input matInput type="text" placeholder="" formControlName="cargo" autocomplete="off">
+                <mat-error *ngIf="formModal_F.controls.cargo.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline">
                 <mat-label>Entidad</mat-label>
@@ -74,7 +76,7 @@
                 <mat-error *ngIf="formModal_F.controls.vinculadoActualmente.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_F.value.vinculadoActualmente=='N'">
-                <mat-label>Fecha de desvinculado</mat-label>
+                <mat-label>Fecha de desvinculación</mat-label>
                 <input matInput [matDatepicker]="picker3"  formControlName="fechaVinculado"
                        (click)="picker3.open()"
                        (keydown)="picker3.open()"
@@ -114,7 +116,7 @@
                 <mat-error *ngIf="formModal_P.controls.vinculadoActualmente.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="outline" *ngIf="formModal_P.value.vinculadoActualmente=='N'">
-                <mat-label>Fecha de desvinculado</mat-label>
+                <mat-label>Fecha de desvinculación</mat-label>
                 <input matInput [matDatepicker]="picker2"  formControlName="fechaVinculado"
                        (click)="picker2.open()"
                        (keydown)="picker2.open()"
