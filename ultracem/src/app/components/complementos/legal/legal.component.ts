@@ -72,7 +72,7 @@ export class LegalComponent implements OnInit {
       monto: [0]
     })
     this.formTab4 = this.fb.group({
-      descripcion: ['', [Validators.required]],
+      descripcion: ['', [Validators.required, Validators.minLength(5)]],
     })
     this.getListados();
   }
@@ -102,7 +102,7 @@ export class LegalComponent implements OnInit {
   }
 
   preguntasfacta(){
-    
+
   }
 
   siguiente(index: any) {
@@ -146,7 +146,7 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 2:
-      
+
         url = 'credito/tk/formulario-solicitud-tabs';
         data = {
           "recurso": "tab-legal-declaracion-facta",
@@ -186,7 +186,7 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 4:
-        if(this.formTab4.value.descripcion==''){
+        if(this.formTab4.value.descripcion=='' || this.formTab4.value.descripcion.length < 5){
           return;
         }
         data = {
@@ -269,10 +269,10 @@ export class LegalComponent implements OnInit {
       const dialogRef = this.dialog.open(MonedaExtranjeraComponent, {
 
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
         console.log(result)
-  
+
         if (result == undefined) {
           this.formTab3.controls['pregunta3'].setValue('N');
           return;
@@ -298,7 +298,7 @@ export class LegalComponent implements OnInit {
         this.formTab3.controls['moneda'].setValue('')
         this.formTab3.controls['monto'].setValue(0)
     }
-    
+
   }
   openModalCargoPublico(tipo: String, valor: boolean) {
     if (

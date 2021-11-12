@@ -273,6 +273,7 @@
               <mat-form-field class="clasetextArea" appearance="fill">
                 <textarea matInput placeholder="Escribe aquí" formControlName="descripcion"></textarea>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.</mat-error>
               </mat-form-field>
             </form>
 
@@ -551,7 +552,7 @@
 
         <br> <br>
 
-        <p><strong>PEP de Organizaciones Internacionales: </strong></p> 
+        <p><strong>PEP de Organizaciones Internacionales: </strong></p>
         <p>
           Son aquellas personas naturales que ejercen funciones directivas en una organizaci&oacute;n internacional,
           entre otros (vr.gr. directores, subdirectores, miembros de junta directiva o cualquier persona que ejerza una
