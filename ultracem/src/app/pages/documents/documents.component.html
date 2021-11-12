@@ -11,12 +11,30 @@
                             alt="" [matTooltip]="item.nombreCategoria">
                         <span>{{item.descripcion}}</span>
                     </div>
+                    <input type="file" #fileInput class="d-none"
+                           [accept]="'image/jpeg,image/png,application/pdf'"
+                           (change)="subirArchivo($event, item)">
                     <div class="col-lg-3 group-butons">
-                        <div class="icon subir"></div>
-                        <div class="icon delete"></div>
+                        <a (click)="fileInput.click()"
+                           matTooltip="Subir archivo"
+                           [ngClass]="{'upload': item.archivoCargado != 'N'}">
+                          <i class="fas fa-file-upload fs-1 me-4"></i>
+                        </a>
+                        <a [ngClass]="{'upload': item.archivoCargado != 'N'}"
+                           matTooltip="Eliminar archivo"
+                        >
+                          <i class="fas fa-trash-alt fs-1"></i>
+                        </a>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
+</div>
+<div class="col-lg-12 d-flex justify-content-center">
+  <button
+    mat-raised-button color="accent"
+    class="btn_siguiente"
+  >Firmar documentos
+  </button>
 </div>
