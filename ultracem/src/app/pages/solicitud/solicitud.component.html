@@ -51,6 +51,21 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Tipo de documento</mat-label>
+              <input type="text" matInput formControlName="tipoDocumento" autocomplete="off" readonly>
+              <!-- <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects"
+              >
+                <mat-option
+                  [value]="item.codigoOpcion"
+                  *ngFor="let item of tipoRegistro"
+                  [disabled]="formInicial.controls['cliente'].value? 'S' : 'N' "
+                >
+                  {{item.codigoOpcion}}
+                </mat-option>
+              </mat-select> -->
+              <!-- <mat-error *ngIf="validacionCamposRequerido('tipoDocumento')">Este campo es requerido.</mat-error> -->
+            </mat-form-field> 
+            <!-- <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
               <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects"
               >
                 <mat-option
@@ -62,7 +77,7 @@
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="validacionCamposRequerido('tipoDocumento')">Este campo es requerido.</mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field class="col-lg-6" appearance="fill" >
               <mat-label>Número de <span *ngIf="natural">documento</span> <span *ngIf="!natural">NIT</span></mat-label>
               <input type="text" matInput formControlName="documento" autocomplete="off"
