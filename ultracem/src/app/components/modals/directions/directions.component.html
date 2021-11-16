@@ -11,35 +11,37 @@
             <form [formGroup]="form">
               <div class="col-sm-12 col-lg-12" [formGroupName]="'direccion'">
                 <div class="row">
-                  <div class="form-group col-lg-3 col-sm-12">
-                    <label for="fechaVinculado">Tipo de vía</label>
-                    <mat-select [formControlName]="'tipo'" class="form-control">
+
+                  <mat-form-field class="col-lg-3" appearance="outline">
+                    <mat-label>Tipo de vía</mat-label>
+                    <mat-select formControlName="tipo">
                       <mat-option value="" disabled>Seleccionar</mat-option>
                       <mat-option [value]="item.nombre" *ngFor="let item of vias">
                         {{item.nombre}} </mat-option>
                     </mat-select>
-                  </div>
-                  <div class="form-group col-lg-3 col-sm-12">
-                    <label for="fechaVinculado">Vía</label>
-                    <input type="text" autocomplete="off" name="viaPrincipal" class="form-control"
-                           [formControlName]="'viaPrincipal'">
-                  </div>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-lg-3" appearance="outline">
+                    <mat-label>Vía</mat-label>
+                    <input matInput type="text" placeholder="" formControlName="viaPrincipal" autocomplete="off">
+                  </mat-form-field>
+
                   <div class="form-group col-lg-1 col-sm-12 texto">
                     <h5>#</h5>
                   </div>
-                  <div class="form-group col-lg-2 col-sm-12">
-                    <label for="fechaVinculado">Número</label>
-                    <input type="text" autocomplete="off" name="viaPrincipal" class="form-control"
-                           [formControlName]="'numeroInicial'">
-                  </div>
+
+                  <mat-form-field class="col-lg-2" appearance="outline">
+                    <mat-label>Número</mat-label>
+                    <input matInput type="text" placeholder="" formControlName="numeroInicial" autocomplete="off">
+                  </mat-form-field>
+
                   <div class="form-group col-lg-1 col-sm-12 texto">
                     <h5>-</h5>
                   </div>
-                  <div class="form-group col-lg-2 col-sm-12">
-                    <label for="fechaVinculado">Complementario</label>
-                    <input type="text" autocomplete="off" name="numero2" class="form-control"
-                           [formControlName]="'numeroFinal'">
-                  </div>
+                  <mat-form-field class="col-lg-2" appearance="outline">
+                    <mat-label>Complementario</mat-label>
+                    <input matInput type="text" placeholder="" formControlName="numeroFinal" autocomplete="off">
+                  </mat-form-field>
                 </div>
                 <div class="row">
                   <!-- <div class="col-lg-12 col-sm-12">
@@ -49,14 +51,12 @@
                   [formControlName]="'complemento'">
                   </mat-form-field>
                   </div> -->
+                  <mat-form-field class="col-lg-6" appearance="outline">
+                    <mat-label>Complementario</mat-label>
+                    <input matInput type="text" placeholder="" formControlName="complemento" autocomplete="off">
+                  </mat-form-field>
                   <div class="form-group col-lg-6 col-sm-12">
-                    <label for="fechaVinculado">Complementario</label>
-                    <input type="text" autocomplete="off" name="complemento" class="form-control"
-                           [formControlName]="'complemento'">
-                  </div>
-                  <div class="form-group col-lg-6 col-sm-12" >
-                    <button mat-raised-button class="btn_siguiente"
-                            (click)="onGuardar()">Guardar</button>
+                    <button mat-raised-button class="btn_siguiente" (click)="onGuardar()">Guardar</button>
                   </div>
                 </div>
               </div>
