@@ -185,11 +185,12 @@ export class solicitudComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DatosContactoComponent, {
-      width: '250px',
+      width: '25%',
       data: { name: 1, animal: 2 }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       console.log('The dialog was closed');
     });
   }
@@ -278,6 +279,7 @@ export class solicitudComponent implements OnInit {
             this.step = 3;
           }
         } else {
+          console.log('NO existe');
           if (this.formInicial.value.tipoDocumento == 'CC') {
             this.formSolicitudNatural.patchValue({
               tipoTercero: 'T',
@@ -352,6 +354,21 @@ export class solicitudComponent implements OnInit {
             break;
         }
       });
+    }else {
+      this.formSolicitudNatural.markAllAsTouched();
+    }
+  }
+
+  onActualizarNultracem(): void {
+    if (this.formSolicitudNatural.valid) {
+      let form = { ...this.formSolicitudNatural.value };
+      form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
+      form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
+      delete form.fechaMatricula
+      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+      form.antiguedadNegocio = 0;
+      this.openDialog();
+
     }else {
       this.formSolicitudNatural.markAllAsTouched();
     }

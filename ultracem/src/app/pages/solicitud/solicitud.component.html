@@ -63,7 +63,7 @@
                 </mat-option>
               </mat-select> -->
               <!-- <mat-error *ngIf="validacionCamposRequerido('tipoDocumento')">Este campo es requerido.</mat-error> -->
-            </mat-form-field> 
+            </mat-form-field>
             <!-- <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Tipo de documento</mat-label>
               <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects"
@@ -216,7 +216,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
-              <input matInput formControlName="celular" autocomplete="off">
+              <input matInput formControlName="celular" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
                 <mat-error *ngIf="(formSolicitudNatural.controls.celular.dirty || formSolicitudNatural.controls.celular.touched)">
                   <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
                   <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
@@ -226,7 +226,7 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="formSolicitudNatural.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -240,7 +240,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
-              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'" [readonly]="existeDatos? existeDatos : existeDatos">
+              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'" >
               <mat-error *ngIf="(formSolicitudNatural.controls.antiguedadNegocio.dirty || formSolicitudNatural.controls.antiguedadNegocio.touched)">
                 <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.pattern">Solo se aceptan números positivos.</mat-error>
@@ -278,7 +278,20 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button class="btn_siguiente"  (click)="SolicitudNUltracem()">Solicitar</button>
+            <ng-container *ngIf="!existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="SolicitudNUltracem()"
+              >
+                Solicitar
+              </button>
+            </ng-container>
+            <ng-container *ngIf="existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="onActualizarNultracem()"
+              >
+                Continuar
+              </button>
+            </ng-container>
           </div>
         </form>
       </div>
