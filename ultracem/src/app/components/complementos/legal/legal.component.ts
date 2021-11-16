@@ -22,6 +22,7 @@ export class LegalComponent implements OnInit {
   formTab3: FormGroup;
   ListOperaciones: any;
   formTab4: FormGroup;
+  cantidadSI: number=0;
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
@@ -102,7 +103,25 @@ export class LegalComponent implements OnInit {
   }
 
   preguntasfacta(){
+    this.cantidadSI =0;
+    if(this.formTab2.value.pregunta1 == true){
+      this.cantidadSI = this.cantidadSI +1;
+    }
+    if(this.formTab2.value.pregunta2 == true){
+      this.cantidadSI = this.cantidadSI +1;
+    }
+    if(this.formTab2.value.pregunta3 == true){
+      this.cantidadSI = this.cantidadSI +1;
+    }
+    if(this.formTab2.value.pregunta4 == true){
+      this.cantidadSI = this.cantidadSI +1;
+    }
 
+    if(this.cantidadSI>0){
+      this.formTab2.controls['pregunta6'].setValue(true)
+    }else{
+      this.formTab2.controls['pregunta6'].setValue(false)
+    }
   }
 
   siguiente(index: any) {

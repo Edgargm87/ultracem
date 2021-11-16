@@ -34,7 +34,7 @@ export class DirectionsComponent implements OnInit {
   public onGuardar(): void {
     const direccion: any = this.form.getRawValue();
     const direccionCompleta: string =
-      `${direccion.direccion.tipo +' '}${direccion.direccion.viaPrincipal? direccion.direccion.viaPrincipal + ' ' : ''}${direccion.direccion.numeroInicial? direccion.direccion.numeroInicial + ' ': ''}${direccion.direccion.numeroFinal? direccion.direccion.numeroFinal + ' ' : ''}${direccion.direccion.complemento? direccion.direccion.complemento + ' ' : ''}`;
+      `${direccion.direccion.tipo +' '}${direccion.direccion.viaPrincipal? direccion.direccion.viaPrincipal + ' ' : ''} #${direccion.direccion.numeroInicial? direccion.direccion.numeroInicial + ' ': ''}-${direccion.direccion.numeroFinal? direccion.direccion.numeroFinal + ' ' : ''}${direccion.direccion.complemento? direccion.direccion.complemento + ' ' : ''}`;
     this.matDialogRef.close(direccionCompleta);
   }
   /**

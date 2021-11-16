@@ -95,7 +95,7 @@
               Unidos.
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta1" formControlName="pregunta1">
+              <mat-slide-toggle name="pregunta1" formControlName="pregunta1" (change)="preguntasfacta()">
               </mat-slide-toggle>
             </div>
           </div>
@@ -107,7 +107,7 @@
               (Tarjeta de Residencia)
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta2" formControlName="pregunta2">
+              <mat-slide-toggle name="pregunta2" formControlName="pregunta2" (change)="preguntasfacta()">
               </mat-slide-toggle>
             </div>
           </div>
@@ -128,7 +128,7 @@
               Estados Unidos.
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
+              <mat-slide-toggle name="pregunta3" formControlName="pregunta3" (change)="preguntasfacta()">
               </mat-slide-toggle>
             </div>
           </div>
@@ -144,7 +144,7 @@
               Estados Unidos.
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta4" formControlName="pregunta4">
+              <mat-slide-toggle name="pregunta4" formControlName="pregunta4" (change)="preguntasfacta()">
               </mat-slide-toggle>
             </div>
           </div>
@@ -168,7 +168,7 @@
               ¿Obligado tributario U.S?
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta6" formControlName="pregunta6">
+              <mat-slide-toggle name="pregunta6" formControlName="pregunta6" [disabled]="cantidadSI>0">
               </mat-slide-toggle>
             </div>
           </div>
