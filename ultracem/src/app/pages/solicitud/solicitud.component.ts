@@ -357,7 +357,7 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
       form.documento = (this.formSolicitudRepresentante.value.documento).toString();
-      this.guardarSolicitudUltracem(form);
+      this.guardarSolicitudJultracem(form);
     }else {
       this.formSolicitudRepresentante.markAllAsTouched();
     }
@@ -380,7 +380,6 @@ export class solicitudComponent implements OnInit {
   onActualizarNultracem(): void {
     if (this.formSolicitudNatural.valid) {
       let form = {...this.formSolicitudNatural.value};
-      console.log(form);
       const tipoDocumento = form.tipoDocumento
       this.openDialog(tipoDocumento);
     }else {
@@ -411,7 +410,7 @@ export class solicitudComponent implements OnInit {
       form.antiguedadNegocio = 0;
       form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
-      this.guardarSolicitudUltracem(form);
+      this.guardarSolicitudJultracem(form);
       /*this._creditService.solicitudUltracem(form).subscribe(resp => {
         this.formSolicitudRepresentante.patchValue({
           numeroSolicitud: (resp.data.numeroSolicitud).toString()
