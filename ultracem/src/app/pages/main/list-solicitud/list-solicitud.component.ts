@@ -61,7 +61,7 @@ export class ListSolicitudComponent implements OnInit {
 
         break;
       case "2":
-        let url = `/main/documents`;
+        let url = `/main/documents/${type}/${x}`;
         this.router.navigateByUrl(url);
         break;
       default:

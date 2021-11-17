@@ -34,7 +34,7 @@ const routes: Routes = [
     component: DatoComplementarioPjuridicaComponent
   },
   {
-    path: 'main/documents',
+    path: 'main/documents/:type/:codigoSolicitud',
     component: DocumentsComponent
   },
   {
