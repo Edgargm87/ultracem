@@ -183,27 +183,53 @@ export class solicitudComponent implements OnInit {
     this.ancho = window.innerWidth + 'px';
   }
 
-  openDialog() {
+  openDialog(tipoDocumento: string) {
     const dialogRef = this.dialog.open(DatosContactoComponent, {
       width: '25%',
-      data: { name: 1, animal: 2 }
+      data: { tipoDocumento },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      const datos: any = {...result};
+      let form: any;
+      let formJuridico: any;
+      if (datos.tipoDocumento == 'CC') {
+        form = { ...this.formSolicitudNatural.value };
+      }else {
+        formJuridico = { ...this.formSolicitudJuridica.value }
+      }
+      console.log(datos);
+      if (datos.tipoDocumento == 'CC' && datos.cerrar) {
         this.formSolicitudNatural.controls.celular.setValue(result.celular);
         this.formSolicitudNatural.controls.email.setValue(result.email);
-        let form = { ...this.formSolicitudNatural.value };
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        console.log(form);
         this.guardarSolicitudUltracem(form);
-      }else {
-        let form = { ...this.formSolicitudNatural.value };
+
+      } else if (datos.tipoDocumento == 'CC' && !datos.cerrar) {
         form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
-        form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
+        form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        console.log(form);
         this.guardarSolicitudUltracem(form);
+
+      } else if (datos.tipoDocumento == 'NIT' && datos.cerrar) {
+        this.formSolicitudJuridica.controls.telefono.setValue(result.telefono);
+        this.formSolicitudJuridica.controls.celular.setValue(result.celular);
+        this.formSolicitudJuridica.controls.email.setValue(result.email);
+        formJuridico.antiguedadNegocio = 0;
+        formJuridico.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
+        formJuridico.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
+        this.guardarSolicitudJultracem(formJuridico);
+
+      } else if (datos.tipoDocumento == 'NIT' && !datos.cerrar){
+          formJuridico.antiguedadNegocio = 0;
+          formJuridico.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
+          formJuridico.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
+          this.guardarSolicitudJultracem(formJuridico);
       }
     });
   }
@@ -353,9 +379,22 @@ export class solicitudComponent implements OnInit {
 
   onActualizarNultracem(): void {
     if (this.formSolicitudNatural.valid) {
-      this.openDialog();
+      let form = {...this.formSolicitudNatural.value};
+      console.log(form);
+      const tipoDocumento = form.tipoDocumento
+      this.openDialog(tipoDocumento);
     }else {
       this.formSolicitudNatural.markAllAsTouched();
+    }
+  }
+
+  onActualizarJultracem(): void {
+    if (this.formSolicitudJuridica.valid) {
+      let form = {...this.formSolicitudJuridica.value};
+      const tipoDocumento = form.tipoDocumento
+      this.openDialog(tipoDocumento);
+    }else {
+      this.formSolicitudJuridica.markAllAsTouched();
     }
   }
 
@@ -372,7 +411,8 @@ export class solicitudComponent implements OnInit {
       form.antiguedadNegocio = 0;
       form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
-      this._creditService.solicitudUltracem(form).subscribe(resp => {
+      this.guardarSolicitudUltracem(form);
+      /*this._creditService.solicitudUltracem(form).subscribe(resp => {
         this.formSolicitudRepresentante.patchValue({
           numeroSolicitud: (resp.data.numeroSolicitud).toString()
         });
@@ -380,7 +420,7 @@ export class solicitudComponent implements OnInit {
         this.step = 4;
         console.log(resp);
         console.log('representante', this.formSolicitudRepresentante.value);
-      });
+      });*/
     }else {
       this.formSolicitudJuridica.markAllAsTouched();
     }
@@ -398,6 +438,19 @@ export class solicitudComponent implements OnInit {
           break;
       }
     });
+  }
+
+  private guardarSolicitudJultracem(datos: any): void {
+    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+      this.formSolicitudRepresentante.patchValue({
+        numeroSolicitud: (resp.data.numeroSolicitud).toString()
+      });
+
+      this.step = 4;
+      console.log(resp);
+      console.log('representante', this.formSolicitudRepresentante.value);
+    });
+
   }
 
   calcularDigitoVerificacion(data: any): any {

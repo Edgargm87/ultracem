@@ -318,7 +318,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Razón social</mat-label>
-              <input matInput formControlName="nombreCompleto" autocomplete="off">
+              <input matInput formControlName="nombreCompleto" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="formSolicitudJuridica.controls.nombreCompleto.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
@@ -332,7 +332,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Teléfono</mat-label>
-              <input matInput formControlName="telefono" autocomplete="off">
+              <input matInput formControlName="telefono" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="(formSolicitudJuridica.controls.telefono.dirty || formSolicitudJuridica.controls.telefono.touched)">
                 <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
@@ -342,7 +342,7 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
-              <input matInput formControlName="celular" autocomplete="off">
+              <input matInput formControlName="celular" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="(formSolicitudJuridica.controls.celular.dirty || formSolicitudJuridica.controls.celular.touched)">
                 <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
@@ -354,12 +354,16 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="text" autocomplete="off" (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); ">
+              <input matInput formControlName="compraSemanal" type="text"
+                     autocomplete="off"
+                     (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); "
+                     [readonly]="existeDatos? existeDatos : existeDatos"
+              >
               <mat-error *ngIf="formSolicitudJuridica.controls.compraSemanal.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -374,7 +378,7 @@
             <ng-container *ngIf="formSolicitudJuridica.controls.antiguedadCompra.value > 0 ">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antigüedad  compras? (meses)</mat-label>
-                <input matInput formControlName="antiguedadCompra" type="number">
+                <input matInput formControlName="antiguedadCompra" type="number" [readonly]="existeDatos? existeDatos : existeDatos">
               </mat-form-field>
             </ng-container>
             <section class="col-lg-6 checkp">
@@ -388,7 +392,20 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button class="btn_siguiente"  (click)="SolicitudJUltracem()">Solicitar</button>
+            <ng-container *ngIf="!existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="SolicitudJUltracem()"
+              >
+                Solicitar
+              </button>
+            </ng-container>
+            <ng-container *ngIf="existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="onActualizarJultracem()"
+              >
+                Continuar
+              </button>
+            </ng-container>
           </div>
         </form>
       </div>

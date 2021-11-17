@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreditService } from 'src/app/services/credit.service';
 import { GenericService } from "../../services/generic.service";
 import Swal from "sweetalert2";
-import { Subscription } from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import { ActivatedRoute, Router } from '@angular/router';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-documents',
@@ -13,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DocumentsComponent implements OnInit, OnDestroy {
   documentos: any;
   public subscription$!: Subscription;
+  public subject$: Subject<any> = new Subject<any>();
   codigoSolicitud: any;
   typeSolicitud: any;
 
@@ -76,7 +78,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   private guardarAdjunto(data: any): void {
-    this.subscription$ = this._creditService.adjuntarDocumento(data).subscribe((data: any) => {
+    this._creditService.adjuntarDocumento(data)
+      .pipe(takeUntil(this.subject$))
+      .subscribe((data: any) => {
       if (data.status == 200) {
         Swal.fire(
           '¡Información!',
@@ -99,7 +103,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this.subject$.unsubscribe();
   }
   atras(){
     let url = `main/listRequest`;

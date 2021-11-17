@@ -27,11 +27,17 @@ export class DatosContactoComponent implements OnInit {
 
   onActualizar(): void {
     const datos = this.form.getRawValue();
+    datos.tipoDocumento = this.data.tipoDocumento;
+    datos.cerrar = true;
     this.dialogRef.close(datos);
   }
 
   onCerrar(): void {
-    this.dialogRef.close(false);
+    const datos: any = {
+      cerrar: false,
+      tipoDocumento: this.data.tipoDocumento
+    }
+    this.dialogRef.close(datos);
   }
 
 }
