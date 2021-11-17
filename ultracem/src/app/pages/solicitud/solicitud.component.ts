@@ -199,13 +199,11 @@ export class solicitudComponent implements OnInit {
       }else {
         formJuridico = { ...this.formSolicitudJuridica.value }
       }
-      console.log(datos);
       if (datos.tipoDocumento == 'CC' && datos.cerrar) {
         this.formSolicitudNatural.controls.celular.setValue(result.celular);
         this.formSolicitudNatural.controls.email.setValue(result.email);
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        console.log(form);
         this.guardarSolicitudUltracem(form);
 
       } else if (datos.tipoDocumento == 'CC' && !datos.cerrar) {
@@ -213,7 +211,6 @@ export class solicitudComponent implements OnInit {
         form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        console.log(form);
         this.guardarSolicitudUltracem(form);
 
       } else if (datos.tipoDocumento == 'NIT' && datos.cerrar) {
