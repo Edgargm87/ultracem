@@ -1,40 +1,40 @@
-<div class="container-fluid">
-    <h2>Sube tus Documentos</h2>
-    <p>*Recomendaciones: Asegúrate que la información se vea lo más nítida y cerca posible. Suben en PDF los documentos
-        que tengan más de 1 hoja.</p>
-    <div class="main-docs">
-        <ul class="col-lg-11">
-            <li *ngFor="let item of documentos">
-                <div class="row document " [ngClass]="{'upload': item.archivoCargado != 'N'}">
-                    <div class="col-lg-9">
-                        <img src="assets/icons/ICONO_FORMULARIO{{item.archivoCargado == 'N' ? '_GRIS' : '_VERDE'}}.svg"
-                            alt="" [matTooltip]="item.nombreCategoria">
-                        <span>{{item.descripcion}}</span>
-                    </div>
-                    <input type="file" #fileInput class="d-none"
-                           [accept]="'image/jpeg,image/png,application/pdf'"
-                           (change)="subirArchivo($event, item)">
-                    <div class="col-lg-3 group-butons">
-                        <a (click)="fileInput.click()"
-                           matTooltip="Subir archivo"
-                           [ngClass]="{'upload': item.archivoCargado != 'N'}">
-                          <i class="fas fa-file-upload fs-1 me-4"></i>
-                        </a>
-                        <a [ngClass]="{'upload': item.archivoCargado != 'N'}"
-                           matTooltip="Eliminar archivo"
-                        >
-                          <i class="fas fa-trash-alt fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
+<div class="container-fluid mb-4">
+  <h2>Sube tus Documentos</h2>
+  <p>*Recomendaciones: Asegúrate que la información se vea lo más nítida y cerca posible. Suben en PDF los documentos
+    que tengan más de 1 hoja.</p>
+  <div class="main-docs">
+    <ul class="col-lg-11">
+      <li *ngFor="let item of documentos">
+        <div class="row document " [ngClass]="{'upload': item.archivoCargado != 'N'}">
+          <div class="col-lg-9">
+            <img src="assets/icons/ICONO_FORMULARIO{{item.archivoCargado == 'N' ? '_GRIS' : '_VERDE'}}.svg" alt=""
+              [matTooltip]="item.nombreCategoria">
+            <span>{{item.descripcion}}</span>
+          </div>
+          <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+            (change)="subirArchivo($event, item)">
+          <div class="col-lg-3 group-butons text-end">
+            <a (click)="fileInput.click()" matTooltip="Subir archivo" *ngIf="item.archivoCargado == 'N'">
+              <img src="assets/icons/icono_add.svg" alt=""class=" me-2 wimg" >
+            </a>
+            <a (click)="eliminarArchivo(item.idArchicoCargado)" *ngIf="item.archivoCargado != 'N'"
+              matTooltip="Eliminar archivo">
+              <i class="fas fa-trash-alt me-4 fs-1 icon_trash"></i>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="row mb-10">
+    <div class="col-lg-6 col-sm-12 d-flex justify-content-end">
+      <button mat-raised-button class="btn_ btn_atras" (click)="atras()">Dejar para mas tarde
+      </button>
     </div>
+    <div class="col-lg-6 col-sm-12 d-flex justify-content-star">
+      <button mat-raised-button class="btn_ btn_siguiente">Firmar documentos
+      </button>
+    </div>
+  </div>
 </div>
-<div class="col-lg-12 d-flex justify-content-center">
-  <button
-    mat-raised-button color="accent"
-    class="btn_siguiente"
-  >Firmar documentos
-  </button>
-</div>
+

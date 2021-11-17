@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreditService } from 'src/app/services/credit.service';
-import {GenericService} from "../../services/generic.service";
+import { GenericService } from "../../services/generic.service";
 import Swal from "sweetalert2";
-import {Subscription} from "rxjs";
+import { Subscription } from "rxjs";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-documents',
@@ -12,19 +13,30 @@ import {Subscription} from "rxjs";
 export class DocumentsComponent implements OnInit, OnDestroy {
   documentos: any;
   public subscription$!: Subscription;
+  codigoSolicitud: any;
+  typeSolicitud: any;
 
   constructor(
     private _creditService: CreditService,
-    private _generiService: GenericService
+    private _activatedRoute: ActivatedRoute,
+    private _generiService: GenericService,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
-    this.getdocumentos()
+    this._activatedRoute.params.subscribe(param => {
+      this.codigoSolicitud = param.codigoSolicitud
+      this.typeSolicitud = param.type
+      this.getdocumentos()
+    })
+
   }
 
   getdocumentos() {
-    this._creditService.getDocuments('CC', 112).subscribe(resp => {
+    Swal.fire({ title: 'Cargando', html: 'Cargando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._creditService.getDocuments(this.typeSolicitud, this.codigoSolicitud).subscribe(resp => {
+      Swal.close();
       this.documentos = resp.data;
       console.log(resp);
 
@@ -34,6 +46,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    * @description: Carga imagen en base 64
    */
   subirArchivo(input: any, item: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     let formulario: {};
     const files = input.target.files;
     if (files && files.length) {
@@ -49,7 +62,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           extension: extension,
           fuente: 'archivo-multi',
           identificador: '',
-          numeroSolicitud: "112",
+          numeroSolicitud: this.codigoSolicitud,
           tipoArchivo: item.idArchivo,
           categoria: item.idCategoria,
           agencia: 'OP',
@@ -64,7 +77,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   private guardarAdjunto(data: any): void {
     this.subscription$ = this._creditService.adjuntarDocumento(data).subscribe((data: any) => {
-      if (data.status == 200){
+      if (data.status == 200) {
         Swal.fire(
           '¡Información!',
           `Se guardo el registro con éxito`,
@@ -87,6 +100,32 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+  }
+  atras(){
+    let url = `main/listRequest`;
+    this.router.navigateByUrl(url);
+  }
+  eliminarArchivo(x: string) {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    let url: string = '';
+    url = `generic/cre-inactivar-doc`;
+    let data = {
+      "numeroSolicitud": parseInt(this.codigoSolicitud),
+      "idArchivoCargado": parseInt(x)
+    }
+    this._generiService.posData(url,data).subscribe((res: any) => {
+      if (res.status == 200) {
+        Swal.fire(
+          '¡Información!',
+          `Se guardo el registro con éxito`,
+          'success'
+        ).then(resultado => {
+          if (resultado.isConfirmed) {
+            this.getdocumentos();
+          }
+        });
+      }
+    });
   }
 
 }
