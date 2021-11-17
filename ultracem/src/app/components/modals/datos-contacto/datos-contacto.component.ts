@@ -15,9 +15,9 @@ export class DatosContactoComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
-      celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
-      email: ['', [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]]
+      telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
+      celular: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(11)]],
+      email: ['', [Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]]
     })
   }
 
@@ -28,6 +28,10 @@ export class DatosContactoComponent implements OnInit {
   onActualizar(): void {
     const datos = this.form.getRawValue();
     this.dialogRef.close(datos);
+  }
+
+  onCerrar(): void {
+    this.dialogRef.close(false);
   }
 
 }

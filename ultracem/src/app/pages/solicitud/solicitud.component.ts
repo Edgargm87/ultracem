@@ -190,8 +190,21 @@ export class solicitudComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      console.log('The dialog was closed');
+      if (result) {
+        this.formSolicitudNatural.controls.celular.setValue(result.celular);
+        this.formSolicitudNatural.controls.email.setValue(result.email);
+        let form = { ...this.formSolicitudNatural.value };
+        delete form.fechaMatricula
+        form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        this.guardarSolicitudUltracem(form);
+      }else {
+        let form = { ...this.formSolicitudNatural.value };
+        form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
+        form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
+        delete form.fechaMatricula
+        form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        this.guardarSolicitudUltracem(form);
+      }
     });
   }
 
@@ -318,17 +331,7 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
       form.documento = (this.formSolicitudRepresentante.value.documento).toString();
-      this._creditService.solicitudUltracem(form).subscribe(resp => {
-        console.log(resp);
-        switch (resp.data.estado) {
-          case 'RECHAZADO':
-            this.estadoSolicitud.rechazado = true;
-            break;
-          case 'APROBADO':
-            this.estadoSolicitud.aprobado = true;
-            break;
-        }
-      });
+      this.guardarSolicitudUltracem(form);
     }else {
       this.formSolicitudRepresentante.markAllAsTouched();
     }
@@ -342,18 +345,7 @@ export class solicitudComponent implements OnInit {
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       // delete form.compraSemanal
-
-      this._creditService.solicitudUltracem(form).subscribe(resp => {
-        console.log(resp);
-        switch (resp.data.estado) {
-          case 'RECHAZADO':
-            this.estadoSolicitud.rechazado = true;
-            break;
-          case 'APROBADO':
-            this.estadoSolicitud.aprobado = true;
-            break;
-        }
-      });
+      this.guardarSolicitudUltracem(form);
     }else {
       this.formSolicitudNatural.markAllAsTouched();
     }
@@ -361,14 +353,7 @@ export class solicitudComponent implements OnInit {
 
   onActualizarNultracem(): void {
     if (this.formSolicitudNatural.valid) {
-      let form = { ...this.formSolicitudNatural.value };
-      form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
-      form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
-      delete form.fechaMatricula
-      form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-      form.antiguedadNegocio = 0;
       this.openDialog();
-
     }else {
       this.formSolicitudNatural.markAllAsTouched();
     }
@@ -399,8 +384,20 @@ export class solicitudComponent implements OnInit {
     }else {
       this.formSolicitudJuridica.markAllAsTouched();
     }
+  }
 
-
+  private guardarSolicitudUltracem(datos: any): void {
+    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+      console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          break;
+        case 'APROBADO':
+          this.estadoSolicitud.aprobado = true;
+          break;
+      }
+    });
   }
 
   calcularDigitoVerificacion(data: any): any {
@@ -447,30 +444,6 @@ export class solicitudComponent implements OnInit {
 
     y = x % 11;
     return (y > 1) ? 11 - y : y;
-  }
-  /**
-   * @description: Validacion de caracteres minimos
-   */
-  public validacionCampoMinimo(field: string) {
-    return this.formInicial.controls[field].hasError('minlength');
-  }
-  /**
-   * @description: Validacion de caracteres minimos
-   */
-  public validacionCampoMinimoJuridico(field: string, valid: boolean) {
-    return this.formInicial.controls[field].hasError('minlength') && valid;
-  }
-  /**
-   * @description: Validacion de caracteres maximos
-   */
-  public validacionCampoMaximo(field: string) {
-    return this.formInicial.controls[field].hasError('maxlength');
-  }
-  /**
-   * @description: Validacion de solo numeros
-   */
-  public validacionSoloNumero(field: string) {
-    return this.formInicial.controls[field].hasError('pattern');
   }
   /**
    * @description: Validacion de campos de formulario requerido
