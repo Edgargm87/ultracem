@@ -200,8 +200,8 @@ export class solicitudComponent implements OnInit {
         formJuridico = { ...this.formSolicitudJuridica.value }
       }
       if (datos.tipoDocumento == 'CC' && datos.cerrar) {
-        this.formSolicitudNatural.controls.celular.setValue(result.celular);
-        this.formSolicitudNatural.controls.email.setValue(result.email);
+        this.formSolicitudNatural.controls.celular.setValue(result.celular? result.celular : form.celular);
+        this.formSolicitudNatural.controls.email.setValue(result.email? result.email : form.email);
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
         this.guardarSolicitudUltracem(form);
@@ -214,9 +214,9 @@ export class solicitudComponent implements OnInit {
         this.guardarSolicitudUltracem(form);
 
       } else if (datos.tipoDocumento == 'NIT' && datos.cerrar) {
-        this.formSolicitudJuridica.controls.telefono.setValue(result.telefono);
-        this.formSolicitudJuridica.controls.celular.setValue(result.celular);
-        this.formSolicitudJuridica.controls.email.setValue(result.email);
+        this.formSolicitudJuridica.controls.telefono.setValue(result.telefono? result.telefono : formJuridico.telefono );
+        this.formSolicitudJuridica.controls.celular.setValue(result.celular? result.celular : formJuridico.celular);
+        this.formSolicitudJuridica.controls.email.setValue(result.email? result.email : formJuridico.email);
         formJuridico.antiguedadNegocio = 0;
         formJuridico.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
         formJuridico.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
