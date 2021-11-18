@@ -7,7 +7,9 @@
         <i class="fas fa-clipboard-list"></i>
       </span>
     </div>
-    <!-- <h6 class="text">Llena el formulario</h6>  -->
+    <h6
+      [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
+      Llena el formulario</h6>
 
   </div>
   <div class="line-step"></div>
@@ -19,7 +21,9 @@
         <i class="fas fa-paste"></i>
       </span>
     </div>
-    <!-- <h6 class="text">Adjunta y firma tus documentos</h6>  -->
+    <h6
+      [ngClass]="{'current': twoStepNumber == currentStep, 'visited': twoStepNumber <  currentStep, 'future': twoStepNumber > currentStep }">
+      Adjunta y firma tus documentos</h6>
 
 
   </div>
@@ -28,12 +32,14 @@
   <div class="horizontal-step"
     [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
 
-    <div class="circle-step" >
+    <div class="circle-step">
       <span>
         <i class="fas fa-hourglass-half"></i>
       </span>
     </div>
-    <!-- <h6 class="text"></h6>  -->
+    <h6
+      [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
+      Esperando validaciones</h6>
 
   </div>
 

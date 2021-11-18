@@ -44,9 +44,9 @@
  
   
   border-radius: 62%;
-  
   z-index: 200;
   padding: 0em 2.5em 0em 2.5em;
+  zoom: 0.4;
 }
 
 .line-step {
@@ -55,7 +55,7 @@
   background: #dadada;
   transform: translateY(56px);
   z-index: 10;
-  margin-top: 2em;
+  margin-top: -2em;
 
   &:last-child {
     display: none;
@@ -92,10 +92,21 @@
 .future .circle-step {
   @include color-step(#dadada)
 }
+.current  {
+ color:$blue-semi-light;
+}
 
-.text {
+.visited  {
+ color:$blue-primary;
+}
+
+.future  {
+ color:#dadada;
+}
+
+h6 {
   font-size: 1em;
-  color: #32befa;
+  // color: #32befa;
   font-weight: 800;
   text-align: center;
   width: 100px;

@@ -15,38 +15,43 @@
         Solicitudes
       </h5>
       <div class="row ">
-        <div class="col-lg-3 p-3" *ngFor="let item of list"
+        <div class="col-lg-12 p-3" *ngFor="let item of list"
           (click)='gestion(item.numeroSolicitud,item.tipoDocumento,item.stepPortal,item.stepFormulario)'>
           <mat-card class="example-card">
             <mat-card-content>
-              <div class="row zo4 ">
-                <app-timerline [currentStep]="item.stepPortal"></app-timerline>
-              </div>
               <div class="row">
-                <mat-list class="col-lg-12">
-                  <mat-list-item>
-                    <i mat-list-icon class="icono fas fa-sliders-h"></i>
-                    <div mat-line class="title">{{item.numeroSolicitud}}</div>
-                    <div mat-line class="subtitle">Número de solicitud</div>
-                  </mat-list-item>
-                  <mat-divider></mat-divider>
-                  <mat-list-item>
-                    <i mat-list-icon class="icono fas fa-calendar-alt"></i>
-                    <div mat-line class="title"> {{item.emision}}</div>
-                    <div mat-line class="subtitle">Fecha de solicitud</div>
-                  </mat-list-item>
-                  <mat-divider></mat-divider>
-                  <mat-list-item>
-                    <i  mat-list-icon class="icono fas fa-money-bill-wave"></i>
-                    <div mat-line class="title"> ${{item.cupoTotal}}</div>
-                    <div mat-line class="subtitle">Cupo total</div>
-                  </mat-list-item>
-                </mat-list>
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <i  class="icono fas fa-sliders-h"></i>
+                      <div class="title">{{item.numeroSolicitud}}</div>
+                      <div class="subtitle">Número de solicitud</div>
+                    </div>
+                  
+                    <div class="col-lg-4">
+                      <i  class="icono fas fa-calendar-alt"></i>
+                      <div class="title"> {{item.emision}}</div>
+                      <div class="subtitle">Fecha de solicitud</div>
+                    </div>
+                  
+                    <div class="col-lg-4">
+                      <i  class="icono fas fa-money-bill-wave"></i>
+                      <div class="title"> ${{item.cupoTotal}}</div>
+                      <div class="subtitle">Cupo total</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-lg-6">
+                  <app-timerline [currentStep]="item.stepPortal"></app-timerline>
+                </div>
               </div>
+
+
             </mat-card-content>
-            <mat-card-actions>
+            <!-- <mat-card-actions>
               <button mat-button class="bg-principal text-white w-100">continuar con el proceso</button>
-            </mat-card-actions>
+            </mat-card-actions> -->
           </mat-card>
 
 
