@@ -315,7 +315,6 @@ export class solicitudComponent implements OnInit {
             this.step = 3;
           }
         } else {
-          console.log('NO existe');
           if (this.formInicial.value.tipoDocumento == 'CC') {
             this.formSolicitudNatural.patchValue({
               tipoTercero: 'T',
