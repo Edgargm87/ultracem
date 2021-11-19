@@ -15,7 +15,7 @@ p {
 
 .main-docs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-center;
 
   ul {
     padding: 0px;
@@ -42,7 +42,7 @@ p {
 
         .group-butons {
           display: flex;
-          justify-content: end;
+          justify-content: flex-end;
           align-items: center;
 
           .icon {
@@ -57,10 +57,10 @@ p {
               margin-right: 10px;
             }
 
-            &.delete {
-              -webkit-mask-image: url(../../../assets/icons/trash-alt.svg);
-              mask-image: url(../../../assets/icons/trash-alt.svg);
-            }
+            // &.delete {
+            //   -webkit-mask-image: url(../../../assets/icons/trash-alt.svg);
+            //   mask-image: url(../../../assets/icons/trash-alt.svg);
+            // }
           }
         }
 
