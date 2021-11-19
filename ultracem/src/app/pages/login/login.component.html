@@ -1,28 +1,36 @@
-<div class="container-ultracem fondo_gris pantallaCompleta">
-  <div class="row step-one">
-    <div class="col-lg-4 l-izquierdo pantallaCompleta col-sm-1">
-      <img src="assets/img/ultracem-home.png" alt="imagen ultracem home">
-    </div>
-    <div class="col-lg-8 l-derecho  align-self-center col-sm-12">
-      <div class="row justify-content-center">
-        <div class="col-11 text-center">
-          <h4 class="titulo">Iniciar sesión</h4>
+<div class="login p-5">
+  <div class="container pt-5">
+
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-8 fondo_imagen">
+          <img src="assets/images/fondo.jpg" class="img-fluid rounded-start" >
         </div>
-        <form class="col-sm-11 col-lg-5" [formGroup]="formInicial" autocomplete="off">
-          <div class="form-group m-3">
-            <input type="text" class="form-control input-login shadow" id="username" placeholder="Correo electrónico"
-              formControlName="email" autocomplete="off">
-          </div>
-          <div class="form-group m-3">
-            <input type="password" class="form-control input-login shadow" id="password" placeholder="Contraseña"
-              formControlName="password" autocomplete="off">
-          </div>
-          <div class="row justify-content-center pt-3">
-            <div class="col-lg-11 text-center">
-              <button [disabled]="formInicial.invalid" mat-raised-button class="btn_login" (click)="login()">Continuar</button>
+        <div class="col-md-4">
+          <div class="card-body mt-5 pt-5">
+            <div class="row justify-content-center">
+              <div class="col-11 text-center">
+                <h4 class="titulo">Iniciar sesión</h4>
+              </div>
+              <form class="col-sm-12 col-lg-12" [formGroup]="formInicial" autocomplete="off">
+                <div class="form-group m-3">
+                  <input type="text" class="form-control input-login shadow" 
+                    placeholder="Correo electrónico" formControlName="email" autocomplete="off">
+                </div>
+                <div class="form-group m-3">
+                  <input type="password" class="form-control input-login shadow"placeholder="Contraseña"
+                    formControlName="password" autocomplete="off">
+                </div>
+                <div class="row justify-content-center pt-3">
+                  <div class="col-lg-11 text-center">
+                    <button [disabled]="formInicial.invalid" mat-raised-button class="btn_login"
+                      (click)="login()">Continuar</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

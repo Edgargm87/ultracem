@@ -22,22 +22,33 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="row">
-                    <div class="col-lg-4">
-                      <i  class="icono fas fa-sliders-h"></i>
-                      <div class="title">{{item.numeroSolicitud}}</div>
-                      <div class="subtitle">Número de solicitud</div>
+                    <div class="col-lg-4 text-center">
+                      <img [src]="getImage(item,'/assets/images/estadoCredito/enValidacion.svg')" class="image-step">
+                      <div class="subtitle mt-2"> <strong
+                          [ngStyle]="{'color': capturarColor(item)}">{{item.estado}}</strong></div>
                     </div>
-                  
                     <div class="col-lg-4">
-                      <i  class="icono fas fa-calendar-alt"></i>
-                      <div class="title"> {{item.emision}}</div>
+                      <div class="title"> <i class="icono fas fa-sliders-h"></i> {{item.numeroSolicitud}}</div>
+                      <div class="subtitle">Número de solicitud</div>
+                      <hr>
+                      <div class="title"> <i class="icono fas fa-calendar-alt"></i> {{item.emision}}</div>
                       <div class="subtitle">Fecha de solicitud</div>
                     </div>
-                  
+
+
+
                     <div class="col-lg-4">
-                      <i  class="icono fas fa-money-bill-wave"></i>
-                      <div class="title"> ${{item.cupoTotal}}</div>
+                      <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoTotal}}</div>
                       <div class="subtitle">Cupo total</div>
+                      <hr>
+                      <ng-container *ngIf="!mostrarDatos(item)">
+                        <button mat-button class="bg-principal text-white w-100">Continuar</button>
+                      </ng-container>
+                      <ng-container *ngIf="mostrarDatos(item)">
+                        <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoReservado}}</div>
+                        <div class="subtitle">Cupo disponible</div>
+                      </ng-container>
+
                     </div>
                   </div>
 

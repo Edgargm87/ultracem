@@ -18,13 +18,9 @@ export class ListSolicitudComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.infoauth = JSON.parse(localStorage.getItem('infoauth') + '');
     this.cedula = this.infoauth.nit;
-    // this.cedula= '900600256';
     this.solicitudes()
-
-
   }
 
 
@@ -39,7 +35,7 @@ export class ListSolicitudComponent implements OnInit {
     })
   }
   gestion(x: number, type: string, stepPortal: string, stepFormulario: string) {
-    // debugger
+    debugger
     switch (stepPortal) {
       case "1":
         switch (stepFormulario) {
@@ -58,41 +54,59 @@ export class ListSolicitudComponent implements OnInit {
             }
             break;
         }
-
         break;
       case "2":
         let url = `/main/documents/${type}/${x}`;
         this.router.navigateByUrl(url);
         break;
       default:
-
-
         break;
     }
   }
 
-  buscarIcono(x: string) {
-  
-    switch (x) {
+
+  getImage(step: any, img: string) {
+    switch (step.stepPortal) {
       case "1":
-        return "fa-clipboard-list";
-      
+        return img.replace('enValidacion.svg', 'pendientesDocumetos.svg')
       case "2":
-        return "fa-paste";
-       
+        return img.replace('enValidacion.svg', 'pendientesDocumetos.svg')
       case "3":
-        return "fa-hourglass-half";
-      
+        return img
       case "4":
-        return "fa-persons";
-       
+        return img.replace('enValidacion.svg', 'desembolsado.svg')
+      case "5":
+        return img.replace('enValidacion.svg', 'noAprobado.svg')
       default:
-        return "fa-users";
-      
-       
+        return img
     }
   }
 
+
+  capturarColor(step: any) {
+    switch (step.stepPortal) {
+      case "1":
+        return "#32BEFA"
+      case "2":
+        return "#32BEFA"
+      case "3":
+        return "#F9A826"
+      case "4":
+        return "#00BFA6"
+      case "5":
+        return "#F50035"
+      default:
+        return "#F9A826"
+    }
+  }
+  mostrarDatos(step:any){
+    if(Number(step.stepPortal)>3){
+      return true;
+    }else{
+      return false;
+    }
+   
+  }
 
 
 }
