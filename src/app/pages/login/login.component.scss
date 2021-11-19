@@ -1,0 +1,36 @@
+
+@import "/src/styles/vars/exports";
+.input-login {
+  border-left: 2px solid $blue-primary;
+  font-size: 1.5em;
+  padding: 0.3em;
+}
+
+.fondo_gris{
+background: #EFF4F7;
+
+}
+.pantallaCompleta{
+    min-height: 100vh;
+}
+.btn_login { 
+  color: #fff;
+  background-color:$blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
+}
+.titulo{
+  color: $blue-primary;
+  font-size: 313%;
+  font-weight: 500;
+}
+
+.fondo_imagen {
+  background-image: url("/src/assets/images/fondo.jpg");
+  // background-color: #cccccc;
+}

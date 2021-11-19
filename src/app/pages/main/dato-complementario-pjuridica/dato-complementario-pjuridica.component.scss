@@ -1,0 +1,27 @@
+@import "../../../../styles/vars/exports";
+
+.btn-solicitar,
+.btn-solicitar[disabled] {
+  background: $green-light;
+  // opacity: 1;
+  color: white;
+}
+
+.btn_atras {
+  width: 4em;
+  position: absolute;
+  top: 1em;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.btn_siguiente {
+  color: #fff;
+  background-color:$blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
+}

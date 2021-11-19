@@ -1,0 +1,53 @@
+@import "../../../../styles/vars/exports";
+h5 {
+  color: $blue-primary;
+  text-transform: capitalize;
+  font-size: 2em;
+}
+
+.example-card:hover {
+  background: #f8f9fa;
+  box-shadow: 1rem 9px 15px 6px rgb(0 0 0 / 15%);
+}
+
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.border-left{
+  border-left: 1px solid $blue-primary
+}
+.subtitle{
+  color: $blue-primary;
+  font-size: 13px;
+  font-weight: 800;
+}
+.subtitle{
+  color: $blue-primary;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.bg-principal{
+  background: $blue-primary;
+}
+.zo4{
+  zoom: 0.4;
+}
+.icono{
+  color: rgb(17 30 98 / 48%);
+}
+.title{
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: -5px !important;
+}
+.subtitle{
+  color: rgb(0 0 0 / 54%);
+    font-size: 12px;
+}
+img.image-step {
+  height: 6em;
+}

@@ -1,0 +1,539 @@
+<div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
+  <div class="row step-one" *ngIf="step == 1 && !cargando"><!--Es 1-->
+    <div class="col-lg-4 l-izquierdo">
+      <img src="assets/img/ultracem-home.png" alt="imagen ultracem home">
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-left">Únete y sé parte de los ferreteros que se están beneficiando de la alianza
+            Ultracem/Fintra
+            Logistics</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formInicial">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>¿Eres cliente de Ultracem ?</mat-label>
+              <mat-select formControlName="cliente"  [compareWith]="compareObjects">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="validacionCamposRequerido('cliente')">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'S'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>¿Cómo esta registrado con Ultracem ?</mat-label>
+                <mat-select  formControlName="registrado"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistro">{{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="validacionCamposRequerido('registrado')">Este campo es requerido.</mat-error>
+              </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="formInicial.controls['cliente'].value == 'N'">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>¿Cómo quieres registrarte ?</mat-label>
+                <mat-select formControlName="registrar"   [compareWith]="compareObjects">
+                  <mat-option value="">Selecciona</mat-option>
+                  <mat-option
+                    [value]="item.codigoOpcion"
+                    *ngFor="let item of tipoRegistro"
+                  >
+                    {{item.descripcionOpcion}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="validacionCamposRequerido('registrar')">Este campo es requerido.</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <input type="text" matInput formControlName="tipoDocumento" autocomplete="off" readonly>
+              <!-- <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects"
+              >
+                <mat-option
+                  [value]="item.codigoOpcion"
+                  *ngFor="let item of tipoRegistro"
+                  [disabled]="formInicial.controls['cliente'].value? 'S' : 'N' "
+                >
+                  {{item.codigoOpcion}}
+                </mat-option>
+              </mat-select> -->
+              <!-- <mat-error *ngIf="validacionCamposRequerido('tipoDocumento')">Este campo es requerido.</mat-error> -->
+            </mat-form-field>
+            <!-- <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects"
+              >
+                <mat-option
+                  [value]="item.codigoOpcion"
+                  *ngFor="let item of tipoRegistro"
+                  [disabled]="formInicial.controls['cliente'].value? 'S' : 'N' "
+                >
+                  {{item.codigoOpcion}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="validacionCamposRequerido('tipoDocumento')">Este campo es requerido.</mat-error>
+            </mat-form-field> -->
+            <mat-form-field class="col-lg-6" appearance="fill" >
+              <mat-label>Número de <span *ngIf="natural">documento</span> <span *ngIf="!natural">NIT</span></mat-label>
+              <input type="text" matInput formControlName="documento" autocomplete="off"
+                     [matTooltip]="natural? 'Ingresar número de identificación.' : 'Ingresar número sin digito de verificación, ni separador de comas o puntos.'"
+              >
+              <mat-error *ngIf="(formInicial.controls.documento.dirty || formInicial.controls.documento.touched)">
+                <mat-error *ngIf="formInicial.controls.documento.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formInicial.controls.documento.errors?.pattern">Solo se aceptan números.</mat-error>
+                <ng-container *ngIf="formInicial.controls.registrado.value == 'CC' || formInicial.controls.registrar.value == 'CC'">
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.minlength">Longitud mínima son 5 digitos.</mat-error>
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.maxlength">Longitud máxima son 10 digitos.</mat-error>
+                </ng-container>
+                <ng-container *ngIf="formInicial.controls.registrado.value == 'NIT' || formInicial.controls.registrar.value == 'NIT'">
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.minlength">Longitud mínima son 9 digitos.</mat-error>
+                  <mat-error *ngIf="formInicial.controls.documento.errors?.maxlength">Longitud máxima son 9 digitos.</mat-error>
+                </ng-container>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button (click)=" preaprobado()"  mat-raised-button class="btn_siguiente" >Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="cargando">
+    <div class="col-lg-6 alerts-content">
+      <img src="../assets/img/loading.svg" alt="cargando ultracem">
+    </div>
+    <div class="col-lg-7 spinner">
+      <div class="row justify-content-center">
+        <div class="col-lg-2 content-spinner">
+          <mat-spinner [color]="'accent'"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.error" style="margin-bottom: 200px;">
+    <div class="col-lg-5 alerts-content">
+      <img src="assets/img/error.svg" alt="cargando ultracem">
+      <p class="text-center mt-3">Por favor comuníquese con nosotros a nuestra línea:</p>
+      <div class="d-flex chat justify-content-center align-items-center">
+        <img src="assets/icons/asesora.svg" alt="">
+        <a href="#">
+          +575 3782828
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.rechazado" style="margin-bottom: 200px;">
+    <div class="col-lg-5 alerts-content">
+      <img src="assets/img/rechazado.svg" alt="cargando ultracem">
+      <p class="text-center mt-3">En este momento no podemos procesar tu solicitud de crédito.
+        Si deseas conocer más información, comunícate:</p>
+      <div class="d-flex chat justify-content-center align-items-center">
+        <img src="assets/icons/asesora.svg" alt="">
+        <a href="#">
+          +575 3782828
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.aprobado" style="margin-bottom: 200px;">
+    <div class="col-lg-7 alerts-content">
+      <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
+      <div class="row justify-content-center my-4">
+        <button mat-raised-button class="btn_siguiente"  class="inicio-sesion" routerLink="/">Iniciar sesión</button>
+      </div>
+      <p class="text-center mt-3">Para completar tu solicitud de crédito, inicia sesión con tu
+        <span> usuario (correo registrado) y contraseña (cédula registrada)</span>
+      </p>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 2 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos básicos personales</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudNatural">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="formSolicitudNatural.controls.primerNombre.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional)</mat-label>
+              <input matInput formControlName="segundoNombre" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="formSolicitudNatural.controls.primerApellido.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo apellido (opcional)</mat-label>
+              <input matInput formControlName="segundoApellido" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker2"  formControlName="fechaNacimiento"
+                     (click)="picker2.open()"
+                     (keydown)="picker2.open()"
+                     autocomplete="off"
+                     [min]="'1960-01-01'" [max]="fechaMaxima"
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+              <mat-error *ngIf="formSolicitudNatural.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Género</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formSolicitudNatural.controls.genero.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+                <mat-error *ngIf="(formSolicitudNatural.controls.celular.dirty || formSolicitudNatural.controls.celular.touched)">
+                  <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                  <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.minlength">Longitud mínima son 7.</mat-error>
+                  <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="formSolicitudNatural.controls.email.errors">Este campo es requerido.</mat-error>
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
+              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'" >
+              <mat-error *ngIf="(formSolicitudNatural.controls.antiguedadNegocio.dirty || formSolicitudNatural.controls.antiguedadNegocio.touched)">
+                <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.pattern">Solo se aceptan números positivos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <ng-container *ngIf="formSolicitudNatural.controls.antiguedadCompra.value > 0">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Antigüedad compras? (meses)</mat-label>
+                <input matInput formControlName="antiguedadCompra" type="number" [readonly]="existeDatos? existeDatos : existeDatos">
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Compras semanales en cemento ($) </mat-label>
+              <input matInput formControlName="compraSemanal" type="text"
+                     (keyup)="formSolicitudNatural.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudNatural.value.compraSemanal));"
+                     [readonly]="existeDatos? existeDatos : existeDatos"
+              >
+              <mat-error *ngIf="!formSolicitudNatural.controls.compraSemanal.errors && !formSolicitudNatural.controls.compraSemanal.touched ">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox formControlName="aceptaConsultaCentrales"
+                >
+                  Autorizo que la información entregada sea
+                  consultada en centrales de riesgos.
+                </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="aceptaTerminos"
+                              (change)="onAceptoTerminos($event)"
+                > Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <ng-container *ngIf="!existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="SolicitudNUltracem()"
+              >
+                Solicitar
+              </button>
+            </ng-container>
+            <ng-container *ngIf="existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="onActualizarNultracem()"
+              >
+                Continuar
+              </button>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 3 && !cargando">
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS DE LA EMPRESA</span></li>
+          <li><span>REPRESENTANTE LEGAL</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de la empresa</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudJuridica">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Razón social</mat-label>
+              <input matInput formControlName="nombreCompleto" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="formSolicitudJuridica.controls.nombreCompleto.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de matrícula</mat-label>
+              <input matInput [matDatepicker]="picker3" formControlName="fechaMatricula" (click)="picker3.open()" (keydown)="picker3.open()" autocomplete="off" [min]="'1960-01-01'" [max]="fechaMaxima">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+              <mat-error *ngIf="formSolicitudJuridica.controls.fechaMatricula.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="telefono" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="(formSolicitudJuridica.controls.telefono.dirty || formSolicitudJuridica.controls.telefono.touched)">
+                <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.maxlength">Longitud máxima son 7 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="(formSolicitudJuridica.controls.celular.dirty || formSolicitudJuridica.controls.celular.touched)">
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.minlength">Longitud mínima son 10 dígitos.</mat-error>
+                <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.maxlength">Longitud máxima son 10 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Compras semanales en cemento ($) </mat-label>
+              <input matInput formControlName="compraSemanal" type="text"
+                     autocomplete="off"
+                     (keyup)="formSolicitudJuridica.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudJuridica.value.compraSemanal)); "
+                     [readonly]="existeDatos? existeDatos : existeDatos"
+              >
+              <mat-error *ngIf="formSolicitudJuridica.controls.compraSemanal.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off" [readonly]="existeDatos? existeDatos : existeDatos">
+              <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <ng-container *ngIf="formSolicitudJuridica.controls.antiguedadCompra.value > 0 ">
+              <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Antigüedad  compras? (meses)</mat-label>
+                <input matInput formControlName="antiguedadCompra" type="number" [readonly]="existeDatos? existeDatos : existeDatos">
+              </mat-form-field>
+            </ng-container>
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox  formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox  formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <ng-container *ngIf="!existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="SolicitudJUltracem()"
+              >
+                Solicitar
+              </button>
+            </ng-container>
+            <ng-container *ngIf="existeDatos">
+              <button mat-raised-button class="btn_siguiente"
+                      (click)="onActualizarJultracem()"
+              >
+                Continuar
+              </button>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three" *ngIf="step == 4 && !cargando"><!--Es 4-->
+    <div class="col-lg-4 l-izquierdo">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li><span>IDENTIFICACIÓN</span></li>
+          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8 l-derecho">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos de representante legal</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formSolicitudRepresentante">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de documento</mat-label>
+              <mat-select formControlName="tipoDocumento" [compareWith]="compareObjects">
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoRegistroJuridico">{{item.codigoOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.tipoDocumento.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Número de documento</mat-label>
+              <input type="text" matInput formControlName="documento" autocomplete="off">
+              <mat-error *ngIf="(formSolicitudRepresentante.controls.documento.dirty || formSolicitudRepresentante.controls.documento.touched)">
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.minlength">Longitud mínima son 5 dígitos.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.documento.errors?.maxlength">Longitud máxima son 10 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre" autocomplete="off">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.primerNombre.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional)</mat-label>
+              <input matInput formControlName="segundoNombre">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido" autocomplete="off">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.primerApellido.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo apellido (opcional)</mat-label>
+              <input matInput formControlName="segundoApellido">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Género</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option value="">Selecciona</mat-option>
+                <mat-option [value]="item.codigoOpcion" *ngFor="let item of tipoGenero">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.genero.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular" autocomplete="off">
+              <mat-error *ngIf="(formSolicitudRepresentante.controls.celular.dirty || formSolicitudRepresentante.controls.celular.touched)">
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.minlength">Longitud mínima son 10 dígitos.</mat-error>
+                <mat-error *ngIf="formSolicitudRepresentante.controls.celular.errors?.maxlength">Longitud máxima son 10 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <mat-error *ngIf="formSolicitudRepresentante.controls.email.errors">Este campo es requerido.</mat-error>
+              <!-- <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker4"  formControlName="fechaNacimiento"
+                     (click)="picker4.open()"
+                     (keydown)="picker4.open()"
+                     autocomplete="off"
+                     [min]="'1960-01-01'" [max]="fechaMaxima"
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+              <mat-datepicker #picker4></mat-datepicker>
+              <mat-error *ngIf="formSolicitudRepresentante.controls.fechaNacimiento.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <section class="col-lg-6 checkp">
+              <p>
+                <mat-checkbox formControlName="aceptaConsultaCentrales"
+                >Autorizo que la información entregada sea
+                  consultada en centrales de riesgos. </mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="aceptaTerminos"
+                              (change)="onAceptoTerminos($event)"
+                > Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+            </section>
+          </div>
+          <div class="row justify-content-center">
+            <button mat-raised-button class="btn_siguiente"  (click)="SolicitudRepresentante()">Solicitar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

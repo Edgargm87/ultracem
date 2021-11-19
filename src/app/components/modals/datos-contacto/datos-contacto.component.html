@@ -1,0 +1,56 @@
+<h1 mat-dialog-title class="text-center">Actualiza tus datos de contacto</h1>
+<div mat-dialog-content>
+  <div class="bg-white col-lg-12 col-sm-12  5 ">
+    <div class="row">
+      <div class="bg-white col l12">
+        <div class="row justify-start ">
+          <form [formGroup]="form">
+            <ng-container *ngIf="data.tipoDocumento === 'NIT'">
+              <div class="row mt-2">
+                <mat-form-field class="col-lg-12" appearance="outline">
+                  <mat-label>Teléfono</mat-label>
+                  <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'telefono'">
+                  <mat-error *ngIf="(form.controls.telefono.dirty || form.controls.telefono.touched)">
+                    <!--<mat-error *ngIf="form.controls.telefono.errors?.required ">Este campo es requerido.</mat-error>-->
+                    <mat-error *ngIf="form.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                    <mat-error *ngIf="form.controls.telefono.errors?.minlength">Longitud mínima son 7.</mat-error>
+                    <mat-error *ngIf="form.controls.telefono.errors?.maxlength">Longitud máxima son 7.</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </ng-container>
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-12" appearance="outline">
+                <mat-label>Celular</mat-label>
+                <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'celular'">
+                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                  <!--<mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>-->
+                  <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                  <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 10.</mat-error>
+                  <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11.</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-12" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'email'">
+                <mat-error *ngIf="form.controls.email.errors?.pattern">Email no valido.</mat-error>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="row col justify-content-center">
+    <button mat-raised-button color="primary"
+            (click)="onActualizar()"
+    >
+      Actualizar
+    </button>
+    <button mat-button (click)="onCerrar()">Cerrar</button>
+  </div>
+</div>
