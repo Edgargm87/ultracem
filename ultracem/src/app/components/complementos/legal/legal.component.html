@@ -1,17 +1,21 @@
-<div class="container-fluid container-ultracem color_fondo" [ngStyle]="{'height': alto, 'width': ancho}">
+<div class="container-fluid ">
+  <div class="logos">
+    <img src="assets/images/fintra-logistics.png" class="imagen_logos rounded-start p-3">
+    <img src="assets/images/ultracem.png" class="imagen_logos rounded-start">
+  </div>
 
-  <div class="row step-three" *ngIf="step == 1">
-    <div class="col-lg-4 l-izquierdo ">
+  <div class="row step-three legal">
+    <div class="col-lg-4 l-izquierdo m-auto">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
+          <li (click)="step=1" class="li-activo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=2" class="li-activo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3" class="li-activo"><span>REFERENCIAS</span></li>
+          <li (click)="step=4" class="li-inactivo"><span>LEGALES</span></li>
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 1">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">
@@ -50,11 +54,12 @@
             </div>
           </div>
           <div class="row justify-content-center mt-4">
-            <div class="col-lg-10 texto texto"matTooltip="se refiere según el GAFI: a) Casinos; b) agentes inmobiliarios; c) comerciantes de metales preciosos; d) comerciantes de piedras preciosas; e) abogados, notarios, otros profesionales jurídicos independientes o contadore" >
+            <div class="col-lg-10 texto texto"
+              matTooltip="se refiere según el GAFI: a) Casinos; b) agentes inmobiliarios; c) comerciantes de metales preciosos; d) comerciantes de piedras preciosas; e) abogados, notarios, otros profesionales jurídicos independientes o contadore">
               ¿Desarrolla actividades y profesiones no financieras designadas (APNFD)?
             </div>
             <div class="col-lg-1">
-              <mat-slide-toggle name="pregunta3" formControlName="pregunta3" >
+              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
               </mat-slide-toggle>
             </div>
           </div>
@@ -65,19 +70,7 @@
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(1)">Acepto</button>
       </div>
     </div>
-  </div>
-  <div class="row step-three" *ngIf="step == 2">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 2">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Declaración FATCA</h2>
@@ -178,19 +171,7 @@
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(2)">Acepto</button>
       </div>
     </div>
-  </div>
-  <div class="row step-three" *ngIf="step == 3">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 3">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Operaciones en moneda extranjera</h2>
@@ -243,19 +224,7 @@
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
       </div>
     </div>
-  </div>
-  <div class="row step-three" *ngIf="step == 4">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=5"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=6"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 4">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
@@ -273,7 +242,8 @@
               <mat-form-field class="clasetextArea" appearance="fill">
                 <textarea matInput placeholder="Escribe aquí" formControlName="descripcion"></textarea>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
-                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.</mat-error>
+                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.
+                </mat-error>
               </mat-form-field>
             </form>
 
@@ -297,22 +267,10 @@
         </div>
       </section>
       <div class="row justify-content-center mt-5">
-        <button  mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
+        <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
       </div>
     </div>
-  </div>
-  <div class="row step-three" *ngIf="step == 5">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 5">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">
@@ -357,19 +315,7 @@
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(5)">Acepto</button>
       </div>
     </div>
-  </div>
-  <div class="row step-three" *ngIf="step == 6">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
-        <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-lg-8 l-derecho">
+    <div class="col-lg-8 color_fondo" *ngIf="step == 6">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">
@@ -463,7 +409,8 @@
                   l&iacute;nea
                   de &eacute;tica de la compa&ntilde;&iacute;a que se encuentra en la p&aacute;gina web de
                   la
-                  empresa, <a href="https://www.fintralogistics.co" target="_blank">www.fintralogistics.co</a>, de cualquier
+                  empresa, <a href="https://www.fintralogistics.co" target="_blank">www.fintralogistics.co</a>, de
+                  cualquier
                   acto indebido descrito en el presente numeral, en la medida que tome o tenga conocimiento
                   o
                   tenga motivos razonables para creer que ocurri&oacute;.</li>
@@ -486,7 +433,6 @@
       </div>
     </div>
   </div>
-
   <!-- canvas -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
@@ -564,7 +510,7 @@
 
           <p><strong>PEP Extranjeras: </strong></p>
           <p>
-           Son aquellas personas naturales que desempe&ntilde;an funciones
+            Son aquellas personas naturales que desempe&ntilde;an funciones
             p&uacute;blicas prominentes y destacadas en otro pa&iacute;s. En especial, las siguientes personas:
           </p>
           <ol>

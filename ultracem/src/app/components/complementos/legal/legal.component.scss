@@ -3,6 +3,9 @@
 .color_fondo {
   background-color: #eff4f6 !important;
 }
+.legal{
+  height: 100vh;
+}
 
 .btn_siguiente {
   color: #fff;
@@ -56,53 +59,7 @@
   margin-bottom: 1.3em;
   color: $blue-primary;
 }
-.logos{
-  position: absolute;
-  z-index: 999999999; 
-  color: #fff;
-}
 
-ul {
-  list-style: none;
-  li {
-      font-family: Josefin Sans;
-      border-left: 2px solid  $blue-primary;
-      color:  $blue-primary;
-      font-weight: 600;
-      padding-bottom: 35px;
-      position: relative;
-      padding-left: 25px;
-      font-size: 17px;
-      height: 40px;
-      box-sizing: content-box;
-      align-items: center;
-      display: flex;
-      &::before {
-          position: absolute;
-          content: "";
-          background-image: url(/assets/icons/check_complete.svg);
-          background-size: 40px 40px;
-          display: inline-block;
-          width: 40px;
-          height: 40px;
-          left: -20px;
-      }
-      &:last-child{
-          border: none;
-      }
-  }
-}
-
-.div-right{
-  background: #fff;
-  color: #fff;
-}
-@media screen and (max-width: 767px) {
-  .logos{
-    position: relative;
-    color: #fff;
-  }
-}
 
 
 
