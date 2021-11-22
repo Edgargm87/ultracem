@@ -11,3 +11,32 @@
     padding-bottom: 1px;
     width: 9em;
   }
+  .cargandoUltracem{
+    position: absolute;
+    z-index: 999999999999999;
+    top: 1em;
+    left: 1em;
+    height: 80vh;
+    background: #fff;
+    margin: 0;
+    padding: 0em;
+    width: 97%;
+  }
+  .fondo_imagen {
+    background-image: url("/assets/images/fondo.jpg");
+    background-color: #cccccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+  }
+  .img-fluid {
+    height: 90vh;
+    margin-top: 10vh;
+  }
+  @media screen and (max-width: 767px) {
+    .fondo_imagen {
+      display: none;
+    }
+  }  
