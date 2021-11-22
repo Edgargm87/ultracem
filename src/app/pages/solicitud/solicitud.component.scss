@@ -22,6 +22,30 @@
     padding: 0em;
     width: 97%;
   }
+// adds breaks to the mat-checkboxes with long labels
+::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+}
+.imagen-mensaje{
+  height: 70vh;
+}
+.row-mensaje{
+  position: absolute;
+  background: #fff;
+  height: 100vh;
+  z-index: 999999999;
+  width: 100%;
+  text-align: center;
+}
+.texto-mensaje{
+  font-weight: 900;
+  color: rgb(0 0 0 / 87%);
+}
+a{
+  font-weight: 900;
+  color: $blue-primary;
+  text-decoration: none;
+}
   .fondo_imagen {
     background-image: url("/assets/images/fondo.jpg");
     background-color: #cccccc;
