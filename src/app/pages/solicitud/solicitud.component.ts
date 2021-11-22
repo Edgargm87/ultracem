@@ -241,7 +241,7 @@ export class solicitudComponent implements OnInit {
 
   loguear(): void {
     this._creditService.login().subscribe(res => {
-      localStorage.setItem('TOKEN', res.data.token)
+      localStorage.setItem('accessToken', res.data.token)
       this.eresclienteUltracem();
       this.obtenerTipoRegistro();
       this.obtenerTipoGenero();
