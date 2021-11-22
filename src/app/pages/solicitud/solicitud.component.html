@@ -130,10 +130,10 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.error" style="margin-bottom: 200px;">
+  <div class="row justify-content-center step-two mt-3 row-mensaje" *ngIf="estadoSolicitud.error" >
     <div class="col-lg-5 alerts-content">
-      <img src="assets/img/error.svg" alt="cargando ultracem">
-      <p class="text-center mt-3">Por favor comuníquese con nosotros a nuestra línea:</p>
+      <img src="assets/img/error.svg" alt="cargando ultracem"  class="imagen-mensaje">
+      <p class="text-center mt-3 texto-mensaje">Por favor comuníquese con nosotros a nuestra línea:</p>
       <div class="d-flex chat justify-content-center align-items-center">
         <img src="assets/icons/asesora.svg" alt="">
         <a href="#">
@@ -142,10 +142,10 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.rechazado" style="margin-bottom: 200px;">
+  <div class="row justify-content-center step-two mt-3 row-mensaje" *ngIf="estadoSolicitud.rechazado" >
     <div class="col-lg-5 alerts-content">
-      <img src="assets/img/rechazado.svg" alt="cargando ultracem">
-      <p class="text-center mt-3">En este momento no podemos procesar tu solicitud de crédito.
+      <img src="assets/img/rechazado.svg" alt="cargando ultracem"  class="imagen-mensaje">
+      <p class="text-center mt-3 texto-mensaje" >En este momento no podemos procesar tu solicitud de crédito.
         Si deseas conocer más información, comunícate:</p>
       <div class="d-flex chat justify-content-center align-items-center">
         <img src="assets/icons/asesora.svg" alt="">
@@ -155,13 +155,13 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center step-two mt-3" *ngIf="estadoSolicitud.aprobado" style="margin-bottom: 200px;">
-    <div class="col-lg-7 alerts-content">
-      <img src="../assets/img/felicidades.svg" alt="cargando ultracem">
+  <div class="row justify-content-center mt-3 row-mensaje" *ngIf="estadoSolicitud.aprobado">
+    <div class="col-lg-12 alerts-content">
+      <img src="../assets/img/felicidades.svg" alt="cargando ultracem" class="imagen-mensaje">
       <div class="row justify-content-center my-4">
-        <button mat-raised-button class="btn_siguiente" class="inicio-sesion" routerLink="/">Iniciar sesión</button>
+        <button mat-raised-button class="btn_siguiente inicio-sesion" routerLink="/login">Iniciar sesión</button>
       </div>
-      <p class="text-center mt-3">Para completar tu solicitud de crédito, inicia sesión con tu
+      <p class="text-center mt-3 texto-mensaje">Para completar tu solicitud de crédito, inicia sesión con tu
         <span> usuario (correo registrado) y contraseña (cédula registrada)</span>
       </p>
     </div>
@@ -171,7 +171,7 @@
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
           <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
-          <li class="li-activo"><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+          <li class="li-inactivo"><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
         </ul>
       </div>
     </div>
@@ -250,7 +250,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email"
-                [readonly]="existeDatos? existeDatos : existeDatos">
+                [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off">
               <mat-error *ngIf="formSolicitudNatural.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -264,7 +264,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
-              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'">
+              <input matInput formControlName="antiguedadNegocio" type="number" [min]="'0'" autocomplete="off">
               <mat-error
                 *ngIf="(formSolicitudNatural.controls.antiguedadNegocio.dirty || formSolicitudNatural.controls.antiguedadNegocio.touched)">
                 <mat-error *ngIf="formSolicitudNatural.controls.antiguedadNegocio.errors?.required ">Este campo es
@@ -277,14 +277,14 @@
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Antigüedad compras? (meses)</mat-label>
                 <input matInput formControlName="antiguedadCompra" type="number"
-                  [readonly]="existeDatos? existeDatos : existeDatos">
+                  [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off">
               </mat-form-field>
             </ng-container>
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Compras semanales en cemento ($) </mat-label>
-              <input matInput formControlName="compraSemanal" type="text"
+              <input matInput formControlName="compraSemanal" type="text" autocomplete="off"
                 (keyup)="formSolicitudNatural.controls['compraSemanal'].setValue(_generic.formatearNumero(formSolicitudNatural.value.compraSemanal));"
                 [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error
@@ -292,16 +292,14 @@
                 Este campo es requerido.</mat-error>
             </mat-form-field>
             <section class="col-lg-6 checkp">
-              <p>
-                <mat-checkbox formControlName="aceptaConsultaCentrales">
-                  Autorizo que la información entregada sea
+             <div class="row">
+              <mat-checkbox formControlName="aceptaConsultaCentrales" class="col-lg-12 col-sm-12">
+                Autorizo que la información entregada sea
                   consultada en centrales de riesgos.
-                </mat-checkbox>
-              </p>
-              <p>
-                <mat-checkbox formControlName="aceptaTerminos" (change)="onAceptoTerminos($event)"> Acepto los términos
-                  y condiciones.</mat-checkbox>
-              </p>
+              </mat-checkbox>
+              <mat-checkbox formControlName="aceptaTerminos" class="col-lg-12 col-sm-12" (change)="onAceptoTerminos($event)"> Acepto los términos
+                y condiciones.</mat-checkbox>
+             </div>
             </section>
           </div>
           <div class="row justify-content-center">
@@ -321,12 +319,12 @@
     </div>
   </div>
   <div class="row step-three" *ngIf="step == 3 && !cargando">
-    <div class="col-lg-4 l-izquierdo">
+    <div class="col-lg-4 l-izquierdo m-auto">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li><span>IDENTIFICACIÓN</span></li>
-          <li><span>DATOS DE LA EMPRESA</span></li>
-          <li><span>REPRESENTANTE LEGAL</span></li>
+          <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
+          <li class="li-inactivo"><span>DATOS DE LA EMPRESA</span></li>
+          <li class="li-inactivo"><span>REPRESENTANTE LEGAL</span></li>
         </ul>
       </div>
     </div>
@@ -449,11 +447,12 @@
   </div>
   <div class="row step-three" *ngIf="step == 4 && !cargando">
     <!--Es 4-->
-    <div class="col-lg-4 l-izquierdo">
+    <div class="col-lg-4 l-izquierdo m-auto">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li><span>IDENTIFICACIÓN</span></li>
-          <li><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+          <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
+          <li class="li-activo"><span>DATOS DE LA EMPRESA</span></li>
+          <li class="li-inactivo"><span>REPRESENTANTE LEGAL</span></li>
         </ul>
       </div>
     </div>
@@ -544,7 +543,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
-              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+              <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off">
               <mat-error *ngIf="formSolicitudRepresentante.controls.email.errors">Este campo es requerido.</mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">

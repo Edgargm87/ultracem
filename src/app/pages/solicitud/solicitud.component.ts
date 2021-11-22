@@ -353,7 +353,7 @@ export class solicitudComponent implements OnInit {
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
       form.documento = (this.formSolicitudRepresentante.value.documento).toString();
-      this.guardarSolicitudJultracem(form);
+      this.guardarSolicitudJultracemRepresentante(form);
     }else {
       this.formSolicitudRepresentante.markAllAsTouched();
     }
@@ -445,7 +445,27 @@ export class solicitudComponent implements OnInit {
       console.log(resp);
       console.log('representante', this.formSolicitudRepresentante.value);
     });
+  }
 
+  private guardarSolicitudJultracemRepresentante(datos: any): void {
+    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+      console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          break;
+        case 'APROBADO':
+          this.formSolicitudRepresentante.patchValue({
+            numeroSolicitud: (resp.data.numeroSolicitud).toString()
+          });
+
+          this.step = 4;
+          console.log(resp);
+          console.log('representante', this.formSolicitudRepresentante.value);
+          this.estadoSolicitud.aprobado = true;
+          break;
+      }
+    });
   }
 
   calcularDigitoVerificacion(data: any): any {

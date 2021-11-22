@@ -58,6 +58,12 @@ ul {
       background-image: url(/assets/icons/check_complete.svg) !important;
     } 
   }
+  .pantallaCompleta{
+    height: 100vh;
+  }
+  .pantalla-completa{
+    height: 100vh;
+  }
   .li-inactivo{
     &::before {
       border: 2px solid;
