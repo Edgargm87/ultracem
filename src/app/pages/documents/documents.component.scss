@@ -15,7 +15,9 @@ p {
 
 .main-docs {
   display: flex;
-  justify-content: flex-center;
+  align-items: center;
+  justify-content: center;
+
 
   ul {
     padding: 0px;
@@ -108,9 +110,11 @@ p {
 
 .btn_atras {
   color: $blue-primary;
-  background-color:#fff;
+  background-color: #fff;
   border: 2px solid $blue-primary;
 }
-.wimg{
-    width: 3.5rem !important;
+
+.wimg {
+  width: 3.5rem !important;
 }
+

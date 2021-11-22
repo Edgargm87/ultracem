@@ -20,133 +20,190 @@ $my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-cus
 html {
     min-height: 100%;
 }
-body {
-    margin: 0px;
-    padding: 0px;
-    .container-ultracem {
-        overflow: hidden;
-        .step-one {
-            .l-izquierdo {
-                img {
-                    width: 104%;
-                }
-            }
-            .l-derecho {
-                h2 {
-                    font-family: gotham-black;
-                    margin-bottom: 75px;
-                }
-            }
-            .mat-form-field-appearance-fill .mat-form-field-flex {
-                background-color: #fff;
-            }
+ul {
+    list-style: none;
+    li {
+        font-family: Josefin Sans;
+        border-left: 2px solid  $blue-primary;
+        color:  $blue-primary;
+        font-weight: 600;
+        padding-bottom: 35px;
+        position: relative;
+        padding-left: 25px;
+        font-size: 17px;
+        height: 40px;
+        box-sizing: content-box;
+        align-items: center;
+        display: flex;
+        &::before {
+            position: absolute;
+            content: "";
+            // background-image: url(/assets/icons/check_complete.svg);
+            background-size: 40px 40px;
+            
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            left: -20px;
         }
-        .step-two {
-            .alerts-content {
-                margin-bottom: 47px;
-                img {
-                    width: 100%;
-                }
-                a,
-                p {
-                    color: #838383;
-                }
-                p {
-                    font-size: 22px;
-                    font-family: Josefin Sans;
-                    font-weight: 400;
-                    line-height: 22px;
-                    span {
-                        font-weight: 600;
-                    }
-                }
-                .chat {
-                    a {
-                        text-decoration: none;
-                        font-size: 40px;
-                        font-family: Josefin Sans;
-                        font-style: italic;
-                        font-weight: 600;
-                    }
-                    img {
-                        width: 10%;
-                    }
-                }
-            }
-            .spinner {
-                img {
-                    width: 100%;
-                }
-            }
-        }
-        .step-three {
-            height: inherit;
-            .l-derecho {
-                background-color: #eff4f6;
-                .checkp {
-                    label {
-                        white-space: pre-line;
-                    }
-                }
-            }
-            .l-izquierdo {
-                > .row {
-                    height: 100%;
-                    ul {
-                        list-style: none;
-                        li {
-                            font-family: Josefin Sans;
-                            border-left: 2px solid  $blue-primary;
-                            color:  $blue-primary;
-                            font-weight: 600;
-                            padding-bottom: 35px;
-                            position: relative;
-                            padding-left: 25px;
-                            font-size: 17px;
-                            height: 40px;
-                            box-sizing: content-box;
-                            align-items: center;
-                            display: flex;
-                            &::before {
-                                position: absolute;
-                                content: "";
-                                background-image: url(./assets/icons/check_complete.svg);
-                                background-size: 40px 40px;
-                                display: inline-block;
-                                width: 40px;
-                                height: 40px;
-                                left: -20px;
-                            }
-                            &:last-child{
-                                border: none;
-                            }
-                        }
-                    }
-                }
-                background-image: url(./assets/img/ultracem-form.png);
-            }
-            .mat-form-field-appearance-fill .mat-form-field-flex {
-                background-color: #eff4f6;
-                height: 53px;
-            }
-        }
-
-        button {
-            width: max-content;
-            color: #fff;
-            background-color: #111E62;
-            font-family: Josefin Sans;
-            font-weight: 600;
-            border-radius: 38px;
-            &.inicio-sesion {
-                border-radius: 38px;
-                height: 60px;
-                padding: 0px 25px;
-                font-size: 35px;
-            }
-        }
-        .mat-form-field-appearance-fill .mat-form-field-flex {
-            background-color: #eff4f6;
+        &:last-child{
+            border: none;
         }
     }
-}
+  }
+  .li-activo{
+    &::before {
+      border: none;
+      border-radius: none;
+      background-image: url(/assets/icons/check_complete.svg) !important;
+    } 
+  }
+  .li-inactivo{
+    &::before {
+      border: 2px solid;
+      border-radius: 1em;
+      background: #fff;
+    } 
+  }
+  .logos{
+    position: absolute;
+    z-index: 999999999; 
+    color: #fff;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .logos{
+      position: relative;
+      color: #fff;
+    }
+  }
+// body {
+//     margin: 0px;
+//     padding: 0px;
+//     .container-ultracem {
+//         overflow: hidden;
+//         .step-one {
+//             .l-izquierdo {
+//                 img {
+//                     width: 104%;
+//                 }
+//             }
+//             .l-derecho {
+//                 h2 {
+//                     font-family: gotham-black;
+//                     margin-bottom: 75px;
+//                 }
+//             }
+//             .mat-form-field-appearance-fill .mat-form-field-flex {
+//                 background-color: #fff;
+//             }
+//         }
+//         .step-two {
+//             .alerts-content {
+//                 margin-bottom: 47px;
+//                 img {
+//                     width: 100%;
+//                 }
+//                 a,
+//                 p {
+//                     color: #838383;
+//                 }
+//                 p {
+//                     font-size: 22px;
+//                     font-family: Josefin Sans;
+//                     font-weight: 400;
+//                     line-height: 22px;
+//                     span {
+//                         font-weight: 600;
+//                     }
+//                 }
+//                 .chat {
+//                     a {
+//                         text-decoration: none;
+//                         font-size: 40px;
+//                         font-family: Josefin Sans;
+//                         font-style: italic;
+//                         font-weight: 600;
+//                     }
+//                     img {
+//                         width: 10%;
+//                     }
+//                 }
+//             }
+//             .spinner {
+//                 img {
+//                     width: 100%;
+//                 }
+//             }
+//         }
+//         .step-three {
+//             height: inherit;
+//             .l-derecho {
+//                 background-color: #eff4f6;
+//                 .checkp {
+//                     label {
+//                         white-space: pre-line;
+//                     }
+//                 }
+//             }
+//             .l-izquierdo {
+//                 > .row {
+//                     height: 100%;
+//                     ul {
+//                         list-style: none;
+//                         li {
+//                             font-family: Josefin Sans;
+//                             border-left: 2px solid  $blue-primary;
+//                             color:  $blue-primary;
+//                             font-weight: 600;
+//                             padding-bottom: 35px;
+//                             position: relative;
+//                             padding-left: 25px;
+//                             font-size: 17px;
+//                             height: 40px;
+//                             box-sizing: content-box;
+//                             align-items: center;
+//                             display: flex;
+//                             &::before {
+//                                 position: absolute;
+//                                 content: "";
+//                                 background-image: url(./assets/icons/check_complete.svg);
+//                                 background-size: 40px 40px;
+//                                 display: inline-block;
+//                                 width: 40px;
+//                                 height: 40px;
+//                                 left: -20px;
+//                             }
+//                             &:last-child{
+//                                 border: none;
+//                             }
+//                         }
+//                     }
+//                 }
+//                 background-image: url(./assets/img/ultracem-form.png);
+//             }
+//             .mat-form-field-appearance-fill .mat-form-field-flex {
+//                 background-color: #eff4f6;
+//                 height: 53px;
+//             }
+//         }
+
+//         button {
+//             width: max-content;
+//             color: #fff;
+//             background-color: #111E62;
+//             font-family: Josefin Sans;
+//             font-weight: 600;
+//             border-radius: 38px;
+//             &.inicio-sesion {
+//                 border-radius: 38px;
+//                 height: 60px;
+//                 padding: 0px 25px;
+//                 font-size: 35px;
+//             }
+//         }
+//         .mat-form-field-appearance-fill .mat-form-field-flex {
+//             background-color: #eff4f6;
+//         }
+//     }
+// }
