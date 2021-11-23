@@ -14,69 +14,86 @@ $my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-cus
 @include angular-material-theme($my-custom-theme);
 
 @font-face {
-    font-family: gotham-black;
-    src: url(assets/fonts/Gotham-Black.otf) format("opentype");
+  font-family: gotham-black;
+  src: url(assets/fonts/Gotham-Black.otf) format("opentype");
 }
+
 html {
-    min-height: 100%;
+  min-height: 100%;
 }
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #fff;
+}
+
 ul {
-    list-style: none;
-    li {
-        font-family: Josefin Sans;
-        border-left: 2px solid  $blue-primary;
-        color:  $blue-primary;
-        font-weight: 600;
-        padding-bottom: 35px;
-        position: relative;
-        padding-left: 25px;
-        font-size: 17px;
-        height: 40px;
-        box-sizing: content-box;
-        align-items: center;
-        display: flex;
-        &::before {
-            position: absolute;
-            content: "";
-            // background-image: url(/assets/icons/check_complete.svg);
-            background-size: 40px 40px;
-            
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            left: -20px;
-        }
-        &:last-child{
-            border: none;
-        }
+  list-style: none;
+
+  li {
+    font-family: Josefin Sans;
+    border-left: 2px solid $blue-primary;
+    color: $blue-primary;
+    font-weight: 600;
+    padding-bottom: 35px;
+    position: relative;
+    padding-left: 25px;
+    font-size: 17px;
+    height: 40px;
+    box-sizing: content-box;
+    align-items: center;
+    display: flex;
+
+    &::before {
+      position: absolute;
+      content: "";
+      // background-image: url(/assets/icons/check_complete.svg);
+      background-size: 40px 40px;
+
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      left: -20px;
+    }
+
+    &:last-child {
+      border: none;
     }
   }
-  .li-activo{
-    &::before {
-      border: none;
-      border-radius: none;
-      background-image: url(/assets/icons/check_complete.svg) !important;
-    } 
+}
+
+.li-activo {
+  &::before {
+    border: none;
+    border-radius: none;
+    background-image: url(/assets/icons/check_complete.svg) !important;
   }
-  .li-inactivo{
-    &::before {
-      border: 2px solid;
-      border-radius: 1em;
-      background: #fff;
-    } 
+}
+
+.pantallaCompleta {
+  height: 100vh;
+}
+
+.li-inactivo {
+  &::before {
+    border: 2px solid;
+    border-radius: 1em;
+    background: #fff;
   }
-  .logos{
-    position: absolute;
-    z-index: 999999999; 
+}
+
+.logos {
+  position: absolute;
+  z-index: 999999999;
+  color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  .logos {
+    position: relative;
     color: #fff;
   }
-  
-  @media screen and (max-width: 767px) {
-    .logos{
-      position: relative;
-      color: #fff;
-    }
-  }
+}
+
 // body {
 //     margin: 0px;
 //     padding: 0px;

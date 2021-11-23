@@ -1,17 +1,20 @@
 <div class="container-fluid container-ultracem color_fondo" [ngStyle]="{'height': alto, 'width': ancho}">
-
-  <div class="row step-three" *ngIf="step == 1 && !cargando">
-    <div class="col-lg-4 l-izquierdo ">
-      <div class="row justify-content-center align-items-center">
+  <div class="logos">
+    <img src="assets/images/fintra-logistics.png" class="imagen_logos rounded-start p-3">
+    <img src="assets/images/ultracem.png" class="imagen_logos rounded-start">
+  </div>
+  <div class="row step-three pantalla-completa" *ngIf="step == 1 && !cargando">
+    <div class="col-lg-4 l-izquierdo m-auto">
+      <div class="row justify-content-center align-items-center mt-5">
         <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
+          <li (click)="step=1" class="li-inactivo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=2" class="li-inactivo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3"  class="li-inactivo"><span>REFERENCIAS</span></li>
+          <li  class="li-inactivo"><span>LEGALES</span></li>
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
       </div> -->
@@ -126,18 +129,18 @@
       </div>
     </div>
   </div>
-  <div class="row step-three" *ngIf="step == 2 && !cargando">
-    <div class="col-lg-4 l-izquierdo">
+  <div class="row step-three pantalla-completa" *ngIf="step == 2 && !cargando">
+    <div class="col-lg-4 l-izquierdo m-auto ">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
+          <li (click)="step=1" class="li-activo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=2" class="li-inactivo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3"  class="li-inactivo"><span>REFERENCIAS</span></li>
+          <li class="li-inactivo"><span>LEGALES</span></li>
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center ">
+    <div class="col-lg-8 l-derecho ">
       <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
       </div> -->
@@ -228,7 +231,7 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-lg-6" appearance="fill">
+            <mat-form-field class="col-lg-6 mb-3" appearance="fill">
               <mat-label>Télefono</mat-label>
               <input type="text" autocomplete="off" matInput formControlName="telefonoNegocio">
               <mat-error *ngIf="(formTab2.controls.telefonoNegocio.dirty || formTab2.controls.telefonoNegocio.touched)">
@@ -303,18 +306,18 @@
       </div>
     </div>
   </div>
-  <div class="row step-three" *ngIf="step == 3 && !cargando">
-    <div class="col-lg-4 l-izquierdo">
+  <div class="row step-three pantalla-completa" *ngIf="step == 3 && !cargando">
+    <div class="col-lg-4 l-izquierdo m-auto ">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li (click)="step=1"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3"><span>REFERENCIAS</span></li>
-          <li (click)="step=4"><span>LEGALES</span></li>
+          <li (click)="step=1" class="li-activo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li (click)="step=2" class="li-activo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li (click)="step=3"  class="li-inactivo"><span>REFERENCIAS</span></li>
+          <li class="li-inactivo"><span>LEGALES</span></li>
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho align-self-center">
+    <div class="col-lg-8 l-derecho">
       <!-- <div class="row">
         <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
       </div> -->
@@ -347,10 +350,10 @@
               <input type="text" autocomplete="off" matInput formControlName="pSegundoApellido">
             </mat-form-field>
           </div>
-          <div class="row">
-            <mat-form-field class="col-lg-6" appearance="fill">
+          <div class="row mb-3">
+            <mat-form-field class="col-lg-6 mb-3" appearance="fill">
               <mat-label>Teléfono / celular</mat-label>
-              <input matInput autocomplete="off" formControlName="ptelefono" type="text">
+              <input matInput autocomplete="off" formControlName="ptelefono" type="text" >
               <mat-error *ngIf="(formTab3.controls.ptelefono.dirty || formTab3.controls.ptelefono.touched)">
                 <mat-error *ngIf="formTab3.controls.ptelefono.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formTab3.controls.ptelefono.errors?.pattern">Solo se aceptan números.</mat-error>

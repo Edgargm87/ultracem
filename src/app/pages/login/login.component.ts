@@ -19,22 +19,24 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService
   ) {
     this.formInicial = this.fb.group({
-      email: ['muelles@gmail.com', Validators.required],
-      password: ['1143163517', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     })
-   }
+  }
 
   ngOnInit(): void {
   }
 
-  login(){
-    Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this._authService.postSession(this.formInicial.value.email,this.formInicial.value.password).subscribe(resp => {
-      if(resp){
-        Swal.close();
-        this._router.navigate(['main/listRequest']);
-      }
-    })
+  login() {
+    if (!this.formInicial.invalid) {
+      Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      this._authService.postSession(this.formInicial.value.email, this.formInicial.value.password).subscribe(resp => {
+        if (resp) {
+          Swal.close();
+          this._router.navigate(['main/listRequest']);
+        }
+      })
+    }
   }
 
 }
