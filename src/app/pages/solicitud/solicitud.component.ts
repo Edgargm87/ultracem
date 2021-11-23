@@ -439,6 +439,7 @@ export class solicitudComponent implements OnInit {
         case 'APROBADO':
           this.estadoSolicitud.aprobado = true;
           this.cargando = false;
+          this.router.navigateByUrl('/aprobado');
           break;
       }
     });
@@ -462,6 +463,7 @@ export class solicitudComponent implements OnInit {
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.router.navigateByUrl('/rechazado');
           break;
         case 'APROBADO':
           this.formSolicitudRepresentante.patchValue({
@@ -472,6 +474,7 @@ export class solicitudComponent implements OnInit {
           console.log(resp);
           console.log('representante', this.formSolicitudRepresentante.value);
           this.estadoSolicitud.aprobado = true;
+          this.router.navigateByUrl('/aprobado');
           break;
       }
     });

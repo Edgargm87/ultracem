@@ -14,9 +14,10 @@ import {CommonModule} from "@angular/common";
 import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 import { MensajeRechazadoComponent } from './mensaje-rechazado/mensaje-rechazado.component';
 import { MensajeAprobadoComponent } from './mensaje-aprobado/mensaje-aprobado.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
-    imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule],
+  imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule],
   exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent],
     declarations: [
         DatosContactoComponent,

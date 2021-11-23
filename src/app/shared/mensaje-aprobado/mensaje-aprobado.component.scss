@@ -1,3 +1,4 @@
+@import "../../../styles/vars/exports";
 .imagen-mensaje {
   height: 70vh;
 }
@@ -14,4 +15,16 @@
 .texto-mensaje {
   font-weight: 900;
   color: rgb(0 0 0 / 87%);
+}
+
+.btn_siguiente {
+  color: #fff;
+  background-color: $blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
 }
