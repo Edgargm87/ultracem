@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.formInicial.invalid) {
-      Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      // Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._authService.postSession(this.formInicial.value.email, this.formInicial.value.password).subscribe(resp => {
         if (resp) {
           Swal.close();
