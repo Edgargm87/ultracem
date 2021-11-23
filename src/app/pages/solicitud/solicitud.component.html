@@ -231,7 +231,7 @@
           </div>
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
-              <mat-label>Cuánto tiempo lleva el negocio? (meses) </mat-label>
+              <mat-label>¿Cuánto tiempo lleva el negocio? (meses) </mat-label>
               <input matInput
                      formControlName="antiguedadNegocio"
                      type="number" [min]="'0'" autocomplete="off"
@@ -248,7 +248,7 @@
             </mat-form-field>
             <ng-container *ngIf="formSolicitudNatural.controls.antiguedadCompra.value > 0">
               <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Antigüedad compras? (meses)</mat-label>
+                <mat-label>Antigüedad en compras (meses)</mat-label>
                 <input matInput formControlName="antiguedadCompra" type="number"
                   [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off">
               </mat-form-field>
@@ -387,7 +387,7 @@
           <div class="row">
             <ng-container *ngIf="formSolicitudJuridica.controls.antiguedadCompra.value > 0 ">
               <mat-form-field class="col-lg-6" appearance="fill">
-                <mat-label>Antigüedad compras? (meses)</mat-label>
+                <mat-label>Antigüedad compras (meses)</mat-label>
                 <input matInput formControlName="antiguedadCompra" type="number"
                   [readonly]="existeDatos? existeDatos : existeDatos">
               </mat-form-field>
