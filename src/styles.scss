@@ -72,7 +72,9 @@ ul {
 .pantallaCompleta {
   height: 100vh;
 }
-
+.imagen_logos {
+  height: 15vh;
+}
 .li-inactivo {
   &::before {
     border: 2px solid;
