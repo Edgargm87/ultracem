@@ -7,6 +7,7 @@ import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import {format, getDate, parseISO} from 'date-fns'
 import { GenericService } from 'src/app/services/generic.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {delay} from "rxjs/operators";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -276,7 +277,8 @@ export class solicitudComponent implements OnInit {
   preaprobado(): void {
     if (this.formInicial.valid) {
       this.cargando = true;
-      this._creditService.preaprobado(this.formInicial.value).subscribe(resp => {
+      this._creditService.preaprobado(this.formInicial.value).pipe(delay(500))
+        .subscribe(resp => {
         if (resp.data) {
           this.existeDatos = true;
           if (this.formInicial.value.tipoDocumento == 'CC') {
@@ -422,14 +424,18 @@ export class solicitudComponent implements OnInit {
   }
 
   private guardarSolicitudUltracem(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this.cargando = true;
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       console.log(resp);
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.cargando = false;
           break;
         case 'APROBADO':
           this.estadoSolicitud.aprobado = true;
+          this.cargando = false;
           break;
       }
     });
