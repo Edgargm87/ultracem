@@ -95,6 +95,6 @@ export class CreditService {
   }
 
   adjuntarDocumento(data: any): Observable<any> {
-    return this._http.post(this.infoN + 'archivos/guardar/adjuntar-archivo', data);
+    return this._http.post(this.infoApp.urlApi2 + 'archivos/guardar/adjuntar-archivo', data);
   }
 }
