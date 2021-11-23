@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   formInicial: FormGroup;
 
-
   constructor(
     private fb: FormBuilder,
     private _router: Router,
@@ -26,10 +25,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  /**
+   * @description: Login
+   */
   login() {
     if (!this.formInicial.invalid) {
-      Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      // Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._authService.postSession(this.formInicial.value.email, this.formInicial.value.password).subscribe(resp => {
         if (resp) {
           Swal.close();
