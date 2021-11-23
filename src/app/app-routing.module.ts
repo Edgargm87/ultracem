@@ -7,6 +7,7 @@ import { DatoComplementarioPnaturalComponent } from './pages/main/dato-complemen
 import { DatoComplementarioPjuridicaComponent } from './pages/main/dato-complementario-pjuridica/dato-complementario-pjuridica.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
+import {MensajeRechazadoComponent} from "./shared/mensaje-rechazado/mensaje-rechazado.component";
 
 
 
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'main/legal/:codigoSolicitud',
     component: LegalComponent
+  },
+  {
+    path: 'rechazado',
+    component: MensajeRechazadoComponent
   },
   {
     path: '',

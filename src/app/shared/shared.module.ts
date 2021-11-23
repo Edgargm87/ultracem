@@ -11,12 +11,18 @@ import { DatosContactoComponent } from '../components/modals/datos-contacto/dato
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
+import { MensajeRechazadoComponent } from './mensaje-rechazado/mensaje-rechazado.component';
+import { MensajeAprobadoComponent } from './mensaje-aprobado/mensaje-aprobado.component';
 
 @NgModule({
     imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule],
-    exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule],
+  exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent],
     declarations: [
         DatosContactoComponent,
+        MensajeErrorComponent,
+        MensajeRechazadoComponent,
+        MensajeAprobadoComponent,
 
     ],
     entryComponents: [DatosContactoComponent],
