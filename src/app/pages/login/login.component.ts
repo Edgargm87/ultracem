@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   formInicial: FormGroup;
 
-
   constructor(
     private fb: FormBuilder,
     private _router: Router,
