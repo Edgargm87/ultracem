@@ -23,6 +23,13 @@ export class ListSolicitudComponent implements OnInit {
     this.solicitudes()
   }
 
+  onCerrar(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('closeSession');
+    localStorage.removeItem('infoauth');
+    this.router.navigateByUrl('/login');
+  }
+
 
   solicitudes() {
     Swal.fire({ title: 'Cargando', html: 'Cargando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -105,7 +112,7 @@ export class ListSolicitudComponent implements OnInit {
     }else{
       return false;
     }
-   
+
   }
 
 
