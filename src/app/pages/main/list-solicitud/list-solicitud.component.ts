@@ -35,7 +35,7 @@ export class ListSolicitudComponent implements OnInit {
     })
   }
   gestion(x: number, type: string, stepPortal: string, stepFormulario: string) {
-    debugger
+
     switch (stepPortal) {
       case "1":
         switch (stepFormulario) {
