@@ -22,7 +22,7 @@ export class LegalComponent implements OnInit {
   formTab3: FormGroup;
   ListOperaciones: any;
   formTab4: FormGroup;
-  cantidadSI: number=0;
+  cantidadSI: number = 0;
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
@@ -45,7 +45,7 @@ export class LegalComponent implements OnInit {
       familiar_identificacion: "",
       familiar_nacionalidad: "",
       familiar_Entidad: "",
-      familiar_cargo:"",
+      familiar_cargo: "",
       familiar_vinculadoActualmente: "",
       familiar_fechaDesvinculacion: "",
       pregunta2: [false],
@@ -102,24 +102,24 @@ export class LegalComponent implements OnInit {
     this.ancho = window.innerWidth + 'px';
   }
 
-  preguntasfacta(){
-    this.cantidadSI =0;
-    if(this.formTab2.value.pregunta1 == true){
-      this.cantidadSI = this.cantidadSI +1;
+  preguntasfacta() {
+    this.cantidadSI = 0;
+    if (this.formTab2.value.pregunta1 == true) {
+      this.cantidadSI = this.cantidadSI + 1;
     }
-    if(this.formTab2.value.pregunta2 == true){
-      this.cantidadSI = this.cantidadSI +1;
+    if (this.formTab2.value.pregunta2 == true) {
+      this.cantidadSI = this.cantidadSI + 1;
     }
-    if(this.formTab2.value.pregunta3 == true){
-      this.cantidadSI = this.cantidadSI +1;
+    if (this.formTab2.value.pregunta3 == true) {
+      this.cantidadSI = this.cantidadSI + 1;
     }
-    if(this.formTab2.value.pregunta4 == true){
-      this.cantidadSI = this.cantidadSI +1;
+    if (this.formTab2.value.pregunta4 == true) {
+      this.cantidadSI = this.cantidadSI + 1;
     }
 
-    if(this.cantidadSI>0){
+    if (this.cantidadSI > 0) {
       this.formTab2.controls['pregunta6'].setValue(true)
-    }else{
+    } else {
       this.formTab2.controls['pregunta6'].setValue(false)
     }
   }
@@ -194,7 +194,7 @@ export class LegalComponent implements OnInit {
               "tipoOperacion": this.formTab3.value.pregunta4,
               "entidad": this.formTab3.value.entidad,
               "tipoProducto": this.formTab3.value.tipoProducto,
-              "numeroProducto": this.formTab3.value.numeroProducto+'',
+              "numeroProducto": this.formTab3.value.numeroProducto + '',
               "ciudad": this.formTab3.value.ciudad,
               "pais": this.formTab3.value.pais,
               "moneda": this.formTab3.value.moneda,
@@ -205,7 +205,7 @@ export class LegalComponent implements OnInit {
         }
         break;
       case 4:
-        if(this.formTab4.value.descripcion=='' || this.formTab4.value.descripcion.length < 5){
+        if (this.formTab4.value.descripcion == '' || this.formTab4.value.descripcion.length < 5) {
           return;
         }
         data = {
@@ -262,7 +262,12 @@ export class LegalComponent implements OnInit {
               'success'
             ).then(resultado => {
               if (resultado) {
+                if (this.step == 6) {
+                  let url = `/main/listRequest`;
+                  this.router.navigateByUrl(url);
+                }
                 this.step = response.data.stepLegal
+
               }
             });
 
@@ -284,7 +289,7 @@ export class LegalComponent implements OnInit {
       });
   }
   mostrarMonedaExtranjera() {
-    if(this.formTab3.value.pregunta3=='S'){
+    if (this.formTab3.value.pregunta3 == 'S') {
       const dialogRef = this.dialog.open(MonedaExtranjeraComponent, {
 
       });
@@ -296,7 +301,7 @@ export class LegalComponent implements OnInit {
           this.formTab3.controls['pregunta3'].setValue('N');
           return;
         }
-        if(result.length==0){
+        if (result.length == 0) {
           this.formTab3.controls['pregunta3'].setValue('N');
           return;
         }
@@ -308,14 +313,14 @@ export class LegalComponent implements OnInit {
         this.formTab3.controls['moneda'].setValue(result[0].value.moneda)
         this.formTab3.controls['monto'].setValue(this._generic.enviarNumero(result[0].value.monto))
       })
-    }else{
-       this.formTab3.controls['entidad'].setValue('')
-        this.formTab3.controls['tipoProducto'].setValue('')
-        this.formTab3.controls['numeroProducto'].setValue('')
-        this.formTab3.controls['ciudad'].setValue('')
-        this.formTab3.controls['pais'].setValue('')
-        this.formTab3.controls['moneda'].setValue('')
-        this.formTab3.controls['monto'].setValue(0)
+    } else {
+      this.formTab3.controls['entidad'].setValue('')
+      this.formTab3.controls['tipoProducto'].setValue('')
+      this.formTab3.controls['numeroProducto'].setValue('')
+      this.formTab3.controls['ciudad'].setValue('')
+      this.formTab3.controls['pais'].setValue('')
+      this.formTab3.controls['moneda'].setValue('')
+      this.formTab3.controls['monto'].setValue(0)
     }
 
   }

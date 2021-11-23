@@ -65,8 +65,8 @@
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Dirección de negocio</mat-label>
-                <input matInput autocomplete="off" formControlName="direccionNegocio" (keydown)="openModalDirection()">
-                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error>
+                <input matInput autocomplete="off" formControlName="direccionNegocio" (keydown)="openModalDirection()" (click)="openModalDirection()">
+                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error> 
               </mat-form-field>
             </div>
             <div class="row">
@@ -199,7 +199,7 @@
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Direccion de residencia </mat-label>
-                <input matInput formControlName="direccionResidencia" type="text" (keydown)="openModalDirectionRepresentante()">
+                <input matInput formControlName="direccionResidencia" type="text" (keydown)="openModalDirectionRepresentante()" (click)="openModalDirection()">
                 <mat-error *ngIf="formTab2.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
