@@ -7,6 +7,8 @@ import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import {format, getDate, parseISO} from 'date-fns'
 import { GenericService } from 'src/app/services/generic.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {delay} from "rxjs/operators";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -42,6 +44,7 @@ export class solicitudComponent implements OnInit {
     public dialog: MatDialog,
     private _creditService: CreditService,
     public _generic: GenericService,
+    private router: Router
   ) {
     localStorage.removeItem('TOKEN')
     this.fechaValida();
@@ -61,7 +64,7 @@ export class solicitudComponent implements OnInit {
       nombreCompleto: ["", [Validators.required]], // razon Social
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       compraSemanal: ['', [Validators.required]],
-      email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
+      email: ["", [Validators.required, Validators.pattern(/[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/)]],
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
@@ -85,7 +88,7 @@ export class solicitudComponent implements OnInit {
       fechaNacimiento: ["", Validators.required],
       genero: ["", [Validators.required]],
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
-      email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
+      email: ["", [Validators.required, Validators.pattern(/[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/)]],
       antiguedadNegocio: [0],
       antiguedadCompra: [0],
       compraSemanal: [0],
@@ -108,7 +111,7 @@ export class solicitudComponent implements OnInit {
       fechaNacimiento: ["", [Validators.required]],
       genero: ["", [Validators.required]],
       celular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      email: ["", [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],
+      email: ["", [Validators.required, Validators.pattern(/[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/)]],
       antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       antiguedadCompra: [0],
       compraSemanal: ['', [Validators.required]],
@@ -276,7 +279,8 @@ export class solicitudComponent implements OnInit {
   preaprobado(): void {
     if (this.formInicial.valid) {
       this.cargando = true;
-      this._creditService.preaprobado(this.formInicial.value).subscribe(resp => {
+      this._creditService.preaprobado(this.formInicial.value).pipe(delay(500))
+        .subscribe(resp => {
         if (resp.data) {
           this.existeDatos = true;
           if (this.formInicial.value.tipoDocumento == 'CC') {
@@ -422,14 +426,20 @@ export class solicitudComponent implements OnInit {
   }
 
   private guardarSolicitudUltracem(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this.cargando = true;
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       console.log(resp);
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.cargando = false;
+          this.router.navigateByUrl('/rechazado');
           break;
         case 'APROBADO':
           this.estadoSolicitud.aprobado = true;
+          this.cargando = false;
+          this.router.navigateByUrl('/aprobado');
           break;
       }
     });
@@ -453,6 +463,7 @@ export class solicitudComponent implements OnInit {
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.router.navigateByUrl('/rechazado');
           break;
         case 'APROBADO':
           this.formSolicitudRepresentante.patchValue({
@@ -463,6 +474,7 @@ export class solicitudComponent implements OnInit {
           console.log(resp);
           console.log('representante', this.formSolicitudRepresentante.value);
           this.estadoSolicitud.aprobado = true;
+          this.router.navigateByUrl('/aprobado');
           break;
       }
     });
@@ -519,5 +531,13 @@ export class solicitudComponent implements OnInit {
   public validacionCamposRequerido(field: string) {
     return this.formInicial.controls[field].errors
       && this.formInicial.controls[field].touched;
+  }
+
+  public keyDown(event: any): boolean {
+    return event.keyCode == 69 ? false : true;
+  }
+
+  public keyPress(event: any): any {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 }

@@ -1,35 +1,39 @@
-
 @import "../../../styles/vars/exports";
+
 .btn_siguiente {
-    color: #fff;
-    background-color:$blue-primary;
-    font-family: Josefin Sans;
-    font-weight: 600;
-    font-size: 1.6em;
-    padding-top: 12px;
-    border-radius: 10px;
-    padding-bottom: 1px;
-    width: 9em;
-  }
-  .cargandoUltracem{
-    position: absolute;
-    z-index: 999999999999999;
-    top: 1em;
-    left: 1em;
-    height: 80vh;
-    background: #fff;
-    margin: 0;
-    padding: 0em;
-    width: 97%;
-  }
+  color: #fff;
+  background-color: $blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
+}
+
+.cargandoUltracem {
+  position: absolute;
+  z-index: 999999999999999;
+  top: 1em;
+  left: 1em;
+  height: 80vh;
+  background: #fff;
+  margin: 0;
+  padding: 0em;
+  width: 97%;
+}
+
 // adds breaks to the mat-checkboxes with long labels
 ::ng-deep .mat-checkbox-layout {
   white-space: normal !important;
 }
-.imagen-mensaje{
+
+.imagen-mensaje {
   height: 70vh;
 }
-.row-mensaje{
+
+.row-mensaje {
   position: absolute;
   background: #fff;
   height: 100vh;
@@ -37,30 +41,39 @@
   width: 100%;
   text-align: center;
 }
-.texto-mensaje{
+
+.texto-mensaje {
   font-weight: 900;
   color: rgb(0 0 0 / 87%);
 }
-a{
+
+a {
   font-weight: 900;
   color: $blue-primary;
   text-decoration: none;
 }
+
+.fondo_imagen {
+  background-image: url("/assets/images/fondo.jpg");
+  background-color: #cccccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 100vh;
+}
+
+.img-fluid {
+  height: 90vh;
+  margin-top: 10vh;
+}
+
+.imagen_logos[_ngcontent-mrs-c77] {
+  height: 15vh;
+}
+
+@media screen and (max-width: 767px) {
   .fondo_imagen {
-    background-image: url("/assets/images/fondo.jpg");
-    background-color: #cccccc;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    height: 100vh;
+    display: none;
   }
-  .img-fluid {
-    height: 90vh;
-    margin-top: 10vh;
-  }
-  @media screen and (max-width: 767px) {
-    .fondo_imagen {
-      display: none;
-    }
-  }  
+}
