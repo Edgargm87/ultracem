@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  /**
+   * @description: Login
+   */
   login() {
     if (!this.formInicial.invalid) {
       // Swal.fire({ title: 'Cargando', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
