@@ -399,7 +399,7 @@ export class solicitudComponent implements OnInit {
 
   onAceptoTerminos(evento: MatCheckboxChange): void {
     if (evento.checked) {
-      let url:string = 'https://www.google.com.co'
+      let url:string = 'https://fintralogistics.co/#'
       window.open(url, '_blank');
     }
   }

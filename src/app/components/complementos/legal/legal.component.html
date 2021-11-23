@@ -168,7 +168,7 @@
           </div>
         </form>
       </section>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(2)">Acepto</button>
       </div>
     </div>
@@ -221,7 +221,7 @@
           </div>
         </form>
       </section>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
       </div>
     </div>
@@ -231,16 +231,16 @@
           <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
         </div>
       </div>
-      <section class="scrollPersonalizado">
+      <section>
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
           </div>
         </div>
         <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 texto texto">
+          <div class="col-lg-11 mb-5 texto">
             <form [formGroup]="formTab4">
-              <mat-form-field class="clasetextArea" appearance="fill">
+              <mat-form-field class="clasetextArea" appearance="outline">
                 <textarea matInput placeholder="Escribe aquí" formControlName="descripcion"></textarea>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.
@@ -280,11 +280,7 @@
           </h2>
         </div>
       </div>
-      <section style="
-      height: 33em;
-      overflow-y: auto;
-      overflow-x: hidden;
-  ">
+      <section>
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             Los datos personales adicionales para el estudio técnico del riesgo asegurable y reasegurable se tratarán
@@ -313,7 +309,7 @@
             leal, lícita, segura y confiable para los fines señalados en el presente documento. </div>
         </div>
       </section>
-      <div class="row justify-content-center mt-3">
+      <div class="row justify-content-center mt-5 pt-3">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(5)">Acepto</button>
       </div>
     </div>
@@ -325,10 +321,7 @@
           </h2>
         </div>
       </div>
-      <section style="
-      height: 33em;
-      overflow-y: auto;
-      overflow-x: hidden;">
+      <section>
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             <div>FINTRA LOGISTICS S.A,S., s&oacute;lo contratar&aacute; con
@@ -429,7 +422,7 @@
           </div>
         </div>
       </section>
-      <div class="row justify-content-center mt-3">
+      <div class="row justify-content-center mt-5 pt-3">
         <button mat-raised-button class="btn_siguiente" (click)="siguiente(6)">Acepto</button>
       </div>
     </div>
