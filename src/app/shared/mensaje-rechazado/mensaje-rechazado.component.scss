@@ -1,0 +1,17 @@
+.imagen-mensaje {
+  height: 70vh;
+}
+
+.row-mensaje {
+  position: absolute;
+  background: #fff;
+  height: 80vh;
+  left: 1em;
+  z-index: 999999999;
+  width: 97%;
+}
+
+.texto-mensaje {
+  font-weight: 900;
+  color: rgb(0 0 0 / 87%);
+}
