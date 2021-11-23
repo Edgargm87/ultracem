@@ -68,8 +68,15 @@ a {
   margin-top: 10vh;
 }
 
-.imagen_logos[_ngcontent-mrs-c77] {
+.imagen_logos{
   height: 15vh;
+}
+
+.color_fondo {
+  background-color: #eff4f6 !important;
+}
+.pantalla_completa{
+  height: 100vh;
 }
 
 @media screen and (max-width: 767px) {

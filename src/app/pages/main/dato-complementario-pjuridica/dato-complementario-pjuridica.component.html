@@ -1,4 +1,4 @@
-<div class="container-fluid container-ultracem color_fondo" [ngStyle]="{'height': alto, 'width': ancho}">
+<div class="container-fluid container-ultracem" [ngStyle]="{'height': alto, 'width': ancho}">
   <div class="logos">
     <img src="assets/images/fintra-logistics.png" class="imagen_logos rounded-start p-3">
     <img src="assets/images/ultracem.png" class="imagen_logos rounded-start">
@@ -14,7 +14,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-8 l-derecho">
+      <div class="col-lg-8 l-derecho color_fondo">
         <!-- <div class="row">
           <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
         </div> -->
@@ -129,7 +129,7 @@
               </mat-form-field>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-5">
               <button mat-raised-button class="btn_siguiente"
                       (click)="onGuardarUno()"
               >
@@ -151,7 +151,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-8 l-derecho">
+      <div class="col-lg-8 l-derecho color_fondo">
         <!-- <div class="row">
           <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
         </div> -->
@@ -229,7 +229,7 @@
                 <mat-error *ngIf="formTab2.controls.nivelEstudio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-5">
               <button mat-raised-button class="btn_siguiente"
                       (click)="onGuardarDos()"
               >
@@ -251,7 +251,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-8 l-derecho">
+      <div class="col-lg-8 l-derecho color_fondo">
         <!-- <div class="row">
           <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
         </div> -->
@@ -362,7 +362,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-5">
               <button mat-raised-button class="btn_siguiente"
                       (click)="onGuardarTres()"
               >
@@ -408,7 +408,7 @@
                 </p>
               </section>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-5">
               <button mat-raised-button class="btn_siguiente" [disabled]="formTab4.invalid" (click)="siguienteTab()">Siguiente</button>
             </div>
           </form>
