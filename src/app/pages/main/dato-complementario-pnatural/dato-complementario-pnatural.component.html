@@ -87,7 +87,7 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Dirección de residencia</mat-label>
-              <input matInput autocomplete="off" formControlName="direccionResidencia" (keydown)="openModalDirection()">
+              <input matInput autocomplete="off" formControlName="direccionResidencia" (keydown)="openModalDirection()" (click)="openModalDirection()">
               <mat-error *ngIf="formTab1.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
@@ -188,7 +188,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Dirección </mat-label>
               <input matInput autocomplete="off" formControlName="direccionNegocio" type="text"
-                (keydown)="openModalDirectionNegocio()">
+                (keydown)="openModalDirectionNegocio()" (click)="openModalDirection()">
             </mat-form-field>
           </div>
           <div class="row" *ngIf="viveNegocioCondicion==true">
