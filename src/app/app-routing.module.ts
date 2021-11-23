@@ -9,6 +9,7 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MensajeRechazadoComponent} from "./shared/mensaje-rechazado/mensaje-rechazado.component";
 import {MensajeAprobadoComponent} from "./shared/mensaje-aprobado/mensaje-aprobado.component";
+import { MensajeErrorComponent } from './shared/mensaje-error/mensaje-error.component';
 
 
 
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'aprobado',
     component: MensajeAprobadoComponent
+  },
+  {
+    path: 'error',
+    component: MensajeErrorComponent
   },
   {
     path: '',

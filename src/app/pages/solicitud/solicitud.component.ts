@@ -442,8 +442,12 @@ export class solicitudComponent implements OnInit {
           this.router.navigateByUrl('/aprobado');
           break;
       }
-    });
+    }, error => {
+        this.router.navigateByUrl('/error');
+      });
   }
+
+
 
   private guardarSolicitudJultracem(datos: any): void {
     this._creditService.solicitudUltracem(datos).subscribe(resp => {
@@ -477,6 +481,8 @@ export class solicitudComponent implements OnInit {
           this.router.navigateByUrl('/aprobado');
           break;
       }
+    }, error => {
+        this.router.navigateByUrl('/error');
     });
   }
 

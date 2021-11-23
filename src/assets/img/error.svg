@@ -23,7 +23,7 @@
         <rect id="Rectángulo_299" data-name="Rectángulo 299" width="773.098" height="82.534" rx="38.139" transform="translate(-1364.457 726.608)" fill="#f3a901"/>
         <rect id="Rectángulo_300" data-name="Rectángulo 300" width="773.098" height="82.534" rx="38.139" transform="translate(-1364.849 726.163)" fill="#f8ad00"/>
       </g>
-      <text id="Algo_salio_mal..." data-name="Algo salio mal..." transform="translate(-1190.3 788.9)" fill="#fff" font-size="65.028" font-family="JosefinSans-SemiBold, Josefin Sans" font-weight="600" letter-spacing="-0.028em"><tspan x="0" y="0">Algo salio mal...</tspan></text>
+      <text id="En_el_momento_no_pudimos_procesar_tu_solicitud." data-name="En el momento no pudimos procesar tu solicitud." transform="translate(-1190.3 788.9)" fill="#fff" font-size="50.028" font-family="JosefinSans-SemiBold, Josefin Sans" font-weight="600" letter-spacing="-0.028em"><tspan x="0" y="0">Ha ocurrido un error</tspan></text>
     </g>
     <g id="Grupo_812" data-name="Grupo 812">
       <path id="Trazado_689" data-name="Trazado 689" d="M-592.325,682.782c-53.293,0-773.793-1.555-773.793-1.641-.3-.7-91.465-112.437,23.333-229.262,56.882-57.885-52.235-132.878,0-197.267,89.477-110.3,178.01-48.179,251.765-79.2,13.031-5.476,26.108-14.289,39.2-27.814a145.748,145.748,0,0,1,24.089-20q1.988-1.324,4.017-2.585a160.257,160.257,0,0,1,16.072-8.723q5.571-2.626,11.351-4.859h0a185.645,185.645,0,0,1,18.813-6.125,212.981,212.981,0,0,1,28.057-5.5q6.259-.813,12.618-1.286c82.41-6.195,175.153,28.652,223.013,79.584,9.636,10.257,53.453,63.324,18.913,136.266-21.807,46.053,69.55,90.037,102.014,142.626C-510.325,590.7-591.576,681.039-592.325,682.782Z" fill="#e8f2fa"/>
