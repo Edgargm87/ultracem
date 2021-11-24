@@ -135,7 +135,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     });
   }
   firmar() {
-    debugger;
+    // debugger;
     let contador = 0;
     for (const iterator of this.documentos) {
       // archivo no cargado 
