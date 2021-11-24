@@ -49,6 +49,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   public ciudadReferenciaDos: any[] =[];
   public barrioRepresentante: any[] =[];
   public barrioReferencia: any[] =[];
+  public existeDatos: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -121,6 +122,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     this.route.params.pipe(take(1)).subscribe(res => {
       const codigo:string = res.codigoSolicitud;
       this.getEstados(codigo);
+      if (this.step === 1) {
+        this.getDatosComplementarios(codigo);
+      }
     });
 
   }
@@ -128,6 +132,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
    * @description: Selecciona ciudad
    */
   public seleccionCiudad(evento: MatSelectChange, params: string): void {
+    console.log(evento);
     const codigo: string = evento.value;
     this.getCiudades(codigo, params);
   }
@@ -420,6 +425,23 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     url= `generic/qry/consulta-step-formulario/${codigo}`;
     this._generic.getData(url).subscribe((res: any) => {
       this.step = res.stepFormulario;
+    });
+  }
+
+  getDatosComplementarios(numeroSolicitud: any): void {
+    this._creditService.getDataJuridicaUltracem(numeroSolicitud).subscribe(res => {
+      if (res) {
+        console.log(res.data);
+        this.existeDatos = true;
+        this.getCiudades(res.data.codigoDepartamento, 'REP');
+        this.getBarrios(res.data.codigoCiudad, 'REP');
+        this.formTab2.patchValue({
+          departamentoResidencia: res.data.codigoDepartamento,
+          ciudadResidencia: res.data.codigoCiudad,
+          barrioResidencia: res.data.codigo_barrio,
+          direccionResidencia: res.data.direccion
+        });
+      }
     });
   }
 

@@ -66,7 +66,7 @@
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Dirección de negocio</mat-label>
                 <input matInput autocomplete="off" formControlName="direccionNegocio" (keydown)="openModalDirection()" (click)="openModalDirection()">
-                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error> 
+                <mat-error *ngIf="formTab1.controls.direccionNegocio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
@@ -173,7 +173,7 @@
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio de residencia</mat-label>
-                <mat-select formControlName="ciudadResidencia" (selectionChange)="seleccionBarrios($event, 'REP')">
+                <mat-select formControlName="ciudadResidencia" (selectionChange)="seleccionBarrios($event, 'REP')" >
                   <mat-option value="">Selecciona</mat-option>
                   <mat-option [value]="item.codigo"
                               *ngFor="let item of ciudadRepresentante"
@@ -199,7 +199,11 @@
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Direccion de residencia </mat-label>
-                <input matInput formControlName="direccionResidencia" type="text" (keydown)="openModalDirectionRepresentante()" (click)="openModalDirection()">
+                <input matInput formControlName="direccionResidencia" type="text"
+                       (keydown)="openModalDirectionRepresentante()"
+                       (click)="openModalDirection()"
+                       [readOnly]="existeDatos? existeDatos : existeDatos "
+                >
                 <mat-error *ngIf="formTab2.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>

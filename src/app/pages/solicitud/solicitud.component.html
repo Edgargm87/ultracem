@@ -398,9 +398,9 @@
                   consultada en centrales de riesgos. </mat-checkbox>
               </p>
               <p>
-                <mat-checkbox formControlName="aceptaTerminos"> Acepto los términos y condiciones.</mat-checkbox>
+                <mat-checkbox formControlName="aceptaTerminos" (change)="onAceptoTerminos($event)"> Acepto los términos y condiciones.</mat-checkbox>
               </p>
-            </section> 
+            </section>
           </div>
           <div class="row justify-content-center">
             <ng-container *ngIf="!existeDatos">
