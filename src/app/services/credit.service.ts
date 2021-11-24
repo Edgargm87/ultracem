@@ -97,4 +97,8 @@ export class CreditService {
   adjuntarDocumento(data: any): Observable<any> {
     return this._http.post(this.infoApp.urlApi + 'archivos/guardar/adjuntar-archivo', data);
   }
+
+  getDataJuridicaUltracem(numeroSolicitud: any): Observable<any> {
+    return this._http.get(this.infoApp.urlApi + `generic/qry/tab-auto-completar-info-negocio/${numeroSolicitud}`).pipe(map(res => res));
+  }
 }
