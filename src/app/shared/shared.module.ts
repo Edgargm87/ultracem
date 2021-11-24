@@ -15,15 +15,18 @@ import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 import { MensajeRechazadoComponent } from './mensaje-rechazado/mensaje-rechazado.component';
 import { MensajeAprobadoComponent } from './mensaje-aprobado/mensaje-aprobado.component';
 import {RouterModule} from "@angular/router";
+import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 @NgModule({
-  imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule],
-  exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent],
+  imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule,MatBottomSheetModule],
+  exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent,BottomSheetComponent],
     declarations: [
         DatosContactoComponent,
         MensajeErrorComponent,
         MensajeRechazadoComponent,
         MensajeAprobadoComponent,
+        BottomSheetComponent,
 
     ],
     entryComponents: [DatosContactoComponent],
