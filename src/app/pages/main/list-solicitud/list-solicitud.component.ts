@@ -81,9 +81,9 @@ export class ListSolicitudComponent implements OnInit {
       case "3":
         return img
       case "4":
-        return img.replace('enValidacion.svg', 'desembolsado.svg')
-      case "5":
         return img.replace('enValidacion.svg', 'noAprobado.svg')
+      case "5":
+        return img.replace('enValidacion.svg', 'desembolsado.svg')
       default:
         return img
     }
@@ -99,9 +99,9 @@ export class ListSolicitudComponent implements OnInit {
       case "3":
         return "#F9A826"
       case "4":
-        return "#00BFA6"
-      case "5":
         return "#F50035"
+      case "5":
+        return "#00BFA6"
       default:
         return "#F9A826"
     }

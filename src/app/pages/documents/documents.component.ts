@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreditService } from 'src/app/services/credit.service';
 import { GenericService } from "../../services/generic.service";
 import Swal from "sweetalert2";
-import {Subject, Subscription} from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from '@angular/router';
-import {takeUntil} from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
+import { MatDialog } from '@angular/material/dialog';
+import { FirmaComponent } from 'src/app/components/modals/firma/firma.component';
 
 @Component({
   selector: 'app-documents',
@@ -22,6 +24,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     private _creditService: CreditService,
     private _activatedRoute: ActivatedRoute,
     private _generiService: GenericService,
+    public dialog: MatDialog,
     private router: Router,
   ) {
   }
@@ -81,31 +84,31 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this._creditService.adjuntarDocumento(data)
       .pipe(takeUntil(this.subject$))
       .subscribe((data: any) => {
-      if (data.status == 200) {
-        Swal.fire(
-          '¡Información!',
-          `Se guardo el registro con éxito`,
-          'success'
-        ).then(resultado => {
-          if (resultado.isConfirmed) {
-            this.getdocumentos();
-          }
-        });
-      }
+        if (data.status == 200) {
+          Swal.fire(
+            'Información',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(resultado => {
+            if (resultado.isConfirmed) {
+              this.getdocumentos();
+            }
+          });
+        }
 
-    }, error => {
-      Swal.fire(
-        '¡Información!',
-        `Ha ocurrido un error`,
-        'error',
-      );
-    })
+      }, error => {
+        Swal.fire(
+          'Información',
+          `Ha ocurrido un error`,
+          'error',
+        );
+      })
   }
 
   ngOnDestroy(): void {
     this.subject$.unsubscribe();
   }
-  atras(){
+  atras() {
     let url = `main/listRequest`;
     this.router.navigateByUrl(url);
   }
@@ -117,7 +120,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       "numeroSolicitud": parseInt(this.codigoSolicitud),
       "idArchivoCargado": parseInt(x)
     }
-    this._generiService.posData(url,data).subscribe((res: any) => {
+    this._generiService.posData(url, data).subscribe((res: any) => {
       if (res.status == 200) {
         Swal.fire(
           '¡Información!',
@@ -130,6 +133,38 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+  firmar() {
+    debugger;
+    let contador = 0;
+    for (const iterator of this.documentos) {
+      // archivo no cargado 
+      if (iterator.archivoCargado == 'N') {
+        contador = +1
+      }
+    }
+
+    if (contador>0) {
+      Swal.fire(
+        'Información',
+        `Aun falta documentos por cargar`,
+        'info'
+      ).then(resultado => {
+        if (resultado.isConfirmed) {
+         
+        }
+      });
+      return;
+    }
+    const dialogRef = this.dialog.open(FirmaComponent, {
+      data: { valido: true },
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      // this.formTab1.controls['direccionNegocio'].setValue(res);
+      
+    })
   }
 
 }
