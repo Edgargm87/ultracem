@@ -450,11 +450,13 @@ export class solicitudComponent implements OnInit {
 
 
   private guardarSolicitudJultracem(datos: any): void {
+    this.cargando = true;
     this._creditService.solicitudUltracem(datos).pipe(delay(500))
       .subscribe(resp => {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
+      this.cargando = false;
 
       this.step = 4;
       console.log(resp);
@@ -463,17 +465,21 @@ export class solicitudComponent implements OnInit {
   }
 
   private guardarSolicitudJultracemRepresentante(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this.cargando = true;
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       console.log(resp);
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.cargando = false;
           this.router.navigateByUrl('/rechazado');
           break;
         case 'APROBADO':
           this.formSolicitudRepresentante.patchValue({
             numeroSolicitud: (resp.data.numeroSolicitud).toString()
           });
+          this.cargando = false;
 
           this.step = 4;
           console.log(resp);
