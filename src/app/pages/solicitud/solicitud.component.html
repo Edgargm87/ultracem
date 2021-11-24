@@ -334,8 +334,6 @@
                 [readonly]="existeDatos? existeDatos : existeDatos">
               <mat-error
                 *ngIf="(formSolicitudJuridica.controls.telefono.dirty || formSolicitudJuridica.controls.telefono.touched)">
-                <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.required ">Este campo es requerido.
-                </mat-error>
                 <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.pattern">Solo se aceptan números.
                 </mat-error>
                 <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.minlength">Longitud mínima son 7

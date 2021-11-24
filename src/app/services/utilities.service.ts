@@ -40,14 +40,12 @@ export class UtilityService {
 
   // funciones de peticiones puras
   getQuery(query: string, sendHeaders: boolean) {
-    console.log(this.readToken());
     const URL = this.server + query;
     const headers = new HttpHeaders({
       'Authentication': `${this.readToken()}`,
       'Content-Type': 'application/json; charset=utf-8'
     });
     if (sendHeaders) {
-      console.log(headers);
       return this._httpClient.get(URL, { headers }).pipe(catchError(this.handleError));
     }
     else {

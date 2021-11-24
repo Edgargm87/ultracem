@@ -50,6 +50,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   public barrioRepresentante: any[] =[];
   public barrioReferencia: any[] =[];
   public existeDatos: boolean = false;
+  public formTab2_clonacion: any = {};
+  public numeroSolicitud: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -108,6 +110,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
     route.params.pipe(take(1)).subscribe((params) => {
       const numeroSolicitud: string = params.codigoSolicitud;
+      this.numeroSolicitud = params.codigoSolicitud;
       this.formTab1.controls['numeroSolicitud'].setValue(numeroSolicitud);
       this.formTab2.controls['numeroSolicitud'].setValue(numeroSolicitud);
       this.formTab3.controls['numeroSolicitud'].setValue(numeroSolicitud);
@@ -122,9 +125,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     this.route.params.pipe(take(1)).subscribe(res => {
       const codigo:string = res.codigoSolicitud;
       this.getEstados(codigo);
-      if (this.step === 1) {
-        this.getDatosComplementarios(codigo);
-      }
     });
 
   }
@@ -216,6 +216,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             ).then(resultado => {
               if (resultado.isConfirmed) {
                 this.step = res.data.stepFormulario;
+                if (this.step === 2) {
+                  this.getDatosComplementarios(this.numeroSolicitud);
+                }
               }
             });
           }
@@ -272,6 +275,48 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       this.formTab2.markAllAsTouched();
     }
   }
+  public onGuardarDosPrecarga(): void {
+    let url: string = 'credito/tk/formulario-solicitud-tabs';
+    if (this.formTab2.valid) {
+      const {
+        departamentoResidencia,
+        ciudadResidencia,
+        barrioResidencia,
+        direccionResidencia,
+        numeroSolicitud,
+        recurso
+      } = this.formTab2_clonacion;
+      let formularioClonado = {
+        departamentoResidencia: departamentoResidencia,
+        ciudadResidencia: ciudadResidencia,
+        barrioResidencia: String(barrioResidencia),
+        direccionResidencia: direccionResidencia,
+        nivelEstudio: this.formTab2.controls.nivelEstudio.value,
+        tipoVivienda: this.formTab2.controls.tipoVivienda.value,
+        recurso: recurso,
+        numeroSolicitud: numeroSolicitud,
+      }
+      this._generic.posData(url, formularioClonado).subscribe((res: any) => {
+        if (res) {
+          if (res.status === 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con éxito`,
+              'success'
+            ).then(resultado => {
+              if (resultado.isConfirmed) {
+                this.step = res.data.stepFormulario;
+              }
+            });
+          }
+        }
+      });
+    }else {
+      this.formTab2.markAllAsTouched();
+    }
+
+  }
+
   /**
    * @description: Almacena las referencias comerciales
    */
@@ -413,7 +458,8 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      this.formTab2.controls['direccionResidencia'].setValue(res);
+      let form = {...this.formTab2.value};
+      this.formTab2.controls['direccionResidencia'].setValue(res? res: form.direccionResidencia);
     })
 
   }
@@ -425,22 +471,34 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     url= `generic/qry/consulta-step-formulario/${codigo}`;
     this._generic.getData(url).subscribe((res: any) => {
       this.step = res.stepFormulario;
+      if (this.step === 2) {
+        this.getDatosComplementarios(codigo);
+      }
     });
   }
 
   getDatosComplementarios(numeroSolicitud: any): void {
     this._creditService.getDataJuridicaUltracem(numeroSolicitud).subscribe(res => {
-      if (res) {
-        console.log(res.data);
+      if (res.status === 200) {
         this.existeDatos = true;
         this.getCiudades(res.data.codigoDepartamento, 'REP');
         this.getBarrios(res.data.codigoCiudad, 'REP');
         this.formTab2.patchValue({
+          departamentoResidencia: res.data.departamento,
+          ciudadResidencia: res.data.ciudad,
+          barrioResidencia: res.data.barrio,
+          direccionResidencia: res.data.direccion,
+          numeroSolicitud: numeroSolicitud,
+          recurso: 'tab-nit-dato-representante'
+        });
+        this.formTab2_clonacion = {
           departamentoResidencia: res.data.codigoDepartamento,
           ciudadResidencia: res.data.codigoCiudad,
           barrioResidencia: res.data.codigo_barrio,
-          direccionResidencia: res.data.direccion
-        });
+          direccionResidencia: res.data.direccion,
+          numeroSolicitud: numeroSolicitud,
+          recurso: 'tab-nit-dato-representante'
+        };
       }
     });
   }

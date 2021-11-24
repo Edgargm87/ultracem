@@ -68,7 +68,7 @@ export class solicitudComponent implements OnInit {
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
+      telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
       digitoVerificacion: [''],
       fechaMatricula: ["", [Validators.required]],
 
@@ -450,10 +450,13 @@ export class solicitudComponent implements OnInit {
 
 
   private guardarSolicitudJultracem(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this.cargando = true;
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
+      this.cargando = false;
 
       this.step = 4;
       console.log(resp);
@@ -462,17 +465,21 @@ export class solicitudComponent implements OnInit {
   }
 
   private guardarSolicitudJultracemRepresentante(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this.cargando = true;
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       console.log(resp);
       switch (resp.data.estado) {
         case 'RECHAZADO':
           this.estadoSolicitud.rechazado = true;
+          this.cargando = false;
           this.router.navigateByUrl('/rechazado');
           break;
         case 'APROBADO':
           this.formSolicitudRepresentante.patchValue({
             numeroSolicitud: (resp.data.numeroSolicitud).toString()
           });
+          this.cargando = false;
 
           this.step = 4;
           console.log(resp);
