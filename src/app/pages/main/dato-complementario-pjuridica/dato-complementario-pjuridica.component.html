@@ -213,8 +213,6 @@
                   <input matInput formControlName="direccionResidencia" type="text"
                          (keydown)="openModalDirectionRepresentante()"
                          (click)="openModalDirectionRepresentante()"
-                         [readOnly]="existeDatos? existeDatos : existeDatos"
-
                   >
                 </ng-container>
                 <mat-error *ngIf="formTab2.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>

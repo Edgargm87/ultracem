@@ -51,6 +51,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
   public barrioReferencia: any[] =[];
   public existeDatos: boolean = false;
   public formTab2_clonacion: any = {};
+  public numeroSolicitud: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -109,6 +110,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
     route.params.pipe(take(1)).subscribe((params) => {
       const numeroSolicitud: string = params.codigoSolicitud;
+      this.numeroSolicitud = params.codigoSolicitud;
       this.formTab1.controls['numeroSolicitud'].setValue(numeroSolicitud);
       this.formTab2.controls['numeroSolicitud'].setValue(numeroSolicitud);
       this.formTab3.controls['numeroSolicitud'].setValue(numeroSolicitud);
@@ -123,9 +125,6 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     this.route.params.pipe(take(1)).subscribe(res => {
       const codigo:string = res.codigoSolicitud;
       this.getEstados(codigo);
-      if (this.step === 1) {
-        this.getDatosComplementarios(codigo);
-      }
     });
 
   }
@@ -217,6 +216,9 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
             ).then(resultado => {
               if (resultado.isConfirmed) {
                 this.step = res.data.stepFormulario;
+                if (this.step === 2) {
+                  this.getDatosComplementarios(this.numeroSolicitud);
+                }
               }
             });
           }
@@ -469,13 +471,15 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     url= `generic/qry/consulta-step-formulario/${codigo}`;
     this._generic.getData(url).subscribe((res: any) => {
       this.step = res.stepFormulario;
+      if (this.step === 2) {
+        this.getDatosComplementarios(codigo);
+      }
     });
   }
 
   getDatosComplementarios(numeroSolicitud: any): void {
     this._creditService.getDataJuridicaUltracem(numeroSolicitud).subscribe(res => {
-      if (res) {
-        console.log(res.data);
+      if (res.status === 200) {
         this.existeDatos = true;
         this.getCiudades(res.data.codigoDepartamento, 'REP');
         this.getBarrios(res.data.codigoCiudad, 'REP');
