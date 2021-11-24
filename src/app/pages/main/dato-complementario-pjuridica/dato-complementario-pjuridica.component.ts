@@ -430,15 +430,18 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
 
   getDatosComplementarios(numeroSolicitud: any): void {
     this._creditService.getDataJuridicaUltracem(numeroSolicitud).subscribe(res => {
-      this.existeDatos = true;
-      this.getCiudades(res.data.codigoDepartamento, 'REP');
-      this.getBarrios(res.data.codigoCiudad, 'REP');
-      this.formTab2.patchValue({
-        departamentoResidencia: res.data.codigoDepartamento,
-        ciudadResidencia: res.data.codigoCiudad,
-        barrioResidencia: res.data.codigo_barrio,
-        direccionResidencia: res.data.direccion
-      });
+      if (res) {
+        console.log(res.data);
+        this.existeDatos = true;
+        this.getCiudades(res.data.codigoDepartamento, 'REP');
+        this.getBarrios(res.data.codigoCiudad, 'REP');
+        this.formTab2.patchValue({
+          departamentoResidencia: res.data.codigoDepartamento,
+          ciudadResidencia: res.data.codigoCiudad,
+          barrioResidencia: res.data.codigo_barrio,
+          direccionResidencia: res.data.direccion
+        });
+      }
     });
   }
 
