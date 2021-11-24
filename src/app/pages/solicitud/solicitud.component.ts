@@ -68,7 +68,7 @@ export class solicitudComponent implements OnInit {
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
+      telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
       digitoVerificacion: [''],
       fechaMatricula: ["", [Validators.required]],
 
@@ -450,7 +450,8 @@ export class solicitudComponent implements OnInit {
 
 
   private guardarSolicitudJultracem(datos: any): void {
-    this._creditService.solicitudUltracem(datos).subscribe(resp => {
+    this._creditService.solicitudUltracem(datos).pipe(delay(500))
+      .subscribe(resp => {
       this.formSolicitudRepresentante.patchValue({
         numeroSolicitud: (resp.data.numeroSolicitud).toString()
       });
