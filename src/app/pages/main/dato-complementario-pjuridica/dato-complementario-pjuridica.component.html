@@ -165,45 +165,58 @@
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Departamento de residencia</mat-label>
-                <mat-select formControlName="departamentoResidencia" (selectionChange)="seleccionCiudad($event, 'REP')">
-                  <mat-option value="" disabled>Selecciona</mat-option>
-                  <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoRepresentante ">{{item.nombre}}</mat-option>
-                </mat-select>
+                <input *ngIf="existeDatos" matInput formControlName="departamentoResidencia" [readonly]="true">
+                <ng-container *ngIf="!existeDatos">
+                  <mat-select formControlName="departamentoResidencia" (selectionChange)="seleccionCiudad($event, 'REP')">
+                    <mat-option value="" disabled>Selecciona</mat-option>
+                    <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoRepresentante ">{{item.nombre}}</mat-option>
+                  </mat-select>
+                </ng-container>
                 <mat-error *ngIf="formTab2.controls.departamentoResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad / municipio de residencia</mat-label>
-                <mat-select formControlName="ciudadResidencia" (selectionChange)="seleccionBarrios($event, 'REP')" >
-                  <mat-option value="">Selecciona</mat-option>
-                  <mat-option [value]="item.codigo"
-                              *ngFor="let item of ciudadRepresentante"
-                  >
-                    {{item.nombre}}
-                  </mat-option>
-                </mat-select>
+                <input *ngIf="existeDatos" matInput formControlName="ciudadResidencia" [readonly]="true">
+                <ng-container *ngIf="!existeDatos">
+                  <mat-select formControlName="ciudadResidencia" (selectionChange)="seleccionBarrios($event, 'REP')" >
+                    <mat-option value="">Selecciona</mat-option>
+                    <mat-option [value]="item.codigo"
+                                *ngFor="let item of ciudadRepresentante"
+                    >
+                      {{item.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </ng-container>
                 <mat-error *ngIf="formTab2.controls.ciudadResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
             <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Barrio</mat-label>
-                <mat-select formControlName="barrioResidencia" >
-                  <mat-option value="">Selecciona</mat-option>
-                  <mat-option [value]="item.codigo"
-                              *ngFor="let item of barrioRepresentante"
-                  >
-                    {{item.nombre}}
-                  </mat-option>
-                </mat-select>
+                <input *ngIf="existeDatos" matInput formControlName="barrioResidencia" [readonly]="true">
+                <ng-container *ngIf="!existeDatos">
+                  <mat-select formControlName="barrioResidencia">
+                    <mat-option value="">Selecciona</mat-option>
+                    <mat-option [value]="item.codigo"
+                                *ngFor="let item of barrioRepresentante"
+                    >
+                      {{item.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </ng-container>
                 <mat-error *ngIf="formTab2.controls.barrioResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Direccion de residencia </mat-label>
-                <input matInput formControlName="direccionResidencia" type="text"
-                       (keydown)="openModalDirectionRepresentante()"
-                       (click)="openModalDirection()"
-                       [readOnly]="existeDatos? existeDatos : existeDatos "
-                >
+                <input *ngIf="existeDatos" matInput formControlName="direccionResidencia" [readonly]="true">
+                <ng-container *ngIf="!existeDatos">
+                  <input matInput formControlName="direccionResidencia" type="text"
+                         (keydown)="openModalDirectionRepresentante()"
+                         (click)="openModalDirectionRepresentante()"
+                         [readOnly]="existeDatos? existeDatos : existeDatos"
+
+                  >
+                </ng-container>
                 <mat-error *ngIf="formTab2.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
@@ -233,13 +246,24 @@
                 <mat-error *ngIf="formTab2.controls.nivelEstudio.errors">Este campo es requerido.</mat-error>
               </mat-form-field>
             </div>
-            <div class="row justify-content-center mt-5">
-              <button mat-raised-button class="btn_siguiente"
-                      (click)="onGuardarDos()"
-              >
-                Siguiente
-              </button>
-            </div>
+            <ng-container *ngIf="!existeDatos">
+              <div class="row justify-content-center mt-5">
+                <button mat-raised-button class="btn_siguiente"
+                        (click)="onGuardarDos()"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="existeDatos">
+              <div class="row justify-content-center mt-5">
+                <button mat-raised-button class="btn_siguiente"
+                        (click)="onGuardarDosPrecarga()"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </ng-container>
           </form>
         </div>
       </div>
