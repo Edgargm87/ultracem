@@ -10,7 +10,7 @@
           <div class="col-lg-9">
             <img src="assets/icons/ICONO_FORMULARIO{{item.archivoCargado == 'N' ? '_GRIS' : '_VERDE'}}.svg" alt=""
               [matTooltip]="item.nombreCategoria">
-            <span>{{item.descripcion}}</span>
+            <span>{{item.descripcion}} <strong>{{item.requerido=="N"?'(Opcional)':''}}</strong></span>
           </div>
           <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
             (change)="subirArchivo($event, item)">
