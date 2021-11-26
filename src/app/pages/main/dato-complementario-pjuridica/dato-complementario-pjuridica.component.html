@@ -314,7 +314,6 @@
                   <mat-option value="{{item.codigo}}" *ngFor="let item of departamentoReferenciaUno ">{{item.nombre}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formTab3.controls.codigoDepartamento.errors">Este campo es requerido.</mat-error>
-                <input matInput formControlName="codigoDepartamento" type="text">
               </mat-form-field>
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Ciudad /municipio</mat-label>

@@ -43,7 +43,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this._creditService.getDocuments(this.typeSolicitud, this.codigoSolicitud).subscribe(resp => {
       Swal.close();
       this.documentos = resp.data;
-      console.log(resp);
+      // console.log(resp);
 
     })
   }
@@ -165,10 +165,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe((res) => {
-      // this.formTab1.controls['direccionNegocio'].setValue(res);
-
-    })
+    dialogRef.afterClosed().toPromise();
   }
 
 }

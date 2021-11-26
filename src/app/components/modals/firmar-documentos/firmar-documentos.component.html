@@ -49,7 +49,13 @@
 <div mat-dialog-actions>
   <div class="text-center w-100">
     <button mat-raised-button class="btn_siguiente  color-fintra bg-cancelar" [mat-dialog-close]="[]">Cancelar</button>
-    <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar">Finalizar</button>
+    <button mat-raised-button
+            class="btn_siguiente fondo_fintra bg-finalizar"
+            (click)="onFirmar()"
+            [disabled]="cantidadDocumentos.length < 3"
+    >
+      Finalizar
+    </button>
   </div>
 
 </div>

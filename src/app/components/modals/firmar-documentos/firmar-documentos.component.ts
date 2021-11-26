@@ -1,19 +1,20 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import Swal from "sweetalert2";
 import {CreditService} from "../../../services/credit.service";
 import {takeUntil} from "rxjs/operators";
-import {DatePipe} from "@angular/common";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-firmar-documentos',
   templateUrl: './firmar-documentos.component.html',
   styleUrls: ['./firmar-documentos.component.scss']
 })
-export class FirmarDocumentosComponent implements OnInit {
+export class FirmarDocumentosComponent implements OnInit, OnDestroy {
 
-
+  public unsubscribe$: Subject<any> = new Subject<any>();
+  public cantidadDocumentos: any = []
   constructor(
     public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
     public _creditService: CreditService,
@@ -24,7 +25,6 @@ export class FirmarDocumentosComponent implements OnInit {
   }
 
   descargar(type: number) {
-debugger;
     let url = '';
     let nombre
     switch (type) {
@@ -75,6 +75,7 @@ debugger;
           base64: file
         };
         this.guardarAdjunto(formulario);
+
       }
 
     }
@@ -85,7 +86,6 @@ debugger;
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     let formulario: {};
     const files = input.target.files;
-    console.log(files);
     if (files && files.length) {
       const fileToRead = files[0];
       const reader = new FileReader();
@@ -144,9 +144,16 @@ debugger;
     }
   }
 
+  onFirmar(): void {
+    /**
+     * @description: Metodo para firmar documentos
+     */
+
+  }
+
   private guardarAdjunto(data: any): void {
     this._creditService.adjuntarDocumento(data)
-      // .pipe(takeUntil(this.subject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
         if (data.status == 200) {
           Swal.fire(
@@ -156,6 +163,7 @@ debugger;
           ).then(resultado => {
             if (resultado.isConfirmed) {
               // this.getdocumentos();
+              this.cantidadDocumentos.push(1);
             }
           });
         }
@@ -167,6 +175,10 @@ debugger;
           'error',
         );
       })
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 
 }
