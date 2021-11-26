@@ -29,7 +29,6 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FirmarDocumentosComponent } from './components/modals/firmar-documentos/firmar-documentos.component';
-import { FirmaComponent } from './components/modals/firma/firma.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +45,6 @@ import { FirmaComponent } from './components/modals/firma/firma.component';
     LegalComponent,
     MonedaExtranjeraComponent,
     FirmarDocumentosComponent,
-    FirmaComponent,
   ],
   imports: [
     BrowserModule,

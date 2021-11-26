@@ -6,7 +6,7 @@ import { Subject, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from "rxjs/operators";
 import { MatDialog } from '@angular/material/dialog';
-import { FirmaComponent } from 'src/app/components/modals/firma/firma.component';
+import { FirmarDocumentosComponent } from 'src/app/components/modals/firmar-documentos/firmar-documentos.component';
 
 @Component({
   selector: 'app-documents',
@@ -139,31 +139,35 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     let contador = 0;
     for (const iterator of this.documentos) {
       // archivo no cargado 
-      if (iterator.archivoCargado == 'N') {
+
+      if ((iterator.archivoCargado == 'N') && (iterator.requerido == "S")) {
         contador = +1
       }
     }
 
-    if (contador>0) {
+    if (contador > 0) {
       Swal.fire(
         'Información',
-        `Aun falta documentos por cargar`,
+        `Aun falta documentos obligatorios por cargar`,
         'info'
       ).then(resultado => {
         if (resultado.isConfirmed) {
-         
+
         }
       });
       return;
     }
-    const dialogRef = this.dialog.open(FirmaComponent, {
-      data: { valido: true },
+    const dialogRef = this.dialog.open(FirmarDocumentosComponent, {
+      data: {
+        codigoSolicitud: this.codigoSolicitud,
+        typeSolicitud: this.typeSolicitud
+      },
       disableClose: false
     });
 
     dialogRef.afterClosed().subscribe((res) => {
       // this.formTab1.controls['direccionNegocio'].setValue(res);
-      
+
     })
   }
 
