@@ -138,7 +138,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     // debugger;
     let contador = 0;
     for (const iterator of this.documentos) {
-      // archivo no cargado 
+      // archivo no cargado
 
       if ((iterator.archivoCargado == 'N') && (iterator.requerido == "S")) {
         contador = +1
@@ -162,7 +162,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         codigoSolicitud: this.codigoSolicitud,
         typeSolicitud: this.typeSolicitud
       },
-      disableClose: false
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((res) => {

@@ -8,22 +8,36 @@
       <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
       <div mat-line>Solicitud de crédito</div>
       <div mat-line class="text-Descarga" (click)="descargar(1)">Descargar</div>
-      
-      <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
+      <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+             (change)="subirSolicitud($event)">
+      <button mat-raised-button
+              (click)="fileInput.click()"
+              matTooltip="Firma y subir archivo"
+              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item>
       <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
       <div mat-line>Autorización de consulta</div>
       <div mat-line class="text-Descarga" (click)="descargar(2)">Descargar</div>
-      <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
+      <input type="file" #fileInputAut class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+             (change)="subirAutorizacion($event)">
+      <button mat-raised-button
+              (click)="fileInputAut.click()"
+              matTooltip="Firma y subir archivo"
+              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item>
       <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
       <div mat-line>Pagare y carta de intruccioones </div>
       <div mat-line class="text-Descarga" (click)="descargar(3)">Descargar</div>
-      <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
+      <input type="file" #fileInputPag class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+             (change)="subirPagare($event)">
+      <button mat-raised-button
+              (click)="fileInputPag.click()"
+              matTooltip="Firma y subir archivo"
+              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
     </mat-list-item>
     <!-- <mat-divider></mat-divider> -->
   </mat-list>

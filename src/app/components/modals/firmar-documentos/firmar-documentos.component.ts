@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import Swal from "sweetalert2";
+import {CreditService} from "../../../services/credit.service";
+import {takeUntil} from "rxjs/operators";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-firmar-documentos',
@@ -10,7 +14,9 @@ import { ActivatedRoute } from '@angular/router';
 export class FirmarDocumentosComponent implements OnInit {
 
 
-  constructor(public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
+    public _creditService: CreditService,
     @Inject(MAT_DIALOG_DATA) public data: any,) { }
 
   ngOnInit(): void {
@@ -40,6 +46,127 @@ debugger;
     link.href = url;
     link.download = `${nombre}_${this.data.codigoSolicitud}.pdf`;
     link.dispatchEvent(new MouseEvent('click'));
+  }
+
+  subirSolicitud(input: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    let formulario: {};
+    const files = input.target.files;
+    console.log(files);
+    if (files && files.length) {
+      const fileToRead = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(fileToRead);
+      reader.onloadend = () => {
+        const file: string | ArrayBuffer | null = reader.result;
+        const nombre: string = fileToRead.name.split('.')[0];
+        const extension: string = fileToRead.type.split('/')[1];
+        const fechaHoy = Date.now();
+        formulario = {
+          nombreArchivo: nombre + '' + fechaHoy,
+          extension: extension,
+          fuente: 'archivo-multi',
+          identificador: '',
+          numeroSolicitud: this.data.codigoSolicitud,
+          tipoArchivo: this.data.typeSolicitud === 'CC'? 484 : 485,
+          categoria: 79,
+          agencia: 'OP',
+          tipo: 'negocio',
+          base64: file
+        };
+        this.guardarAdjunto(formulario);
+      }
+
+    }
+
+  }
+
+  subirAutorizacion(input: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    let formulario: {};
+    const files = input.target.files;
+    console.log(files);
+    if (files && files.length) {
+      const fileToRead = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(fileToRead);
+      reader.onloadend = () => {
+        const file: string | ArrayBuffer | null = reader.result;
+        const nombre: string = fileToRead.name.split('.')[0];
+        const extension: string = fileToRead.type.split('/')[1];
+        const fechaHoy = Date.now();
+        formulario = {
+          nombreArchivo: nombre + '' + fechaHoy,
+          extension: extension,
+          fuente: 'archivo-multi',
+          identificador: '',
+          numeroSolicitud: this.data.codigoSolicitud,
+          tipoArchivo: this.data.typeSolicitud === 'CC'? 483 : 482,
+          categoria: 78,
+          agencia: 'OP',
+          tipo: 'negocio',
+          base64: file
+        };
+        this.guardarAdjunto(formulario);
+      }
+
+    }
+  }
+
+  subirPagare(input: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    let formulario: {};
+    const files = input.target.files;
+    console.log(files);
+    if (files && files.length) {
+      const fileToRead = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(fileToRead);
+      reader.onloadend = () => {
+        const file: string | ArrayBuffer | null = reader.result;
+        const nombre: string = fileToRead.name.split('.')[0];
+        const extension: string = fileToRead.type.split('/')[1];
+        const fechaHoy = Date.now();
+        formulario = {
+          nombreArchivo: nombre + '' + fechaHoy,
+          extension: extension,
+          fuente: 'archivo-multi',
+          identificador: '',
+          numeroSolicitud: this.data.codigoSolicitud,
+          tipoArchivo: this.data.typeSolicitud === 'CC'? 487 : 488,
+          categoria: 80,
+          agencia: 'OP',
+          tipo: 'negocio',
+          base64: file
+        };
+        this.guardarAdjunto(formulario);
+      }
+    }
+  }
+
+  private guardarAdjunto(data: any): void {
+    this._creditService.adjuntarDocumento(data)
+      // .pipe(takeUntil(this.subject$))
+      .subscribe((data: any) => {
+        if (data.status == 200) {
+          Swal.fire(
+            'Información',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(resultado => {
+            if (resultado.isConfirmed) {
+              // this.getdocumentos();
+            }
+          });
+        }
+
+      }, error => {
+        Swal.fire(
+          'Información',
+          `Ha ocurrido un error`,
+          'error',
+        );
+      })
   }
 
 }
