@@ -11,6 +11,7 @@
       <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
              (change)="subirSolicitud($event)">
       <button mat-raised-button
+              *ngIf="!adjuntoSolicitud"
               (click)="fileInput.click()"
               matTooltip="Firma y subir archivo"
               class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
@@ -23,9 +24,10 @@
       <input type="file" #fileInputAut class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
              (change)="subirAutorizacion($event)">
       <button mat-raised-button
+              *ngIf="!adjuntoAutorizacion"
               (click)="fileInputAut.click()"
               matTooltip="Firma y subir archivo"
-              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
+              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el documeto</button>
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item>
@@ -35,6 +37,7 @@
       <input type="file" #fileInputPag class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
              (change)="subirPagare($event)">
       <button mat-raised-button
+              *ngIf="!adjuntoPagare"
               (click)="fileInputPag.click()"
               matTooltip="Firma y subir archivo"
               class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el docuemnto</button>
@@ -52,6 +55,7 @@
     <button mat-raised-button
             class="btn_siguiente fondo_fintra bg-finalizar"
             (click)="onFirmar()"
+            [mat-dialog-close]="[]"
             [disabled]="cantidadDocumentos.length < 3"
     >
       Finalizar

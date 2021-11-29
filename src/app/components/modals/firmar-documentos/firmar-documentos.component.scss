@@ -29,3 +29,8 @@
 .bg-finalizar{
     background: $blue-primary !important;
 }
+
+button.btn_siguiente.fondo_fintra.mat-button-base.mat-button-disabled.mat-focus-indicator.mat-raised-button:disabled {
+    background: #111e6294;
+    color: #fff !important;
+  }

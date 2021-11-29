@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class UtilityService {
   notoken: string = 'notoken';
 
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient, private router: Router,) { }
 
   //Funciones de sesion
   readToken() {
@@ -163,11 +164,11 @@ export class UtilityService {
               confirmButtonText: 'Cerrar'
             })
             localStorage.setItem('closeSession', 'true');
-
+            this.router.navigateByUrl("/login");
           }, 100);
           break;
         case 402:
-          localStorage.clear();
+          // localStorage.clear();
           localStorage.clear();
           setTimeout(() => {
             localStorage.setItem('closeSession', 'true');
@@ -212,12 +213,13 @@ export class UtilityService {
         })
 
       } else {
-        Swal.fire({
-          title: 'Error',
-          text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
-          icon: 'error',
-          confirmButtonText: 'Cerrar'
-        })
+        // Swal.fire({
+        //   title: 'Error',
+        //   text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
+        //   icon: 'error',
+        //   confirmButtonText: 'Cerrar'
+        // })
+        this.router.navigateByUrl("/error");
       }
     }
     return throwError(errorMessage);
