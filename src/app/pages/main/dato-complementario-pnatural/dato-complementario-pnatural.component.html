@@ -49,7 +49,7 @@
               <!-- <input matInput autocomplete="off" formControlName="ciudadNacionalidad"> -->
               <mat-select formControlName="ciudadNacionalidad">
                 <mat-option value="">SELECCIONA</mat-option>
-                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNacionalidad ">{{item.nombre}}
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNacionalidad " >{{item.nombre}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="formTab1.controls.ciudadNacionalidad.errors">Este campo es requerido.</mat-error>
