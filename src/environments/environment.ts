@@ -11,6 +11,8 @@ export const environment = {
   // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
   userName: "APPWEB",
   password: "123456",
+  reconocer:"https://recidaw.olimpiait.com",
+  apiCredit: "https://prometheus.fintra.co:8443/fintracredit",
 
 };
 

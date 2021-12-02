@@ -9,6 +9,7 @@ import { GenericService } from 'src/app/services/generic.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {delay} from "rxjs/operators";
 import {Router} from "@angular/router";
+import { ReconocerComponent } from '../../shared/reconocer/reconocer.component';
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -44,7 +45,7 @@ export class solicitudComponent implements OnInit {
     public dialog: MatDialog,
     private _creditService: CreditService,
     public _generic: GenericService,
-    private router: Router
+    private router: Router,
   ) {
     localStorage.removeItem('TOKEN')
     this.fechaValida();
@@ -133,6 +134,7 @@ export class solicitudComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.openReconocer('1143163517','ingshirleyjohanna@gmail.com','3045337156')
     this.loguear();
     this.formInicial.controls['registrar'].valueChanges.subscribe(registrar => {
       if (registrar == 'CC') {
@@ -231,6 +233,24 @@ export class solicitudComponent implements OnInit {
           formJuridico.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
           this.guardarSolicitudJultracem(formJuridico);
       }
+    });
+  }
+
+  openReconocer(documento:string,email:string,celular:string) {
+    const dialogRef = this.dialog.open(ReconocerComponent, {
+      height: '98%',
+      width: '100vw',
+      data: { 
+        documento:documento,
+        email:email,
+        celular:celular
+       },
+      disableClose: true,
+      panelClass: 'full-screen-modal'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     
     });
   }
 

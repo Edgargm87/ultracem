@@ -18,6 +18,7 @@ import {RouterModule} from "@angular/router";
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { MensajeFinalizadoComponent } from './mensaje-finalizado/mensaje-finalizado.component';
+import { ReconocerComponent } from './reconocer/reconocer.component';
 
 @NgModule({
   imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule,MatBottomSheetModule],
@@ -29,6 +30,7 @@ import { MensajeFinalizadoComponent } from './mensaje-finalizado/mensaje-finaliz
         MensajeAprobadoComponent,
         BottomSheetComponent,
         MensajeFinalizadoComponent,
+        ReconocerComponent,
 
     ],
     entryComponents: [DatosContactoComponent],

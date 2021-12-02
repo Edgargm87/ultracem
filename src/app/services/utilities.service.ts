@@ -113,8 +113,10 @@ export class UtilityService {
 
 
 
-  putQuery(query: string, data: any, typeHeaders: string = 'data') {
-    const URL = this.server + query;
+  putQuery(server:string, query: string, data: any, typeHeaders: string = 'data') {
+    
+    
+    const URL =server + query;
     let optiones: any;
     if (typeHeaders == 'data') {
       optiones = {

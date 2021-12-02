@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { UtilityService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenericService {
+  server: string = environment.urlApi;
   public seleccionDireccion: Subject<{ valor: any }> = new Subject<{valor: any}>();
   constructor(private _utility: UtilityService) { }
 
@@ -23,6 +25,14 @@ export class GenericService {
       .pipe(map((res: any) => {
         return res.data;
       }));
+  }
+
+  saveReconocerID(data: any){
+    return this._utility.putQuery(environment.apiCredit, '/webresources/form/save_reconocer', data)
+      .pipe(map((res: any) => {
+        return res.data;
+      }));
+      // return this.http.put('/webresources/form/save_reconocer', data)
   }
 
   formatearNumero(value:any){
