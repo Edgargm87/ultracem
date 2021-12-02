@@ -1,6 +1,6 @@
 @import "../../../styles/vars/exports";
 .imagen-mensaje {
-  height: 50vh;
+  height: 70vh;
 }
 
 .row-mensaje {
@@ -27,4 +27,7 @@
   border-radius: 10px;
   padding-bottom: 1px;
   width: 9em;
+}
+.mt--3{
+  margin-top: -3em;
 }

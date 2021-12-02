@@ -26,6 +26,9 @@ html {
   background-color:#1110;
 }
 .l-izquierdo{
+  .row{
+    padding-left: 4vw;
+  }
   ul {
     list-style: none;
   
@@ -93,7 +96,7 @@ app-bottom-sheet{
   right: 3em;
   bottom: 1em;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .logos {
     position: relative;
     color: #fff;

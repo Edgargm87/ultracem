@@ -107,10 +107,12 @@ export class ListSolicitudComponent implements OnInit {
     }
   }
   mostrarDatos(step:any){
-    if(Number(step.stepPortal)>3){
-      return true;
-    }else{
+    if(
+      (step.stepPortal=="1")||(step.stepPortal=="2")
+      ){
       return false;
+    }else{
+      return true;
     }
 
   }
