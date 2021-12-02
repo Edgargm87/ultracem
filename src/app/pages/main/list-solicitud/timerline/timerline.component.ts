@@ -14,6 +14,7 @@ export class TimerlineComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.currentStep=this.currentStep==4?0:this.currentStep;
   }
 
   getImage(step: number, img: string) {

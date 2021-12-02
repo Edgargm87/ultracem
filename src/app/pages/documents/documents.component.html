@@ -1,9 +1,11 @@
 <div class="container-fluid mb-4">
   <app-bottom-sheet></app-bottom-sheet>
-  <h2 class="mx-5">Sube tus Documentos</h2>
-  <p class="mx-5">*Recomendaciones: Asegúrate que la información se vea lo más nítida y cerca posible. Suben en PDF los documentos
-    que tengan más de 1 hoja.</p>
-  <div class="main-docs">
+  <div class="main-docs row ">
+    <div class="col-lg-11 m-0 p-0">
+      <h2>Sube tus Documentos</h2>
+      <p>*Recomendaciones: Asegúrate que la información se vea lo más nítida y cerca posible. Suben en PDF los documentos
+        que tengan más de 1 hoja.</p>
+    </div>
     <ul class="col-lg-11">
       <li *ngFor="let item of documentos">
         <div class="row document " [ngClass]="{'upload': item.archivoCargado != 'N'}">

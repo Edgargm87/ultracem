@@ -1,10 +1,11 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from "sweetalert2";
-import {CreditService} from "../../../services/credit.service";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import { CreditService } from "../../../services/credit.service";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
   selector: 'app-firmar-documentos',
@@ -15,9 +16,14 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
 
   public unsubscribe$: Subject<any> = new Subject<any>();
   public cantidadDocumentos: any = []
+  adjuntoSolicitud: boolean=false;
+  adjuntoAutorizacion: boolean=false;
+  adjuntoPagare: boolean=false;
   constructor(
     public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
     public _creditService: CreditService,
+    private _generiService: GenericService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,) { }
 
   ngOnInit(): void {
@@ -29,13 +35,13 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
     let nombre
     switch (type) {
       case 1:
-        url = "/assets/documentos/centralesRiesgoJuridica.pdf";
+        url = "/assets/documentos/solicitudCredito.pdf";
         nombre = "Solicitud_de_crédito"
         break;
 
       case 2:
-        url = `/assets/documentos/centralesRiesgo${this.data.typeSolicitud=='CC'?'Natural':'Juridica'}.pdf`;
-        nombre = `centralesRiesgo${this.data.typeSolicitud=='CC'?'Natural':'Juridica'}`
+        url = `/assets/documentos/centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}.pdf`;
+        nombre = `centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}`
         break;
       case 3:
         url = "/assets/documentos/pagare.pdf";
@@ -68,13 +74,13 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           fuente: 'archivo-multi',
           identificador: '',
           numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC'? 484 : 485,
+          tipoArchivo: this.data.typeSolicitud === 'CC' ? 484 : 485,
           categoria: 79,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario);
+        this.guardarAdjunto(formulario,1);
 
       }
 
@@ -101,13 +107,13 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           fuente: 'archivo-multi',
           identificador: '',
           numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC'? 483 : 482,
+          tipoArchivo: this.data.typeSolicitud === 'CC' ? 483 : 482,
           categoria: 78,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario);
+        this.guardarAdjunto(formulario,2);
       }
 
     }
@@ -133,13 +139,13 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           fuente: 'archivo-multi',
           identificador: '',
           numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC'? 487 : 488,
+          tipoArchivo: this.data.typeSolicitud === 'CC' ? 487 : 488,
           categoria: 80,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario);
+        this.guardarAdjunto(formulario,3);
       }
     }
   }
@@ -148,10 +154,31 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
     /**
      * @description: Metodo para firmar documentos
      */
+    let url = `generic/cre-cambiar-estado-solicitud`;
+    let data = {
+      "numeroSolicitud": Number(this.data.codigoSolicitud),
+      "estado": "V",
+      "subEstado": "PA"
+    }
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData(url, data).subscribe((res: any) => {
+      if (res.status == 200) {
+        Swal.fire(
+          '¡Información!',
+          `Se guardo el registro con éxito`,
+          'success'
+        ).then(resultado => {
+          if (resultado.isConfirmed) {
+            let url = `/finalizado`;
+            this.router.navigateByUrl(url);
+          }
+        });
+      }
+    });
 
   }
 
-  private guardarAdjunto(data: any): void {
+  private guardarAdjunto(data: any,type:number): void {
     this._creditService.adjuntarDocumento(data)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
@@ -164,6 +191,11 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
             if (resultado.isConfirmed) {
               // this.getdocumentos();
               this.cantidadDocumentos.push(1);
+              switch (type) { 
+                case 1: this.adjuntoSolicitud=true; break;
+                case 2: this.adjuntoAutorizacion=true; break;
+                case 3: this.adjuntoPagare=true; break;
+              }
             }
           });
         }

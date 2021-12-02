@@ -17,6 +17,7 @@ import { MensajeAprobadoComponent } from './mensaje-aprobado/mensaje-aprobado.co
 import {RouterModule} from "@angular/router";
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { MensajeFinalizadoComponent } from './mensaje-finalizado/mensaje-finalizado.component';
 
 @NgModule({
   imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule,MatBottomSheetModule],
@@ -27,6 +28,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
         MensajeRechazadoComponent,
         MensajeAprobadoComponent,
         BottomSheetComponent,
+        MensajeFinalizadoComponent,
 
     ],
     entryComponents: [DatosContactoComponent],

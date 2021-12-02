@@ -10,6 +10,7 @@ import { LegalComponent } from './components/complementos/legal/legal.component'
 import {MensajeRechazadoComponent} from "./shared/mensaje-rechazado/mensaje-rechazado.component";
 import {MensajeAprobadoComponent} from "./shared/mensaje-aprobado/mensaje-aprobado.component";
 import { MensajeErrorComponent } from './shared/mensaje-error/mensaje-error.component';
+import { MensajeFinalizadoComponent } from './shared/mensaje-finalizado/mensaje-finalizado.component';
 
 
 
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'error',
     component: MensajeErrorComponent
+  },
+  {
+    path: 'finalizado',
+    component: MensajeFinalizadoComponent
   },
   {
     path: '',

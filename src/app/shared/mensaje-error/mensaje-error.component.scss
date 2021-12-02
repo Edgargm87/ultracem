@@ -1,6 +1,6 @@
 @import "../../../styles/vars/exports";
 .imagen-mensaje {
-  height: 70vh;
+  height: 90vh;
 }
 
 .row-mensaje {
@@ -32,5 +32,9 @@ a {
   color: $blue-primary;
   text-decoration: none;
   font-weight: 800;
+}
+
+.mt-neg{
+  margin-top: -7em;
 }
 

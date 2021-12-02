@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
+import {UtilityService} from "./utilities.service";
 
 export interface listaGenerica {
   codigoOpcion: string,
@@ -20,7 +21,10 @@ export class CreditService {
     'Content-Type': 'application/json'
   });
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient,
+    private _utilitiService: UtilityService
+  ) { }
   /**
    * Regresa 'SI' y 'NO'
    * @returns Observable
@@ -78,7 +82,7 @@ export class CreditService {
       tipoDocumento: form.tipoDocumento,
       documento: form.documento.toString()
     }
-    return this._http.post(this.infoApp.urlApi + 'generic/formulario-solicitud-preaprobado', body).pipe(map(res => res));
+    return this._http.post(this.infoApp.urlApi + 'generic/formulario-solicitud-preaprobado', body).pipe(map(res => res), catchError(this._utilitiService.handleError));
   }
 
   /**
@@ -87,7 +91,7 @@ export class CreditService {
    * @returns un observable
    */
   solicitudUltracem(form: any): Observable<any> {
-    return this._http.post(this.infoApp.urlApi + 'credito/formulario-solicitud-ultracem', form).pipe(map(res => res));
+    return this._http.post(this.infoApp.urlApi + 'credito/formulario-solicitud-ultracem', form).pipe(map(res => res), catchError(this._utilitiService.handleError));
   }
 
   solicitudes(url: string): Observable<any> {
@@ -99,6 +103,6 @@ export class CreditService {
   }
 
   getDataJuridicaUltracem(numeroSolicitud: any): Observable<any> {
-    return this._http.get(this.infoApp.urlApi + `generic/qry/tab-auto-completar-info-negocio/${numeroSolicitud}`).pipe(map(res => res));
+    return this._http.get(this.infoApp.urlApi + `generic/qry/tab-auto-completar-info-negocio/${numeroSolicitud}`).pipe(map(res => res), catchError(this._utilitiService.handleError));
   }
 }
