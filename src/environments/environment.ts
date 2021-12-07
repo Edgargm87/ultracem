@@ -12,7 +12,7 @@ export const environment = {
   userName: "APPWEB",
   password: "123456",
   reconocer:"https://recidaw.olimpiait.com",
-  apiCredit: "https://prometheus.fintra.co:8443/fintracredit",
+  apiCredit: "http://192.168.140.197:8084/fintracredit",
 
 };
 

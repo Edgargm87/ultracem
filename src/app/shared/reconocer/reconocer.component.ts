@@ -231,7 +231,7 @@ export class ReconocerComponent implements OnInit, OnDestroy {
 
   saveReconocerID(data: any) {
     // console.log(data)
-    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "json_resp": data })
+    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "unidad_negocio":32, "json_resp": data })
   }
 
 }
