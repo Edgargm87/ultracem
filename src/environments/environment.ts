@@ -6,7 +6,7 @@
 
 export const environment = {
   production: false,
-  urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
+  urlApi: 'http://192.168.140.197:8010/api-fintra/api/',
   // urlApi: 'http://192.168.140.197:8010/api-fintra/api/',
   // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
   userName: "APPWEB",
