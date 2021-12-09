@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import {Component, OnInit, HostListener, OnDestroy, Inject} from '@angular/core';
 // import { CreditsService } from '../../services/credits/credits.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/services/generic.service';
@@ -7,6 +7,7 @@ import { GenericService } from 'src/app/services/generic.service';
 // import { Subscription } from 'rxjs';
 // import { GetListRequest } from '../../actions/list-requests.actions';
 import { environment } from 'src/environments/environment';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-reconocer',
@@ -37,6 +38,8 @@ export class ReconocerComponent implements OnInit, OnDestroy {
     private activateRouter: ActivatedRoute,
     private router: Router,
     public _generic: GenericService,
+    private _matDialog: MatDialogRef<ReconocerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnDestroy(): void {
@@ -47,7 +50,7 @@ export class ReconocerComponent implements OnInit, OnDestroy {
     this.activateRouter.params.subscribe(({ num, neg }) => {
       this.numSolicitud = num;
       this.uniNegocio = neg;
-      this.dataUser = { telefono:3045337156, email: 'ingshirleyjohanna@gmail.com', cc: '1143163517' }
+      this.dataUser = { telefono: this.data.celular, email: this.data.email, cc:this.data.documento  }
     })
 
     this.getCredits();
@@ -101,13 +104,18 @@ export class ReconocerComponent implements OnInit, OnDestroy {
           // prod:  https://recidaw.olimpiait.com/index.html
           // prueba: "https://demorcs.olimpiait.com:6314/Validacion/ConsultarValidacion"
           await this.ConsultarValidacion(`${this.UrlReconocer}/Validacion/ConsultarValidacion`, this.token).then((resp: any) => {
+            debugger;
             if (resp && resp.code == 200) {
               const data = resp.data;
               this.saveReconocerID(data).subscribe(Response => {
-                console.log(Response);
-                
+                if (Response === 'OK') {
+                  console.log(Response);
+                  this._matDialog.close();
+
+                }
+
               });
-              // --(finalizado = TRUE and EstadoProceso = (1: enrolamiento) and cacelado =false) // Paso las validaciones de identidad  
+              // --(finalizado = TRUE and EstadoProceso = (1: enrolamiento) and cacelado =false) // Paso las validaciones de identidad
               // --(finalizado = TRUE and EstadoProceso = (2: validacion) and cancelado =false and aprobado=true  ) // Pasa cliente enrolados previamente
               if (data.finalizado == true && data.estadoProceso == 1 && data.cancelado == false) {
                 this.router.navigate([`/app/upload/${this.uniNegocio}/${this.numSolicitud}`]);
@@ -231,7 +239,8 @@ export class ReconocerComponent implements OnInit, OnDestroy {
 
   saveReconocerID(data: any) {
     // console.log(data)
-    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "json_resp": data })
+    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "unidad_negocio":32, "json_resp": data })
+
   }
 
 }

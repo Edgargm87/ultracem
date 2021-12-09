@@ -40,6 +40,8 @@ export class solicitudComponent implements OnInit {
 
   fechaMaxima: any;
 
+  public formulario: any;
+
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -134,7 +136,6 @@ export class solicitudComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.openReconocer('1143163517','ingshirleyjohanna@gmail.com','3045337156')
     this.loguear();
     this.formInicial.controls['registrar'].valueChanges.subscribe(registrar => {
       if (registrar == 'CC') {
@@ -240,7 +241,7 @@ export class solicitudComponent implements OnInit {
     const dialogRef = this.dialog.open(ReconocerComponent, {
       height: '98%',
       width: '100vw',
-      data: { 
+      data: {
         documento:documento,
         email:email,
         celular:celular
@@ -250,7 +251,10 @@ export class solicitudComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     
+      if (this.formulario.tipoDocumento === 'CC') {
+        this.guardarSolicitudUltracem(this.formulario);
+      }
+
     });
   }
 
@@ -390,8 +394,10 @@ export class solicitudComponent implements OnInit {
       form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre +' '}${this.formSolicitudNatural.value.segundoNombre? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.primerApellido + ' ': this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido? this.formSolicitudNatural.value.segundoApellido : ''}`
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+      this.formulario = form;
+      this.openReconocer(form.documento,form.email,form.celular)
       // delete form.compraSemanal
-      this.guardarSolicitudUltracem(form);
+
     }else {
       this.formSolicitudNatural.markAllAsTouched();
     }

@@ -6,13 +6,13 @@
 
 export const environment = {
   production: false,
-  urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
+  urlApi: 'http://192.168.140.197:8010/api-fintra/api/',
   // urlApi: 'http://192.168.140.197:8010/api-fintra/api/',
   // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
   userName: "APPWEB",
   password: "123456",
   reconocer:"https://recidaw.olimpiait.com",
-  apiCredit: "https://prometheus.fintra.co:8443/fintracredit",
+  apiCredit: "http://192.168.140.197:8084/fintracredit",
 
 };
 
