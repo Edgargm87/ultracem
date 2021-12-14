@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener, OnDestroy, Inject} from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy, Inject } from '@angular/core';
 // import { CreditsService } from '../../services/credits/credits.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/services/generic.service';
@@ -7,7 +7,8 @@ import { GenericService } from 'src/app/services/generic.service';
 // import { Subscription } from 'rxjs';
 // import { GetListRequest } from '../../actions/list-requests.actions';
 import { environment } from 'src/environments/environment';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reconocer',
@@ -15,22 +16,22 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./reconocer.component.scss']
 })
 export class ReconocerComponent implements OnInit, OnDestroy {
-  UrlReconocer:string = environment.reconocer;
+  UrlReconocer: string = environment.reconocer;
   auth: any;
   procesoConvenioGuid: any;
   token: any;
-  iFrameContainer:any;
+  iFrameContainer: any;
   iFrame: any;
   validacion: any;
-  loadingRequest: boolean=false;
+  loadingRequest: boolean = false;
   showStep: boolean = false;
   numSolicitud: any;
   uniNegocio: any;
-  main: string ="";
+  main: string = "";
 
   // listRequest$ = this.store.select(reducers.getListRequestResponse);
   // subReq$: Subscription;
-  dataUser:any= { telefono: "", email: "", cc: "" };
+  dataUser: any = { telefono: "", email: "", cc: "" };
 
   constructor(
     // private store: Store<reducers.State>,
@@ -50,7 +51,7 @@ export class ReconocerComponent implements OnInit, OnDestroy {
     this.activateRouter.params.subscribe(({ num, neg }) => {
       this.numSolicitud = num;
       this.uniNegocio = neg;
-      this.dataUser = { telefono: this.data.celular, email: this.data.email, cc:this.data.documento  }
+      this.dataUser = { telefono: this.data.celular, email: this.data.email, cc: this.data.documento }
     })
 
     this.getCredits();
@@ -69,7 +70,7 @@ export class ReconocerComponent implements OnInit, OnDestroy {
     //   clientSecret: "F1ntr4P@$$w0rd"
     // };
     // prod
-        this.auth = {
+    this.auth = {
       clientId: "FINTRA",
       clientSecret: "Me@uB@!E44CQ%EAP"
     };
@@ -104,30 +105,40 @@ export class ReconocerComponent implements OnInit, OnDestroy {
           // prod:  https://recidaw.olimpiait.com/index.html
           // prueba: "https://demorcs.olimpiait.com:6314/Validacion/ConsultarValidacion"
           await this.ConsultarValidacion(`${this.UrlReconocer}/Validacion/ConsultarValidacion`, this.token).then((resp: any) => {
-            debugger;
+            // debugger;
             if (resp && resp.code == 200) {
               const data = resp.data;
               this.saveReconocerID(data).subscribe(Response => {
-                if (Response === 'OK') {
-                  console.log(Response);
-                  this._matDialog.close();
+                // --(finalizado = TRUE and EstadoProceso = (1: enrolamiento) and cacelado =false) // Paso las validaciones de identidad
+                // --(finalizado = TRUE and EstadoProceso = (2: validacion) and cancelado =false and aprobado=true  ) // Pasa cliente enrolados previamente
 
+                if (data.finalizado == true && (data.estadoProceso == 2 || data.estadoProceso == 1) && data.cancelado == false && data.aprobado == false) {
+                  // TODO la solicitud fue rechazada (la validación de reconocer no pasó los filtros)
+                  // this.currentStep = 4; 
+                  Swal.fire(
+                    'Información',
+                    `Validación facial incorrecta, favor intente nuevamente`,
+                    'error'
+                  ).then(resultado => {
+                    if (resultado) {
+                      this._matDialog.close(false);
+                    }
+                  });
+                  setTimeout(() => {
+                    this._matDialog.close(false);
+                  }, 5000);
+                 
+                }else if (data.finalizado == true && data.estadoProceso == 1 && data.cancelado == false) {
+                  console.log(Response);
+                  this._matDialog.close(true);
+                }
+                if (data.finalizado == true && data.estadoProceso == 2 && data.cancelado == false && data.aprobado == true) {
+                  console.log(Response);
+                  this._matDialog.close(true);
                 }
 
               });
-              // --(finalizado = TRUE and EstadoProceso = (1: enrolamiento) and cacelado =false) // Paso las validaciones de identidad
-              // --(finalizado = TRUE and EstadoProceso = (2: validacion) and cancelado =false and aprobado=true  ) // Pasa cliente enrolados previamente
-              if (data.finalizado == true && data.estadoProceso == 1 && data.cancelado == false) {
-                this.router.navigate([`/app/upload/${this.uniNegocio}/${this.numSolicitud}`]);
-              }
-              if (data.finalizado == true && data.estadoProceso == 2 && data.cancelado == false && data.aprobado == true) {
-                this.router.navigate([`/app/upload/${this.uniNegocio}/${this.numSolicitud}`]);
-              }
-              if (data.finalizado == true && (data.estadoProceso == 2 || data.estadoProceso == 1) && data.cancelado == false && data.aprobado == false) {
-                // TODO la solicitud fue rechazada (la validación de reconocer no pasó los filtros)
-                // this.currentStep = 4;
-                this.showStep = true;
-              }
+
             }
           });
         } else {
@@ -147,8 +158,8 @@ export class ReconocerComponent implements OnInit, OnDestroy {
   }
 
   aceptar() {
-    localStorage.clear()
-    this.router.navigate(['/login']);
+    console.log(Response);
+    this._matDialog.close(false);
   }
 
   async runValidation() {
@@ -239,7 +250,7 @@ export class ReconocerComponent implements OnInit, OnDestroy {
 
   saveReconocerID(data: any) {
     // console.log(data)
-    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "unidad_negocio":32, "json_resp": data })
+    return this._generic.saveReconocerID({ "numero_solicitud": '', "identificacion": this.dataUser.cc, "tipo_trama": 2, "unidad_negocio": 32, "json_resp": data })
 
   }
 

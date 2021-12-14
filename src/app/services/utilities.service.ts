@@ -140,6 +140,32 @@ export class UtilityService {
     const headers = new HttpHeaders(optiones);
     return this._httpClient.put(URL, data, { headers }).pipe(catchError(this.handleError));
   }
+  
+  posQueryServer(server:string, query: string, data: any, typeHeaders: string = 'data') {
+    const URL =server + query;
+    let optiones: any;
+    if (typeHeaders == 'data') {
+      optiones = {
+        'Authentication': `${this.readToken()}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8'
+      };
+    } else {
+      if (typeHeaders == this.notoken) {
+        optiones = {
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8'
+        }
+      } else {
+        optiones = {
+          'Authentication': `${this.readToken()}`,
+          "Accept": "application/json",
+        }
+      }
+    }
+    const headers = new HttpHeaders(optiones);
+    return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
+  }
 
 
 

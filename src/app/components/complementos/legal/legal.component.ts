@@ -275,7 +275,7 @@ export class LegalComponent implements OnInit {
             Swal.fire(
               'Información',
               `Hubo un error en los datos enviados, favor evaluar`,
-              'success'
+              'error'
             );
           }
         } else {

@@ -43,4 +43,10 @@ export class GenericService {
     let valor=value.replace(/,/g, '');
     return valor;
   }
+
+  getAplicaValidacionIdentidad() {
+    return this._utility.posQueryServer(environment.apiCredit, '/webresources/firma/aplica-reconocer','{"unidad":"ULTRACEM"}').pipe(map((result: any) => {
+      return result;
+    }));
+  }
 }
