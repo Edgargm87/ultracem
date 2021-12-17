@@ -203,7 +203,7 @@ export class solicitudComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.alto = window.innerHeight + 'px';
-    this.ancho = window.innerWidth + 'px';
+    this.ancho = window.innerWidth + 'px'; 
   }
 
   openDialog(tipoDocumento: string) {
@@ -255,6 +255,7 @@ export class solicitudComponent implements OnInit {
   }
 
   openReconocer(documento: string, email: string, celular: string) {
+    debugger;
     if (this.aplicaValidacionEntidad) {
       switch (this.entidad) {
         case 'RECONOSER':
@@ -273,6 +274,8 @@ export class solicitudComponent implements OnInit {
             if(result==true){
               if (this.formulario.tipoDocumento === 'CC') {
                 this.guardarSolicitudUltracem(this.formulario);
+              }else{
+                this.SolicitudRepresentante();
               }
             }
            
@@ -414,6 +417,7 @@ export class solicitudComponent implements OnInit {
   }
 
   SolicitudRepresentante(): void {
+    // reconocer
     if (this.formSolicitudRepresentante.valid) {
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
