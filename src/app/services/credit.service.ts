@@ -105,4 +105,8 @@ export class CreditService {
   getDataJuridicaUltracem(numeroSolicitud: any): Observable<any> {
     return this._http.get(this.infoApp.urlApi + `generic/qry/tab-auto-completar-info-negocio/${numeroSolicitud}`).pipe(map(res => res), catchError(this._utilitiService.handleError));
   }
+
+  validarSolicitud(data: any): Observable<any> {
+    return this._http.post(this.infoApp.urlApi + 'generic/validar-solicitud', data).pipe(map(res => res), catchError(this._utilitiService.handleError));
+  }
 }
