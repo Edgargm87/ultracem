@@ -12,6 +12,7 @@ import {MensajeAprobadoComponent} from "./shared/mensaje-aprobado/mensaje-aproba
 import { MensajeErrorComponent } from './shared/mensaje-error/mensaje-error.component';
 import { MensajeFinalizadoComponent } from './shared/mensaje-finalizado/mensaje-finalizado.component';
 import { ReconocerComponent } from './shared/reconocer/reconocer.component';
+import { ExistenteComponent } from './shared/existente/existente.component';
 
 
 
@@ -62,6 +63,12 @@ const routes: Routes = [
     path: 'finalizado',
     component: MensajeFinalizadoComponent
   },
+
+  {
+    path: 'existente',
+    component: ExistenteComponent
+  },
+
   {
     path: 'reconocer',
     component: ReconocerComponent
