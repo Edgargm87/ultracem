@@ -351,7 +351,7 @@ export class solicitudComponent implements OnInit {
       }
       this._creditService.validarSolicitud(datos).pipe(delay(500)).subscribe(resp => {
           if (resp.data.existe > 0) {
-            this.router.navigateByUrl('/rechazado');
+            this.router.navigateByUrl('/existente');
             return;
           }else {
             this._creditService.preaprobado(this.formInicial.value).pipe(delay(500)).subscribe((resp) =>{
