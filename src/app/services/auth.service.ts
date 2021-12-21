@@ -20,7 +20,7 @@ export class AuthService {
     let query: string = `private/portal/iniciar-sesion`;
     let data = {
       "userName": user,
-      "password": pass
+      "password": btoa(pass)
     }
     return this._utilityService.postQuery(query, data, 'notoken')
       .pipe(map((res: any) => {
