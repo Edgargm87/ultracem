@@ -114,8 +114,8 @@ export class UtilityService {
 
 
   putQuery(server:string, query: string, data: any, typeHeaders: string = 'data') {
-    
-    
+
+
     const URL =server + query;
     let optiones: any;
     if (typeHeaders == 'data') {
@@ -140,7 +140,7 @@ export class UtilityService {
     const headers = new HttpHeaders(optiones);
     return this._httpClient.put(URL, data, { headers }).pipe(catchError(this.handleError));
   }
-  
+
   posQueryServer(server:string, query: string, data: any, typeHeaders: string = 'data') {
     const URL =server + query;
     let optiones: any;

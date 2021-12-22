@@ -7,10 +7,12 @@ import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import { format, getDate, parseISO } from 'date-fns'
 import { GenericService } from 'src/app/services/generic.service';
 import { MatCheckboxChange } from "@angular/material/checkbox";
-import { delay } from "rxjs/operators";
+import {delay, switchMap, tap} from "rxjs/operators";
 import { Router } from "@angular/router";
 import { ReconocerComponent } from '../../shared/reconocer/reconocer.component';
 import Swal from 'sweetalert2';
+import {ModalAceptoTerminosComponent} from "../../shared/modal-acepto-terminos/modal-acepto-terminos.component";
+import {of} from "rxjs";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -51,6 +53,7 @@ export class solicitudComponent implements OnInit {
     private _creditService: CreditService,
     public _generic: GenericService,
     private router: Router,
+    private _matDialog: MatDialog
   ) {
     localStorage.removeItem('TOKEN')
     this.fechaValida();
@@ -203,7 +206,7 @@ export class solicitudComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.alto = window.innerHeight + 'px';
-    this.ancho = window.innerWidth + 'px';
+    this.ancho = window.innerWidth + 'px'; 
   }
 
   openDialog(tipoDocumento: string) {
@@ -255,6 +258,7 @@ export class solicitudComponent implements OnInit {
   }
 
   openReconocer(documento: string, email: string, celular: string) {
+    debugger;
     if (this.aplicaValidacionEntidad) {
       switch (this.entidad) {
         case 'RECONOSER':
@@ -273,9 +277,11 @@ export class solicitudComponent implements OnInit {
             if(result==true){
               if (this.formulario.tipoDocumento === 'CC') {
                 this.guardarSolicitudUltracem(this.formulario);
+              }else{
+                this.SolicitudRepresentante();
               }
             }
-           
+
           });
         break;
 
@@ -340,68 +346,76 @@ export class solicitudComponent implements OnInit {
   preaprobado(): void {
     if (this.formInicial.valid) {
       this.cargando = true;
-      this._creditService.preaprobado(this.formInicial.value).pipe(delay(500))
-        .subscribe(resp => {
-          if (resp.data) {
-            this.existeDatos = true;
-            if (this.formInicial.value.tipoDocumento == 'CC') {
-              this.formSolicitudNatural.patchValue({
-                tipoTercero: 'T',
-                tipoDocumento: this.formInicial.value.tipoDocumento,
-                documento: (this.formInicial.value.documento).toString(),
-                clienteUltracem: this.formInicial.value.cliente,
-                primerNombre: resp.data.primerNombre,
-                segundoNombre: resp.data.segundoNombre,
-                primerApellido: resp.data.primerApellido,
-                segundoApellido: resp.data.segundoApellido,
-                nombreCompleto: resp.data.nombreCompleto,
-                fechaNacimiento: '',
-                genero: '',
-                celular: resp.data.celular,
-                email: resp.data.email,
-                antiguedadCompra: resp.data.antiguedadCompra,
-                compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
-              });
-              this.step = 2;
-            } else {
-              this.formSolicitudJuridica.patchValue({
-                tipoTercero: 'T',
-                tipoDocumento: this.formInicial.value.tipoDocumento,
-                documento: (this.formInicial.value.documento).toString(),
-                clienteUltracem: this.formInicial.value.cliente,
-                nombreCompleto: resp.data.razonSocial,
-                celular: resp.data.celular,
-                email: resp.data.email,
-                compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
-                antiguedadCompra: resp.data.antiguedadCompra,
-                telefono: resp.data.telefono,
-                digitoVerificacion: resp.data.digitoVerificacion
-              });
-              this.step = 3;
-            }
-          } else {
-            if (this.formInicial.value.tipoDocumento == 'CC') {
-              this.formSolicitudNatural.patchValue({
-                tipoTercero: 'T',
-                tipoDocumento: this.formInicial.value.tipoDocumento,
-                documento: (this.formInicial.value.documento).toString(),
-                clienteUltracem: this.formInicial.value.cliente
-              });
-              this.step = 2;
-            } else {
-              this.formSolicitudJuridica.patchValue({
-                tipoTercero: 'T',
-                tipoDocumento: this.formInicial.value.tipoDocumento,
-                documento: (this.formInicial.value.documento).toString(),
-                clienteUltracem: this.formInicial.value.cliente,
-                digitoVerificacion: this.calcularDigitoVerificacion(this.formInicial.value.tipoDocumento)
-              });
-              this.step = 3;
-            }
+      const datos: any = {
+        documento: this.formInicial.controls.documento.value
+      }
+      this._creditService.validarSolicitud(datos).pipe(delay(500)).subscribe(resp => {
+          if (resp.data.existe > 0) {
+            this.router.navigateByUrl('/existente');
+            return;
+          }else {
+            this._creditService.preaprobado(this.formInicial.value).pipe(delay(500)).subscribe((resp) =>{
+              if (resp.data) {
+                this.existeDatos = true;
+                if (this.formInicial.value.tipoDocumento == 'CC') {
+                  this.formSolicitudNatural.patchValue({
+                    tipoTercero: 'T',
+                    tipoDocumento: this.formInicial.value.tipoDocumento,
+                    documento: (this.formInicial.value.documento).toString(),
+                    clienteUltracem: this.formInicial.value.cliente,
+                    primerNombre: resp.data.primerNombre,
+                    segundoNombre: resp.data.segundoNombre,
+                    primerApellido: resp.data.primerApellido,
+                    segundoApellido: resp.data.segundoApellido,
+                    nombreCompleto: resp.data.nombreCompleto,
+                    fechaNacimiento: '',
+                    genero: '',
+                    celular: resp.data.celular,
+                    email: resp.data.email,
+                    antiguedadCompra: resp.data.antiguedadCompra,
+                    compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
+                  });
+                  this.step = 2;
+                } else {
+                  this.formSolicitudJuridica.patchValue({
+                    tipoTercero: 'T',
+                    tipoDocumento: this.formInicial.value.tipoDocumento,
+                    documento: (this.formInicial.value.documento).toString(),
+                    clienteUltracem: this.formInicial.value.cliente,
+                    nombreCompleto: resp.data.razonSocial,
+                    celular: resp.data.celular,
+                    email: resp.data.email,
+                    compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
+                    antiguedadCompra: resp.data.antiguedadCompra,
+                    telefono: resp.data.telefono,
+                    digitoVerificacion: resp.data.digitoVerificacion
+                  });
+                  this.step = 3;
+                }
+              } else {
+                if (this.formInicial.value.tipoDocumento == 'CC') {
+                  this.formSolicitudNatural.patchValue({
+                    tipoTercero: 'T',
+                    tipoDocumento: this.formInicial.value.tipoDocumento,
+                    documento: (this.formInicial.value.documento).toString(),
+                    clienteUltracem: this.formInicial.value.cliente
+                  });
+                  this.step = 2;
+                } else {
+                  this.formSolicitudJuridica.patchValue({
+                    tipoTercero: 'T',
+                    tipoDocumento: this.formInicial.value.tipoDocumento,
+                    documento: (this.formInicial.value.documento).toString(),
+                    clienteUltracem: this.formInicial.value.cliente,
+                    digitoVerificacion: this.calcularDigitoVerificacion(this.formInicial.value.tipoDocumento)
+                  });
+                  this.step = 3;
+                }
+              }
+              this.cargando = false;
+            })
           }
-          this.cargando = false;
-        })
-
+        });
     } else {
       this.formInicial.markAllAsTouched();
     }
@@ -414,6 +428,7 @@ export class solicitudComponent implements OnInit {
   }
 
   SolicitudRepresentante(): void {
+    // reconocer
     if (this.formSolicitudRepresentante.valid) {
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
@@ -462,8 +477,13 @@ export class solicitudComponent implements OnInit {
 
   onAceptoTerminos(evento: MatCheckboxChange): void {
     if (evento.checked) {
-      let url: string = 'https://fintralogistics.co/#'
-      window.open(url, '_blank');
+      const dialogRef = this._matDialog.open(ModalAceptoTerminosComponent, {
+        minWidth: '100%',
+        height: '100%',
+      })
+      dialogRef.afterClosed().toPromise().then((res) => {
+        console.log('Cerrado');
+      });
     }
   }
 
@@ -554,6 +574,10 @@ export class solicitudComponent implements OnInit {
       }, error => {
         this.router.navigateByUrl('/error');
       });
+  }
+
+  private validaSolicitud(datos: any) {
+    return this._creditService.validarSolicitud(datos);
   }
 
   calcularDigitoVerificacion(data: any): any {
