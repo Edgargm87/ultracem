@@ -206,7 +206,7 @@ export class solicitudComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.alto = window.innerHeight + 'px';
-    this.ancho = window.innerWidth + 'px'; 
+    this.ancho = window.innerWidth + 'px';
   }
 
   openDialog(tipoDocumento: string) {
@@ -257,8 +257,7 @@ export class solicitudComponent implements OnInit {
     });
   }
 
-  openReconocer(documento: string, email: string, celular: string) {
-    debugger;
+  openReconocer(documento: string, email: string, celular: string, typePerson:string) {
     if (this.aplicaValidacionEntidad) {
       switch (this.entidad) {
         case 'RECONOSER':
@@ -275,7 +274,7 @@ export class solicitudComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if(result==true){
-              if (this.formulario.tipoDocumento === 'CC') {
+              if (typePerson == 'CC') {
                 this.guardarSolicitudUltracem(this.formulario);
               }else{
                 this.SolicitudRepresentante();
@@ -447,7 +446,7 @@ export class solicitudComponent implements OnInit {
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       this.formulario = form;
-      this.openReconocer(form.documento, form.email, form.celular)
+      this.openReconocer(form.documento, form.email, form.celular,'CC')
       // delete form.compraSemanal
 
     } else {
