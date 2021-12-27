@@ -19,7 +19,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   public subject$: Subject<any> = new Subject<any>();
   codigoSolicitud: any;
   typeSolicitud: any;
-
+  validado:boolean=false;
   constructor(
     private _creditService: CreditService,
     private _activatedRoute: ActivatedRoute,
@@ -146,6 +146,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
 
     if (contador > 0) {
+      this.validado=true;
       Swal.fire(
         'Información',
         `Aun falta documentos obligatorios por cargar`,
