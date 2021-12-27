@@ -157,8 +157,8 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
     let url = `generic/cre-cambiar-estado-solicitud`;
     let data = {
       "numeroSolicitud": Number(this.data.codigoSolicitud),
-      "estado": "V",
-      "subEstado": "PA"
+      "estado": "FA",
+      "subEstado": "C"
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._generiService.posData(url, data).subscribe((res: any) => {
