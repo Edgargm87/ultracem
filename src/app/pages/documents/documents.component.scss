@@ -79,6 +79,19 @@ p {
             }
           }
         }
+        &.requerido {
+          border-color: red;
+
+          span {
+            color: red;
+          }
+
+          .group-butons {
+            .icon {
+              background-color: red;
+            }
+          }
+        }
       }
     }
   }
