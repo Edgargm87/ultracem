@@ -244,7 +244,7 @@
               <mat-form-field class="clasetextArea" appearance="outline">
                 <textarea matInput placeholder="Escribe aquí" formControlName="descripcion"></textarea>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
-                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.
+                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength || formTab4.controls.descripcion.markAllAsTouched()">Longitud mínima son 5 caracteres.
                 </mat-error>
               </mat-form-field>
             </form>
