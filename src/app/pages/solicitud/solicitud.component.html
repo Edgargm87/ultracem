@@ -150,7 +150,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho pantalla_completa color_fondo">
+    <div class="col-lg-8 l-derecho pantalla_completa color_fondo overflow-auto">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Datos básicos personales</h2>
@@ -216,9 +216,9 @@
                 </mat-error>
                 <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.pattern">Solo se aceptan números.
                 </mat-error>
-                <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.minlength">Longitud mínima son 7.
+                <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.minlength">Longitud mínima son 7 dígitos.
                 </mat-error>
-                <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.maxlength">Longitud máxima son 11.
+                <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.maxlength">Longitud máxima son 11 dígitos.
                 </mat-error>
               </mat-error>
             </mat-form-field>
@@ -275,7 +275,7 @@
              </div>
             </section>
           </div>
-          <div class="row justify-content-center mt-5 mt-lg-5 mt-xl-5">
+          <div class="row justify-content-center mt-5 mt-lg-5 mt-xl-5 mb-3">
             <ng-container *ngIf="!existeDatos">
               <button mat-raised-button class="btn_siguiente" (click)="SolicitudNUltracem()">
                 Solicitar
