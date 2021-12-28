@@ -149,7 +149,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       this.validado=true;
       Swal.fire(
         'Información',
-        `Aun falta documentos obligatorios por cargar`,
+        `Aún falta documentos obligatorios por cargar`,
         'info'
       ).then(resultado => {
         if (resultado.isConfirmed) {
