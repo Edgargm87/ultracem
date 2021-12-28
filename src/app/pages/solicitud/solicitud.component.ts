@@ -452,7 +452,7 @@ export class solicitudComponent implements OnInit {
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       this.formulario = form;
-      // this.openReconocer(form.documento, form.email, form.celular,'CC')
+      this.openReconocer(form.documento, form.email, form.celular,'CC')
       // delete form.compraSemanal
       this.guardarSolicitudUltracem(form)
 
