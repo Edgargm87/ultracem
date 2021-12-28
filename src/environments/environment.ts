@@ -13,7 +13,7 @@ export const environment = {
   userName: "APPWEB",
   password: btoa("123456"),
   reconocer:"https://recidaw.olimpiait.com",
-  apiCredit: "http://192.168.140.197:8084/fintracredit",
+  apiCredit: "http://demo.fintra.co:8084/fintracredit",
 
 };
 
