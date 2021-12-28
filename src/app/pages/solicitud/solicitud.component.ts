@@ -190,7 +190,7 @@ export class solicitudComponent implements OnInit {
 
 
     //aplica reconocer
-    this._generic.getAplicaValidacionIdentidad().subscribe(res => {
+    /*this._generic.getAplicaValidacionIdentidad().subscribe(res => {
       if (res.status == 200) {
         if ((res.data.aplica == "SI") && (res.data.entidad == "RECONOSER")) {
           this.aplicaValidacionEntidad = true;
@@ -200,7 +200,7 @@ export class solicitudComponent implements OnInit {
           this.aplicaValidacionEntidad = false;
         }
       }
-    })
+    })*/
   }
 
   @HostListener('window:resize', ['$event'])
