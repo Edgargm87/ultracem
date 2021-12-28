@@ -9,10 +9,10 @@
     <div class="col-lg-4 l-izquierdo m-auto">
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
-          <li (click)="step=1" class="li-activo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
-          <li (click)="step=2" class="li-activo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
-          <li (click)="step=3" class="li-activo"><span>REFERENCIAS</span></li>
-          <li (click)="step=4" class="li-inactivo"><span>LEGALES</span></li>
+          <li  class="li-activo"><span>DATOS PERSONALES COMPLEMENTARIOS</span></li>
+          <li  class="li-activo"><span>INFORMACIÓN DEL NEGOCIO</span></li>
+          <li  class="li-activo"><span>REFERENCIAS</span></li>
+          <li  class="li-inactivo"><span>LEGALES</span></li>
         </ul>
       </div>
     </div>
@@ -244,7 +244,7 @@
               <mat-form-field class="clasetextArea" appearance="outline">
                 <textarea matInput placeholder="Escribe aquí" formControlName="descripcion"></textarea>
                 <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
-                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength">Longitud mínima son 5 caracteres.
+                <mat-error *ngIf="formTab4.controls.descripcion.errors?.minlength || formTab4.controls.descripcion.markAllAsTouched()">Longitud mínima son 5 caracteres.
                 </mat-error>
               </mat-form-field>
             </form>

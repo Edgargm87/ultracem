@@ -218,6 +218,7 @@ export class solicitudComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       const datos: any = { ...result };
+      // console.log(datos);
       let form: any;
       let formJuridico: any;
       if (datos.tipoDocumento == 'CC') {
@@ -228,6 +229,8 @@ export class solicitudComponent implements OnInit {
       if (datos.tipoDocumento == 'CC' && datos.cerrar) {
         this.formSolicitudNatural.controls.celular.setValue(result.celular ? result.celular : form.celular);
         this.formSolicitudNatural.controls.email.setValue(result.email ? result.email : form.email);
+        form.celular = this.formSolicitudNatural.controls.celular.value;
+        form.email = this.formSolicitudNatural.controls.email.value;
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
         this.guardarSolicitudUltracem(form);
@@ -243,6 +246,8 @@ export class solicitudComponent implements OnInit {
         this.formSolicitudJuridica.controls.telefono.setValue(result.telefono ? result.telefono : formJuridico.telefono);
         this.formSolicitudJuridica.controls.celular.setValue(result.celular ? result.celular : formJuridico.celular);
         this.formSolicitudJuridica.controls.email.setValue(result.email ? result.email : formJuridico.email);
+        formJuridico.celular = this.formSolicitudJuridica.controls.celular.value;
+        formJuridico.email = this.formSolicitudJuridica.controls.email.value;
         formJuridico.antiguedadNegocio = 0;
         formJuridico.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
         formJuridico.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudJuridica.value.compraSemanal));
@@ -440,14 +445,16 @@ export class solicitudComponent implements OnInit {
 
   SolicitudNUltracem(): void {
     if (this.formSolicitudNatural.valid) {
+      console.log('SSSS')
       let form = { ...this.formSolicitudNatural.value }
       form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
       form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       this.formulario = form;
-      this.openReconocer(form.documento, form.email, form.celular,'CC')
+      // this.openReconocer(form.documento, form.email, form.celular,'CC')
       // delete form.compraSemanal
+      this.guardarSolicitudUltracem(form)
 
     } else {
       this.formSolicitudNatural.markAllAsTouched();
