@@ -234,14 +234,18 @@ export class solicitudComponent implements OnInit {
         form.email = this.formSolicitudNatural.controls.email.value;
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        this.guardarSolicitudUltracem(form);
+        this.formulario=form;
+        this.openReconocer(form.documento, form.email, form.celular,'CC')
+
 
       } else if (datos.tipoDocumento == 'CC' && !datos.cerrar) {
         form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
         form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        this.guardarSolicitudUltracem(form);
+        this.formulario=form;
+        this.openReconocer(form.documento, form.email, form.celular,'CC')
+
 
       } else if (datos.tipoDocumento == 'NIT' && datos.cerrar) {
         this.formSolicitudJuridica.controls.telefono.setValue(result.telefono ? result.telefono : formJuridico.telefono);
@@ -455,7 +459,7 @@ export class solicitudComponent implements OnInit {
       this.formulario = form;
       this.openReconocer(form.documento, form.email, form.celular,'CC')
       // delete form.compraSemanal
-      this.guardarSolicitudUltracem(form)
+      // this.guardarSolicitudUltracem(form)
 
     } else {
       this.formSolicitudNatural.markAllAsTouched();
