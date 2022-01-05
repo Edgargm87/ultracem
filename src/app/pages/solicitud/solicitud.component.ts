@@ -295,11 +295,19 @@ export class solicitudComponent implements OnInit {
         break;
 
         default:
-          this.guardarSolicitudUltracem(this.formulario);
+          if (typePerson == 'CC') {
+            this.guardarSolicitudUltracem(this.formulario);
+          }else{
+            this.SolicitudRepresentante();
+          }
         break;
       }
     } else {
-      this.guardarSolicitudUltracem(this.formulario);
+      if (typePerson == 'CC') {
+        this.guardarSolicitudUltracem(this.formulario);
+      }else{
+        this.SolicitudRepresentante();
+      }
     }
 
 
@@ -439,6 +447,7 @@ export class solicitudComponent implements OnInit {
   SolicitudRepresentante(): void {
     // reconocer
     if (this.formSolicitudRepresentante.valid) {
+      debugger
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
       form.documento = (this.formSolicitudRepresentante.value.documento).toString();
