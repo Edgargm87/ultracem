@@ -261,6 +261,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
             "direccionNegocio": this.formTab2.value.direccionNegocio,
             "telefonoNegocio": this.formTab2.value.telefonoNegocio,
             "camaraComercio": this.formTab2.value.camaraComercio,
+            "nitNegocio":this.formTab2.value.nit,
             "declarante": this.formTab2.value.declarante,
             "activos": Number(this._generic.enviarNumero(this.formTab2.value.activos)),
             "ventasMensuales": Number(this._generic.enviarNumero(this.formTab2.value.ventasMensuales)),

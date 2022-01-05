@@ -234,6 +234,7 @@ export class solicitudComponent implements OnInit {
         form.email = this.formSolicitudNatural.controls.email.value;
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        this.formulario=form;
         this.openReconocer(form.documento, form.email, form.celular,'CC')
 
 
@@ -242,6 +243,7 @@ export class solicitudComponent implements OnInit {
         form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
+        this.formulario=form;
         this.openReconocer(form.documento, form.email, form.celular,'CC')
 
 
