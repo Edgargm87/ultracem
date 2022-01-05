@@ -55,7 +55,8 @@ export class solicitudComponent implements OnInit {
     private router: Router,
     private _matDialog: MatDialog
   ) {
-    localStorage.removeItem('TOKEN')
+
+    localStorage.clear();
     this.fechaValida();
     this.formSolicitudJuridica = this.fb.group({
       tipoTercero: ["", [Validators.required]], // Cambia en juridica
