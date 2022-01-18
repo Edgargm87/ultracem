@@ -124,7 +124,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       if (res.status == 200) {
         Swal.fire(
           '¡Información!',
-          `Se guardo el registro con éxito`,
+          `Se elimino el adjunto con éxito`,
           'success'
         ).then(resultado => {
           if (resultado.isConfirmed) {

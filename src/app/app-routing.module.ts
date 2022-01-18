@@ -48,7 +48,7 @@ const routes: Routes = [
     component: LegalComponent
   },
   {
-    path: 'rechazado',
+    path: 'IntenteNuevamente',
     component: MensajeRechazadoComponent
   },
   {

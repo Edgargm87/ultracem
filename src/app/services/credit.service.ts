@@ -109,4 +109,11 @@ export class CreditService {
   validarSolicitud(data: any): Observable<any> {
     return this._http.post(this.infoApp.urlApi + 'generic/validar-solicitud', data).pipe(map(res => res), catchError(this._utilitiService.handleError));
   }
+
+  validarCorreo(data:any):Observable<any> {
+    return this._http.post(this.infoApp.urlApi + 'generic/validar-correo-x-documento', data).pipe(map(res => res), catchError(this._utilitiService.handleError));
+  }
+  infoSolicitud(data:any):Observable<any> {
+    return this._http.post(this.infoApp.urlApi + 'credito/info-solicitud-x-tipo-tercero', data).pipe(map(res => res), catchError(this._utilitiService.handleError));
+  }
 }

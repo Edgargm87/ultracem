@@ -7,12 +7,12 @@ import { listaGenerica, CreditService } from 'src/app/services/credit.service';
 import { format, getDate, parseISO } from 'date-fns'
 import { GenericService } from 'src/app/services/generic.service';
 import { MatCheckboxChange } from "@angular/material/checkbox";
-import {delay, switchMap, tap} from "rxjs/operators";
+import { delay, switchMap, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { ReconocerComponent } from '../../shared/reconocer/reconocer.component';
 import Swal from 'sweetalert2';
-import {ModalAceptoTerminosComponent} from "../../shared/modal-acepto-terminos/modal-acepto-terminos.component";
-import {of} from "rxjs";
+import { ModalAceptoTerminosComponent } from "../../shared/modal-acepto-terminos/modal-acepto-terminos.component";
+import { of } from "rxjs";
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
@@ -44,8 +44,9 @@ export class solicitudComponent implements OnInit {
   fechaMaxima: any;
 
   public formulario: any;
-  public aplicaValidacionEntidad: boolean=false;
-  public entidad: string="";
+  public aplicaValidacionEntidad: boolean = false;
+  public entidad: string = "";
+  public mensajeErrorCorreo: string="";
 
   constructor(
     private fb: FormBuilder,
@@ -152,7 +153,7 @@ export class solicitudComponent implements OnInit {
 
       } else if (registrar == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue(registrar);
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(9)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(10)]);
 
         this.natural = false;
       }
@@ -164,7 +165,7 @@ export class solicitudComponent implements OnInit {
         this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]);
       } else if (registrado == 'NIT') {
         this.formInicial.controls['tipoDocumento'].setValue('NIT');
-        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(9)]);
+        this.formInicial.controls['documento'].setValidators([Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(10)]);
         this.natural = false;
       }
       this.formInicial.controls['documento'].updateValueAndValidity();
@@ -191,7 +192,7 @@ export class solicitudComponent implements OnInit {
 
 
     //aplica reconocer
-    /*this._generic.getAplicaValidacionIdentidad().subscribe(res => {
+    this._generic.getAplicaValidacionIdentidad().subscribe(res => {
       if (res.status == 200) {
         if ((res.data.aplica == "SI") && (res.data.entidad == "RECONOSER")) {
           this.aplicaValidacionEntidad = true;
@@ -201,7 +202,7 @@ export class solicitudComponent implements OnInit {
           this.aplicaValidacionEntidad = false;
         }
       }
-    })*/
+    })
   }
 
   @HostListener('window:resize', ['$event'])
@@ -234,17 +235,18 @@ export class solicitudComponent implements OnInit {
         form.email = this.formSolicitudNatural.controls.email.value;
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        this.formulario=form;
-        this.openReconocer(form.documento, form.email, form.celular,'CC')
-
+        // this.formulario = form;
+        // this.openReconocer(form.documento, form.email, form.celular, 'CC')
+        this.guardarSolicitudUltracem(form);
 
       } else if (datos.tipoDocumento == 'CC' && !datos.cerrar) {
         form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
         form.nombreCompleto = `${this.formSolicitudNatural.value.primerNombre + ' '}${this.formSolicitudNatural.value.segundoNombre ? this.formSolicitudNatural.value.segundoNombre + ' ' : ''}${this.formSolicitudNatural.value.primerApellido && this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.primerApellido + ' ' : this.formSolicitudNatural.value.primerApellido}${this.formSolicitudNatural.value.segundoApellido ? this.formSolicitudNatural.value.segundoApellido : ''}`
         delete form.fechaMatricula
         form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
-        this.formulario=form;
-        this.openReconocer(form.documento, form.email, form.celular,'CC')
+        // this.formulario = form;
+        // this.openReconocer(form.documento, form.email, form.celular, 'CC')
+        this.guardarSolicitudUltracem(form);
 
 
       } else if (datos.tipoDocumento == 'NIT' && datos.cerrar) {
@@ -267,7 +269,7 @@ export class solicitudComponent implements OnInit {
     });
   }
 
-  openReconocer(documento: string, email: string, celular: string, typePerson:string) {
+  openReconocer(documento: string, email: string, celular: string, typePerson: string,cod:string) {
     if (this.aplicaValidacionEntidad) {
       switch (this.entidad) {
         case 'RECONOSER':
@@ -283,39 +285,51 @@ export class solicitudComponent implements OnInit {
             panelClass: 'full-screen-modal'
           });
           dialogRef.afterClosed().subscribe(result => {
-            if(result==true){
-              if (typePerson == 'CC') {
-                this.guardarSolicitudUltracem(this.formulario);
-              }else{
-                this.SolicitudRepresentante();
-              }
+            if (result == true) {
+              this.infosolicitud(typePerson,cod)
             }
 
           });
-        break;
+          break;
 
         default:
-          if (typePerson == 'CC') {
-            this.guardarSolicitudUltracem(this.formulario);
-          }else{
-            this.SolicitudRepresentante();
-          }
-        break;
+          this.infosolicitud(typePerson,cod)
+          break;
       }
     } else {
-      if (typePerson == 'CC') {
-        this.guardarSolicitudUltracem(this.formulario);
-      }else{
-        this.SolicitudRepresentante();
-      }
+      this.infosolicitud(typePerson,cod)
     }
-
-
-
-
-
     // this.guardarSolicitudUltracem(this.formulario);
+  }
 
+  
+  infosolicitud(typePerson:string,cod:string){
+    // debugger;
+    let datos = {
+      "tipoTercero": typePerson == 'CC'?'T':'R',
+      "numeroSolicitud": cod+''
+    }
+    this.cargando = true;
+    this._creditService.infoSolicitud(datos).pipe(delay(500)).subscribe(resp => {
+      console.log(resp);
+      switch (resp.data.estado) {
+        case 'RECHAZADO':
+          this.estadoSolicitud.rechazado = true;
+          this.cargando = false;
+          this.router.navigateByUrl('/IntenteNuevamente');
+          break;
+        case 'PREAPROBADO':
+          // this.openReconocer()
+          this.cargando = false;
+          // this.openReconocer(datos.documento, datos.email, datos.celular, 'CC',resp.data.numeroSolicitud)
+          // this.estadoSolicitud.aprobado = true;
+          // this.cargando = false;
+          this.router.navigateByUrl('/aprobado');
+
+      }
+    }, error => {
+      this.router.navigateByUrl('/error');
+    });
   }
 
   compareObjects(o1: any, o2: any) {
@@ -367,72 +381,72 @@ export class solicitudComponent implements OnInit {
         documento: this.formInicial.controls.documento.value
       }
       this._creditService.validarSolicitud(datos).pipe(delay(500)).subscribe(resp => {
-          if (resp.data.existe > 0) {
-            this.router.navigateByUrl('/existente');
-            return;
-          }else {
-            this._creditService.preaprobado(this.formInicial.value).pipe(delay(500)).subscribe((resp) =>{
-              if (resp.data) {
-                this.existeDatos = true;
-                if (this.formInicial.value.tipoDocumento == 'CC') {
-                  this.formSolicitudNatural.patchValue({
-                    tipoTercero: 'T',
-                    tipoDocumento: this.formInicial.value.tipoDocumento,
-                    documento: (this.formInicial.value.documento).toString(),
-                    clienteUltracem: this.formInicial.value.cliente,
-                    primerNombre: resp.data.primerNombre,
-                    segundoNombre: resp.data.segundoNombre,
-                    primerApellido: resp.data.primerApellido,
-                    segundoApellido: resp.data.segundoApellido,
-                    nombreCompleto: resp.data.nombreCompleto,
-                    fechaNacimiento: '',
-                    genero: '',
-                    celular: resp.data.celular,
-                    email: resp.data.email,
-                    antiguedadCompra: resp.data.antiguedadCompra,
-                    compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
-                  });
-                  this.step = 2;
-                } else {
-                  this.formSolicitudJuridica.patchValue({
-                    tipoTercero: 'T',
-                    tipoDocumento: this.formInicial.value.tipoDocumento,
-                    documento: (this.formInicial.value.documento).toString(),
-                    clienteUltracem: this.formInicial.value.cliente,
-                    nombreCompleto: resp.data.razonSocial,
-                    celular: resp.data.celular,
-                    email: resp.data.email,
-                    compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
-                    antiguedadCompra: resp.data.antiguedadCompra,
-                    telefono: resp.data.telefono,
-                    digitoVerificacion: resp.data.digitoVerificacion
-                  });
-                  this.step = 3;
-                }
+        if (resp.data.existe > 0) {
+          this.router.navigateByUrl('/existente');
+          return;
+        } else {
+          this._creditService.preaprobado(this.formInicial.value).pipe(delay(500)).subscribe((resp) => {
+            if (resp.data) {
+              this.existeDatos = true;
+              if (this.formInicial.value.tipoDocumento == 'CC') {
+                this.formSolicitudNatural.patchValue({
+                  tipoTercero: 'T',
+                  tipoDocumento: this.formInicial.value.tipoDocumento,
+                  documento: (this.formInicial.value.documento).toString(),
+                  clienteUltracem: this.formInicial.value.cliente,
+                  primerNombre: resp.data.primerNombre,
+                  segundoNombre: resp.data.segundoNombre,
+                  primerApellido: resp.data.primerApellido,
+                  segundoApellido: resp.data.segundoApellido,
+                  nombreCompleto: resp.data.nombreCompleto,
+                  fechaNacimiento: '',
+                  genero: '',
+                  celular: resp.data.celular,
+                  email: resp.data.email,
+                  antiguedadCompra: resp.data.antiguedadCompra,
+                  compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString())
+                });
+                this.step = 2;
               } else {
-                if (this.formInicial.value.tipoDocumento == 'CC') {
-                  this.formSolicitudNatural.patchValue({
-                    tipoTercero: 'T',
-                    tipoDocumento: this.formInicial.value.tipoDocumento,
-                    documento: (this.formInicial.value.documento).toString(),
-                    clienteUltracem: this.formInicial.value.cliente
-                  });
-                  this.step = 2;
-                } else {
-                  this.formSolicitudJuridica.patchValue({
-                    tipoTercero: 'T',
-                    tipoDocumento: this.formInicial.value.tipoDocumento,
-                    documento: (this.formInicial.value.documento).toString(),
-                    clienteUltracem: this.formInicial.value.cliente,
-                    digitoVerificacion: this.calcularDigitoVerificacion(this.formInicial.value.tipoDocumento)
-                  });
-                  this.step = 3;
-                }
+                this.formSolicitudJuridica.patchValue({
+                  tipoTercero: 'T',
+                  tipoDocumento: this.formInicial.value.tipoDocumento,
+                  documento: (this.formInicial.value.documento).toString(),
+                  clienteUltracem: this.formInicial.value.cliente,
+                  nombreCompleto: resp.data.razonSocial,
+                  celular: resp.data.celular,
+                  email: resp.data.email,
+                  compraSemanal: this._generic.formatearNumero(resp.data.compraSemanal.toString()),
+                  antiguedadCompra: resp.data.antiguedadCompra,
+                  telefono: resp.data.telefono,
+                  digitoVerificacion: resp.data.digitoVerificacion
+                });
+                this.step = 3;
               }
-              this.cargando = false;
-            })
-          }
-        });
+            } else {
+              if (this.formInicial.value.tipoDocumento == 'CC') {
+                this.formSolicitudNatural.patchValue({
+                  tipoTercero: 'T',
+                  tipoDocumento: this.formInicial.value.tipoDocumento,
+                  documento: (this.formInicial.value.documento).toString(),
+                  clienteUltracem: this.formInicial.value.cliente
+                });
+                this.step = 2;
+              } else {
+                this.formSolicitudJuridica.patchValue({
+                  tipoTercero: 'T',
+                  tipoDocumento: this.formInicial.value.tipoDocumento,
+                  documento: (this.formInicial.value.documento).toString(),
+                  clienteUltracem: this.formInicial.value.cliente,
+                  digitoVerificacion: this.calcularDigitoVerificacion(this.formInicial.value.tipoDocumento)
+                });
+                this.step = 3;
+              }
+            }
+            this.cargando = false;
+          })
+        }
+      });
     } else {
       this.formInicial.markAllAsTouched();
     }
@@ -466,9 +480,9 @@ export class solicitudComponent implements OnInit {
       delete form.fechaMatricula
       form.compraSemanal = Number(this._generic.enviarNumero(this.formSolicitudNatural.value.compraSemanal));
       this.formulario = form;
-      this.openReconocer(form.documento, form.email, form.celular,'CC')
+      // this.openReconocer(form.documento, form.email, form.celular, 'CC')
       // delete form.compraSemanal
-      // this.guardarSolicitudUltracem(form)
+      this.guardarSolicitudUltracem(form)
 
     } else {
       this.formSolicitudNatural.markAllAsTouched();
@@ -537,13 +551,16 @@ export class solicitudComponent implements OnInit {
           case 'RECHAZADO':
             this.estadoSolicitud.rechazado = true;
             this.cargando = false;
-            this.router.navigateByUrl('/rechazado');
+            this.router.navigateByUrl('/IntenteNuevamente');
             break;
-          case 'APROBADO':
-            this.estadoSolicitud.aprobado = true;
+          case 'PREAPROBADO':
+            // this.openReconocer()
             this.cargando = false;
-            this.router.navigateByUrl('/aprobado');
-            break;
+            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC',resp.data.numeroSolicitud)
+            // this.estadoSolicitud.aprobado = true;
+            // this.cargando = false;
+            // this.router.navigateByUrl('/aprobado');
+
         }
       }, error => {
         this.router.navigateByUrl('/error');
@@ -570,25 +587,26 @@ export class solicitudComponent implements OnInit {
   private guardarSolicitudJultracemRepresentante(datos: any): void {
     this.cargando = true;
     this._creditService.solicitudUltracem(datos).pipe(delay(500))
-      .subscribe(resp => {
+      .subscribe(resp => { 
         console.log(resp);
         switch (resp.data.estado) {
           case 'RECHAZADO':
             this.estadoSolicitud.rechazado = true;
             this.cargando = false;
-            this.router.navigateByUrl('/rechazado');
+            this.router.navigateByUrl('/IntenteNuevamente');
             break;
           case 'APROBADO':
             this.formSolicitudRepresentante.patchValue({
               numeroSolicitud: (resp.data.numeroSolicitud).toString()
             });
+            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC',resp.data.numeroSolicitud)
             this.cargando = false;
 
-            this.step = 4;
-            console.log(resp);
-            console.log('representante', this.formSolicitudRepresentante.value);
-            this.estadoSolicitud.aprobado = true;
-            this.router.navigateByUrl('/aprobado');
+            // this.step = 4;
+            // console.log(resp);
+            // console.log('representante', this.formSolicitudRepresentante.value);
+            // this.estadoSolicitud.aprobado = true;
+            // this.router.navigateByUrl('/aprobado');
             break;
         }
       }, error => {
@@ -659,5 +677,27 @@ export class solicitudComponent implements OnInit {
 
   public keyPress(event: any): any {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
+
+  public statusCorreo(data: any,type:number) {
+    // console.log(data)
+    this.mensajeErrorCorreo='';
+    let datos = {
+      "identificacion": data.documento,
+      "email": data.email
+    }
+    this._creditService.validarCorreo(datos).pipe(delay(500)).subscribe((resp) => {
+      console.log(resp)
+      if(resp.data.caso!=1){
+        this.mensajeErrorCorreo=resp.data.resultado
+        if (type==1){
+          this.formSolicitudNatural.controls['email'].setErrors({});
+        }else{
+          this.formSolicitudJuridica.controls['email'].setErrors({});
+        }
+      }
+
+
+    })
   }
 }

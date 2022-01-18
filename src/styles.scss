@@ -34,8 +34,7 @@ html {
 
     li {
       font-family: Josefin Sans;
-      border-left: 2px solid $blue-primary;
-      color: $blue-primary;
+   
       font-weight: 600;
       padding-bottom: 35px;
       position: relative;
@@ -49,11 +48,16 @@ html {
       &::before {
         position: absolute;
         content: "";
-        background-size: 40px 40px;
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        left: -20px;
+        // left: -18px;
+        // padding: 5px;
+        // top: -5px;
+        top: 3px;
+      
+      }
+      &::after {
+        border-left: 2px solid   #111e62;;
+        color:   #111e62;;
+      
       }
 
       &:last-child {
@@ -65,11 +69,16 @@ html {
 
 
 .li-activo {
+  color:#111e62;
   &::before {
     border: none;
     border-radius: none;
-    background-image: url(/assets/icons/check_complete.svg) !important;
+    content: url(/assets/icons/check_complete.svg) !important;
+    width: 5px;
+    height: 5px;
+    left: -15px;
   }
+
 }
 
 .pantallaCompleta {
@@ -78,28 +87,91 @@ html {
 .imagen_logos {
   height: 15vh;
 }
+.imagen_logo_fintra{
+  height: 8em    !important;
+  margin-left: 2em;
+}
+.imagen_logo_ultracem{
+  margin-left: 1em;
+  height: 5em;
+}
 .li-inactivo {
+  color:#878787;
   &::before {
-    border: 13px solid;
     border-radius: 1em;
-    background: #fff;
+    background: #878787;
+    padding: 16px;
+    left: -15px !important;
   }
 }
+.li-completado {
+  color:#5fbded;
+  &::before {
+    border-radius: 1em;
+    background: #ffffff;
+    border: 11px solid #5fbded;
+    padding: 5px;
+    left: -15px !important;
 
+
+  }
+}
+.alinear-texto {
+  margin-top: 10em;
+}
 .logos {
   position: absolute;
   z-index: 999;
   color: #fff;
 }
 app-bottom-sheet{
-  position: fixed;
-  right: 3em;
-  bottom: 1em;
+  position: absolute;
+  // right: 3em;
+  top: 10px;
+
+  // bottom: 1em
+}
+.pantalla_completa_responsive{
+  overflow: hidden;
+  height: 100vh;
+}
+.parte_overflow{
+  overflow: auto;
+  height: 100vh;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #101689 #878787;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #878787;
+}
+*::-webkit-scrollbar-thumb {
+  background: #101689;
 }
 @media screen and (max-width: 991px) {
   .logos {
     position: relative;
     color: #fff;
+  }
+  app-bottom-sheet{
+    position: relative;
+    
+    // right: 3em;
+    margin-top: 1em;
+    margin-left: 4em
+  }
+  .pantalla_completa_responsive{
+    overflow-y:auto ;
+    height: 100vh;
   }
 }
 
