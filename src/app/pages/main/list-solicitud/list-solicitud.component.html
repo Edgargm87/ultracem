@@ -2,7 +2,7 @@
   <div class="">
     <div class="navbar-brand"> <small class="subtitle"> Nombre del cliente</small>
       <br>
-      <strong>{{infoauth.nombre}}</strong>
+      <strong>{{infoauth.nombre | titlecase}}</strong>
     </div>
   </div>
   <button class="btn shadow btn-outline-secondary" (click)="onCerrar()">

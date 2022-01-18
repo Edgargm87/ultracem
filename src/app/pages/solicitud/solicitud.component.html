@@ -1,7 +1,7 @@
 <div class="container-fluid container-ultracem">
-  <div class=" logos">
-    <img src="assets/images/fintra-logistics.svg" class="imagen_logos rounded-start">
-    <img src="assets/images/ultracem.svg" class="imagen_logos rounded-start">
+  <div class="logos">
+    <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start">
+    <img src="assets/images/ultracem.svg" class="imagen_logo_ultracem rounded-start">
   </div>
   <div class="row step-one" *ngIf="step == 1 && !cargando">
     <!--Es 1-->
@@ -146,7 +146,7 @@
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
           <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
-          <li class="li-inactivo"><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
+          <li class="li-completado"><span>DATOS BÁSICOS - DATOS PERSONALES</span></li>
         </ul>
       </div>
     </div>
@@ -225,8 +225,10 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email"
-                [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off">
+                [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off" (change)="statusCorreo(formSolicitudNatural.value,1)">
               <mat-error *ngIf="formSolicitudNatural.controls.email.errors">Este campo es requerido.</mat-error>
+              <mat-error> {{ mensajeErrorCorreo}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="row">
@@ -296,7 +298,7 @@
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
           <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
-          <li class="li-inactivo"><span>DATOS DE LA EMPRESA</span></li>
+          <li class="li-completado"><span>DATOS DE LA EMPRESA</span></li>
           <li class="li-inactivo"><span>REPRESENTANTE LEGAL</span></li>
         </ul>
       </div>
@@ -371,8 +373,10 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos">
+                [readonly]="existeDatos? existeDatos : existeDatos" (change)="statusCorreo(formSolicitudNatural.value,2)">
               <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
+              <mat-error> {{ mensajeErrorCorreo}}
+              </mat-error>
               <!-- <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
@@ -423,7 +427,7 @@
         <ul class="col-lg-8">
           <li class="li-activo"><span>IDENTIFICACIÓN</span></li>
           <li class="li-activo"><span>DATOS DE LA EMPRESA</span></li>
-          <li class="li-inactivo"><span>REPRESENTANTE LEGAL</span></li>
+          <li class="li-completado"><span>REPRESENTANTE LEGAL</span></li>
         </ul>
       </div>
     </div>
@@ -547,7 +551,7 @@
             </section>
           </div>
           <div class="row justify-content-center">
-            <button mat-raised-button class="btn_siguiente" (click)="openReconocer(formSolicitudRepresentante.value.documento,formSolicitudRepresentante.value.email,formSolicitudRepresentante.value.celular,'NIT')">Solicitar</button>
+            <button mat-raised-button class="btn_siguiente" (click)="SolicitudRepresentante();">Solicitar</button>
           </div>
         </form>
       </div>
