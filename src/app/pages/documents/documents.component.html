@@ -96,7 +96,7 @@
                 </td>
                 <td>
                   <!-- icono de impresora -->
-                  <div *ngIf="item.idArchivo==484">
+                  <div *ngIf="item.idArchivo==484" (click)="descargar(1)">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 620 620"
                       style="enable-background:new 0 0 620 620;" xml:space="preserve">
@@ -120,7 +120,7 @@
                             C446.2,290.1,441.8,295.2,433.5,295.4z" />
                     </svg>
                   </div>
-                  <div *ngIf="item.idArchivo==487">
+                  <div *ngIf="item.idArchivo==487" (click)="descargar(3)">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 620 620"
                       style="enable-background:new 0 0 620 620;" xml:space="preserve">
@@ -144,7 +144,7 @@
                         C446.2,290.1,441.8,295.2,433.5,295.4z" />
                     </svg>
                   </div>
-                  <div *ngIf="item.idArchivo==483">
+                  <div *ngIf="item.idArchivo==483" (click)="descargar(2)">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 620 620"
                       style="enable-background:new 0 0 620 620;" xml:space="preserve">
@@ -279,7 +279,7 @@
       </button>
     </div>
     <div class="col-lg-6 col-sm-12 d-flex justify-content-star mb-4">
-      <button mat-raised-button class="btn_ btn_siguiente w-50" (click)="firmar()" disabled=>Finalizar solicitud
+      <button mat-raised-button class="btn_ btn_siguiente w-50" (click)="firmar()" >Finalizar solicitud
       </button>
     </div>
   </div>
