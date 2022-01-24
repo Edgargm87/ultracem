@@ -21,10 +21,11 @@ import { MensajeFinalizadoComponent } from './mensaje-finalizado/mensaje-finaliz
 import { ReconocerComponent } from './reconocer/reconocer.component';
 import { ModalAceptoTerminosComponent } from './modal-acepto-terminos/modal-acepto-terminos.component';
 import { ExistenteComponent } from './existente/existente.component';
+import { BotonServicioClienteComponent } from './boton-servicio-cliente/boton-servicio-cliente.component';
 
 @NgModule({
   imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule,MatBottomSheetModule],
-  exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent,BottomSheetComponent],
+  exports: [DatosContactoComponent, MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MensajeErrorComponent, MensajeRechazadoComponent,BottomSheetComponent,BotonServicioClienteComponent],
     declarations: [
         DatosContactoComponent,
         MensajeErrorComponent,
@@ -34,7 +35,8 @@ import { ExistenteComponent } from './existente/existente.component';
         MensajeFinalizadoComponent,
         ReconocerComponent,
         ModalAceptoTerminosComponent,
-        ExistenteComponent
+        ExistenteComponent,
+        BotonServicioClienteComponent
 
     ],
     entryComponents: [DatosContactoComponent],

@@ -46,7 +46,7 @@ export class solicitudComponent implements OnInit {
   public formulario: any;
   public aplicaValidacionEntidad: boolean = false;
   public entidad: string = "";
-  public mensajeErrorCorreo: string="";
+  public mensajeErrorCorreo: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -191,18 +191,8 @@ export class solicitudComponent implements OnInit {
     });
 
 
-    //aplica reconocer
-    this._generic.getAplicaValidacionIdentidad().subscribe(res => {
-      if (res.status == 200) {
-        if ((res.data.aplica == "SI") && (res.data.entidad == "RECONOSER")) {
-          this.aplicaValidacionEntidad = true;
-          this.entidad = "RECONOSER";
-          // this.openReconocer("1143163517","smuelle@fintra.co", "3045337156")
-        } else {
-          this.aplicaValidacionEntidad = false;
-        }
-      }
-    })
+
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -269,7 +259,7 @@ export class solicitudComponent implements OnInit {
     });
   }
 
-  openReconocer(documento: string, email: string, celular: string, typePerson: string,cod:string) {
+  openReconocer(documento: string, email: string, celular: string, typePerson: string, cod: string) {
     if (this.aplicaValidacionEntidad) {
       switch (this.entidad) {
         case 'RECONOSER':
@@ -286,28 +276,28 @@ export class solicitudComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result == true) {
-              this.infosolicitud(typePerson,cod)
+              this.infosolicitud(typePerson, cod)
             }
 
           });
           break;
 
         default:
-          this.infosolicitud(typePerson,cod)
+          this.infosolicitud(typePerson, cod)
           break;
       }
     } else {
-      this.infosolicitud(typePerson,cod)
+      this.infosolicitud(typePerson, cod)
     }
     // this.guardarSolicitudUltracem(this.formulario);
   }
 
-  
-  infosolicitud(typePerson:string,cod:string){
+
+  infosolicitud(typePerson: string, cod: string) {
     // debugger;
     let datos = {
-      "tipoTercero": typePerson == 'CC'?'T':'R',
-      "numeroSolicitud": cod+''
+      "tipoTercero": typePerson == 'CC' ? 'T' : 'R',
+      "numeroSolicitud": cod + ''
     }
     this.cargando = true;
     this._creditService.infoSolicitud(datos).pipe(delay(500)).subscribe(resp => {
@@ -347,6 +337,20 @@ export class solicitudComponent implements OnInit {
       this.obtenerTipoRegistro();
       this.obtenerTipoGenero();
       this.obtenerTipoRegistroJuridico();
+      setTimeout(() => {
+        //aplica reconocer
+        this._generic.getAplicaValidacionIdentidad().subscribe(res => {
+          if (res.status == 200) {
+            if ((res.data.aplica == "SI") && (res.data.entidad == "RECONOSER")) {
+              this.aplicaValidacionEntidad = true;
+              this.entidad = "RECONOSER";
+              // this.openReconocer("1143163517","smuelle@fintra.co", "3045337156")
+            } else {
+              this.aplicaValidacionEntidad = false;
+            }
+          }
+        })
+      }, 1500);
     });
   }
 
@@ -556,10 +560,10 @@ export class solicitudComponent implements OnInit {
           case 'PREAPROBADO':
             // this.openReconocer()
             this.cargando = false;
-            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC',resp.data.numeroSolicitud)
-            // this.estadoSolicitud.aprobado = true;
-            // this.cargando = false;
-            // this.router.navigateByUrl('/aprobado');
+            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC', resp.data.numeroSolicitud)
+          // this.estadoSolicitud.aprobado = true;
+          // this.cargando = false;
+          // this.router.navigateByUrl('/aprobado');
 
         }
       }, error => {
@@ -587,7 +591,7 @@ export class solicitudComponent implements OnInit {
   private guardarSolicitudJultracemRepresentante(datos: any): void {
     this.cargando = true;
     this._creditService.solicitudUltracem(datos).pipe(delay(500))
-      .subscribe(resp => { 
+      .subscribe(resp => {
         console.log(resp);
         switch (resp.data.estado) {
           case 'RECHAZADO':
@@ -599,7 +603,7 @@ export class solicitudComponent implements OnInit {
             this.formSolicitudRepresentante.patchValue({
               numeroSolicitud: (resp.data.numeroSolicitud).toString()
             });
-            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC',resp.data.numeroSolicitud)
+            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC', resp.data.numeroSolicitud)
             this.cargando = false;
 
             // this.step = 4;
@@ -679,20 +683,20 @@ export class solicitudComponent implements OnInit {
     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
   }
 
-  public statusCorreo(data: any,type:number) {
+  public statusCorreo(data: any, type: number) {
     // console.log(data)
-    this.mensajeErrorCorreo='';
+    this.mensajeErrorCorreo = '';
     let datos = {
       "identificacion": data.documento,
       "email": data.email
     }
     this._creditService.validarCorreo(datos).pipe(delay(500)).subscribe((resp) => {
       console.log(resp)
-      if(resp.data.caso!=1){
-        this.mensajeErrorCorreo=resp.data.resultado
-        if (type==1){
+      if (resp.data.caso != 1) {
+        this.mensajeErrorCorreo = resp.data.resultado
+        if (type == 1) {
           this.formSolicitudNatural.controls['email'].setErrors({});
-        }else{
+        } else {
           this.formSolicitudJuridica.controls['email'].setErrors({});
         }
       }

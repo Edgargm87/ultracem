@@ -92,8 +92,7 @@ html {
   margin-left: 2em;
 }
 .imagen_logo_ultracem{
-  margin-left: 1em;
-  height: 5em;
+  width: 25vw;
 }
 .li-inactivo {
   color:#878787;
@@ -120,9 +119,11 @@ html {
   margin-top: 10em;
 }
 .logos {
-  position: absolute;
+  position: fixed;
   z-index: 999;
   color: #fff;
+  bottom: 0em;
+  left: 0em;
 }
 app-bottom-sheet{
   position: absolute;
@@ -139,6 +140,7 @@ app-bottom-sheet{
   overflow: auto;
   height: 100vh;
 }
+
 
 /* Works on Firefox */
 * {
@@ -157,6 +159,8 @@ app-bottom-sheet{
 *::-webkit-scrollbar-thumb {
   background: #101689;
 }
+
+
 @media screen and (max-width: 991px) {
   .logos {
     position: relative;
