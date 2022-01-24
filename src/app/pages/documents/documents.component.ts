@@ -19,7 +19,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   public subject$: Subject<any> = new Subject<any>();
   codigoSolicitud: any;
   typeSolicitud: any;
-  validado:boolean=false;
+  validado: boolean = false;
   constructor(
     private _creditService: CreditService,
     private _activatedRoute: ActivatedRoute,
@@ -169,7 +169,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
 
     if (contador > 0) {
-      this.validado=true;
+      this.validado = true;
       Swal.fire(
         'Información',
         `Aún falta documentos obligatorios por cargar`,
@@ -181,15 +181,30 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    const dialogRef = this.dialog.open(FirmarDocumentosComponent, {
-      data: {
-        codigoSolicitud: this.codigoSolicitud,
-        typeSolicitud: this.typeSolicitud
-      },
-      disableClose: true
+    /**
+   * @description: Metodo para firmar documentos
+   */
+    let url = `generic/cre-cambiar-estado-solicitud`;
+    let data = {
+      "numeroSolicitud": Number(this.codigoSolicitud),
+      "estado": "FA",
+      "subEstado": "C"
+    }
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData(url, data).subscribe((res: any) => {
+      if (res.status == 200) {
+        Swal.fire(
+          '¡Información!',
+          `Se guardo el registro con éxito`,
+          'success'
+        ).then(resultado => {
+          if (resultado.isConfirmed) {
+            let url = `/finalizado`;
+            this.router.navigateByUrl(url);
+          }
+        });
+      }
     });
-
-    dialogRef.afterClosed().toPromise();
   }
 
 }
