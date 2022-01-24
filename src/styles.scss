@@ -141,7 +141,10 @@ app-bottom-sheet{
   height: 100vh;
 }
 
-
+span.mat-slide-toggle-content{
+  color: #949798;
+  font-weight: 700;
+}
 /* Works on Firefox */
 * {
   scrollbar-width: thin;
