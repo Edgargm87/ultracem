@@ -3,7 +3,7 @@
   <app-boton-servicio-cliente></app-boton-servicio-cliente>
   <div class="logos">
     <!-- <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start"> -->
-    <img src="assets/images/fondo.svg" class="imagen_logo_ultracem rounded-start">
+    <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
   </div>
 
 
@@ -272,8 +272,16 @@
                 <mat-error *ngIf="formTab2.controls.nit.errors?.required ">Este campo es requerido.</mat-error>
                 <mat-error *ngIf="formTab2.controls.nit.errors?.pattern">Solo se aceptan números.</mat-error>
                 <mat-error *ngIf="formTab2.controls.nit.errors?.minlength">Longitud mínima son 9 dígitos.</mat-error>
-                <mat-error *ngIf="formTab2.controls.nit.errors?.maxlength">Longitud máxima son 9 dígitos.</mat-error>
+                <mat-error *ngIf="formTab2.controls.nit.errors?.maxlength">Longitud máxima son 10 dígitos.</mat-error>
               </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-12" appearance="fill" *ngIf="formTab2.value.camaraComercio=='S'">
+              <mat-label>Nombre del negocio</mat-label>
+              <input matInput formControlName="nombreNegocio"
+                     autocomplete="off"
+                     type="text"
+                    >
+              
             </mat-form-field>
           </div>
           <div class="row">

@@ -77,6 +77,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       telefonoNegocio: ["", [Validators.required,  Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],
+      nombreNegocio:[""],
       declarante: ["", [Validators.required]],
       activos: ["", [Validators.required]],
       ventasMensuales: ["", [Validators.required]],
@@ -185,7 +186,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
         this.formTab2.controls['nit'].addValidators(Validators.required);
         this.formTab2.controls['nit'].addValidators(Validators.pattern(/^[0-9]*$/));
         this.formTab2.controls['nit'].addValidators(Validators.minLength(9));
-        this.formTab2.controls['nit'].addValidators(Validators.maxLength(9));
+        this.formTab2.controls['nit'].addValidators(Validators.maxLength(10));
       }else {
         this.formTab2.controls['nit'].removeValidators(Validators.required);
         this.formTab2.controls['nit'].updateValueAndValidity();
@@ -262,6 +263,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
             "telefonoNegocio": this.formTab2.value.telefonoNegocio,
             "camaraComercio": this.formTab2.value.camaraComercio,
             "nitNegocio":this.formTab2.value.nit,
+            "nombreNegocio":this.formTab2.value.nombreNegocio,
             "declarante": this.formTab2.value.declarante,
             "activos": Number(this._generic.enviarNumero(this.formTab2.value.activos)),
             "ventasMensuales": Number(this._generic.enviarNumero(this.formTab2.value.ventasMensuales)),
