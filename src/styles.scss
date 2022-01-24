@@ -141,6 +141,13 @@ app-bottom-sheet{
   height: 100vh;
 }
 
+.mat-checkbox-layout .mat-checkbox-label {
+  line-height: 19px;
+  font-size: 12px;
+  color: #8b8e8f;
+  font-weight: 600;
+}
+
 span.mat-slide-toggle-content{
   color: #949798;
   font-weight: 700;
