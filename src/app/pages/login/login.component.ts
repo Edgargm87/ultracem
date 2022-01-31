@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
   }
 
   flojo(){
-    this.formInicial.controls['email'].setValue('crojas@fintra.co');
-    this.formInicial.controls['password'].setValue('1110501096');
+    this.formInicial.controls['email'].setValue('GERMAN_ADOLFO_MONCALEANO@HOTMAIL.COM');
+    this.formInicial.controls['password'].setValue('1108932580');
   }
 
 }
