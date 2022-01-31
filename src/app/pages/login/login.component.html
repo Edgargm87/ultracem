@@ -1,14 +1,15 @@
 <div class="login g-0 ">
   <div class="row g-0 justify-content-center ">
     <div class="col-md-6 fondo_imagen">
-      <div (click)="flojo()"><i class="fas fa-chess-pawn" style="    color: #eff4f6;position: absolute;right: 1em;" ></i></div>
       <img src="assets/images/personaje.svg" style="        width: 48vw; height: 100vh; " class="fondo_imagen_hijo">
     </div>
     <div class="col-md-6  m-auto">
       <div class="card-body ">
         <div class="row justify-content-center">
           <div class="col-12 text-center">
-            <h4 class="titulo">Iniciar sesión</h4>
+            <h4 class="titulo">Iniciar sesión
+              <div (click)="flojo()"><i class="fas fa-chess-pawn" style="    color: #a7b9c063;position: absolute;right: 1em;" ></i></div>
+            </h4>
           </div>
           <form class="col-sm-12 col-lg-8" [formGroup]="formInicial" autocomplete="off">
             <div class="form-group m-3">

@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BotonServicioClienteComponent implements OnInit {
 
+  mostrar:boolean=false;
   constructor() { }
 
   ngOnInit(): void {
