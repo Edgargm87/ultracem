@@ -43,7 +43,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
   ListCiudadesNegocio: any;
   ListBarriosNegocio: any;
   ListCMunicipio: any;
-  viveNegocioCondicion: boolean=false;
+  viveNegocioCondicion: boolean = false;
 
 
   constructor(
@@ -74,10 +74,10 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       barrioNegocio: ["", [Validators.required]],
       barrioNombreNegocio: [""],
       direccionNegocio: ["", [Validators.required]],
-      telefonoNegocio: ["", [Validators.required,  Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      telefonoNegocio: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       camaraComercio: ["", [Validators.required]],
       nit: [""],
-      nombreNegocio:[""],
+      nombreNegocio: [""],
       declarante: ["", [Validators.required]],
       activos: ["", [Validators.required]],
       ventasMensuales: ["", [Validators.required]],
@@ -93,7 +93,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       cCelular: ["", [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       cDepartamento: ["", [Validators.required]],
       cMunicipio: ["", [Validators.required]],
-      cAntiguedad: ["", [Validators.required,  Validators.pattern(/^[0-9]*$/)]],
+      cAntiguedad: ["", [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     })
 
 
@@ -187,7 +187,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
         this.formTab2.controls['nit'].addValidators(Validators.pattern(/^[0-9]*$/));
         this.formTab2.controls['nit'].addValidators(Validators.minLength(9));
         this.formTab2.controls['nit'].addValidators(Validators.maxLength(10));
-      }else {
+      } else {
         this.formTab2.controls['nit'].removeValidators(Validators.required);
         this.formTab2.controls['nit'].updateValueAndValidity();
       }
@@ -236,76 +236,83 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
       url = 'credito/tk/formulario-solicitud-tabs';
       switch (key) {
         case 1:
-          data = {
-            "recurso": "tab-cc-dato-natural",
-            "numeroSolicitud": this.codigoSolicitud,
-            "nacionalidad": this.formTab1.value.nacionalidad,
-            "departamentoNacimiento": this.formTab1.value.departamentoNacionalidad,
-            "ciudadNacimiento": this.formTab1.value.ciudadNacionalidad,
-            "departamentoResidencia": this.formTab1.value.departamentoResidencia,
-            "ciudadResidencia": this.formTab1.value.ciudadResidencia,
-            "barrioResidencia": this.formTab1.value.barrioResidencia,
-            "direccionResidencia": this.formTab1.value.direccionResidencia,
-            "nivelEstudio": this.formTab1.value.nivelEstudio,
-            "tipoVivienda": this.formTab1.value.tipoVivienda,
-            "viveEnNegocio": this.formTab1.value.viveEnNegocio
-          }
-          this.guardarDatos(url, 1, data);
+          if (this.formTab1.valid) {
+            data = {
+              "recurso": "tab-cc-dato-natural",
+              "numeroSolicitud": this.codigoSolicitud,
+              "nacionalidad": this.formTab1.value.nacionalidad,
+              "departamentoNacimiento": this.formTab1.value.departamentoNacionalidad,
+              "ciudadNacimiento": this.formTab1.value.ciudadNacionalidad,
+              "departamentoResidencia": this.formTab1.value.departamentoResidencia,
+              "ciudadResidencia": this.formTab1.value.ciudadResidencia,
+              "barrioResidencia": this.formTab1.value.barrioResidencia,
+              "direccionResidencia": this.formTab1.value.direccionResidencia,
+              "nivelEstudio": this.formTab1.value.nivelEstudio,
+              "tipoVivienda": this.formTab1.value.tipoVivienda,
+              "viveEnNegocio": this.formTab1.value.viveEnNegocio
+            }
+            this.guardarDatos(url, 1, data);
+          } else { this.formTab1.markAllAsTouched(); }
           break;
         case 2:
-          data = {
-            "recurso": "tab-cc-dato-negocio",
-            "numeroSolicitud": this.codigoSolicitud,
-            "departamentoNegocio": this.formTab2.value.departamentoNegocio,
-            "ciudadNegocio": this.formTab2.value.ciudadNegocio,
-            "barrioNegocio": this.formTab2.value.barrioNegocio.toString(),
-            "direccionNegocio": this.formTab2.value.direccionNegocio,
-            "telefonoNegocio": this.formTab2.value.telefonoNegocio,
-            "camaraComercio": this.formTab2.value.camaraComercio,
-            "nitNegocio":this.formTab2.value.nit,
-            "nombreNegocio":this.formTab2.value.nombreNegocio,
-            "declarante": this.formTab2.value.declarante,
-            "activos": Number(this._generic.enviarNumero(this.formTab2.value.activos)),
-            "ventasMensuales": Number(this._generic.enviarNumero(this.formTab2.value.ventasMensuales)),
-          }
-          this.guardarDatos(url,2, data);
+          if (this.formTab2.valid) {
+            data = {
+              "recurso": "tab-cc-dato-negocio",
+              "numeroSolicitud": this.codigoSolicitud,
+              "departamentoNegocio": this.formTab2.value.departamentoNegocio,
+              "ciudadNegocio": this.formTab2.value.ciudadNegocio,
+              "barrioNegocio": this.formTab2.value.barrioNegocio.toString(),
+              "direccionNegocio": this.formTab2.value.direccionNegocio,
+              "telefonoNegocio": this.formTab2.value.telefonoNegocio,
+              "camaraComercio": this.formTab2.value.camaraComercio,
+              "nitNegocio": this.formTab2.value.nit,
+              "nombreNegocio": this.formTab2.value.nombreNegocio,
+              "declarante": this.formTab2.value.declarante,
+              "activos": Number(this._generic.enviarNumero(this.formTab2.value.activos)),
+              "ventasMensuales": Number(this._generic.enviarNumero(this.formTab2.value.ventasMensuales)),
+            }
+            this.guardarDatos(url, 2, data);
+          } else { this.formTab2.markAllAsTouched(); }
           break;
         case 3:
-          url="credito/formulario-solicitud-tabs-ref";
-          data = {
-            "detalle": [
-              {
-                "recurso": "tab-referencia-personal",
-                "numeroSolicitud": this.codigoSolicitud,
-                "primerNombre": this.formTab3.value.pPrimerNombre,
-                "segundoNombre": this.formTab3.value.pSegundoNombre,
-                "primerApellido": this.formTab3.value.pPrimerApellido,
-                "segundoApellido": this.formTab3.value.pSegundoApellido,
-                "telefono": this.formTab3.value.ptelefono
-              },
-              {
-                "recurso": "tab-referencia-comercial",
-                "numeroSolicitud": this.codigoSolicitud,
-                "nombreCompleto": this.formTab3.value.cRazonSocial,
-                "codigoDepartamento": this.formTab3.value.cDepartamento,
-                "codigoCiudad": this.formTab3.value.cMunicipio,
-                "telefono": this.formTab3.value.cCelular,
-                "antiguedad": Number(this.formTab3.value.cAntiguedad)
-              }
-            ]
-          }
-          this.guardarDatos(url,3, data);
+          if (this.formTab3.valid) {
+            url = "credito/formulario-solicitud-tabs-ref";
+            data = {
+              "detalle": [
+                {
+                  "recurso": "tab-referencia-personal",
+                  "numeroSolicitud": this.codigoSolicitud,
+                  "primerNombre": this.formTab3.value.pPrimerNombre,
+                  "segundoNombre": this.formTab3.value.pSegundoNombre,
+                  "primerApellido": this.formTab3.value.pPrimerApellido,
+                  "segundoApellido": this.formTab3.value.pSegundoApellido,
+                  "telefono": this.formTab3.value.ptelefono
+                },
+                {
+                  "recurso": "tab-referencia-comercial",
+                  "numeroSolicitud": this.codigoSolicitud,
+                  "nombreCompleto": this.formTab3.value.cRazonSocial,
+                  "codigoDepartamento": this.formTab3.value.cDepartamento,
+                  "codigoCiudad": this.formTab3.value.cMunicipio,
+                  "telefono": this.formTab3.value.cCelular,
+                  "antiguedad": Number(this.formTab3.value.cAntiguedad)
+                }
+              ]
+            }
+            this.guardarDatos(url, 3, data);
+          } else { this.formTab3.markAllAsTouched();  }
           break;
         default:
           break;
       }
-    }else {
+    } else {
       this.formTab1.markAllAsTouched();
       this.formTab2.markAllAsTouched();
       this.formTab3.markAllAsTouched();
     }
 
   }
+
   atras() {
 
   }
@@ -326,10 +333,10 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
               if (resultado) {
                 this.step = key + 1;
                 if (this.step == 4) {
-                  let url=`/main/legal/${this.codigoSolicitud}`;
+                  let url = `/main/legal/${this.codigoSolicitud}`;
                   this.router.navigateByUrl(url);
                 }
-                if(this.step==2){
+                if (this.step == 2) {
                   this.viveNegocio(this.codigoSolicitud);
                 }
               }
@@ -355,19 +362,19 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
 
   getEstados(codigo: string): void {
     let url: string = '';
-    url= `generic/qry/consulta-step-formulario/${codigo}`;
+    url = `generic/qry/consulta-step-formulario/${codigo}`;
     this._generic.getData(url).subscribe((res: any) => {
       this.step = res.stepFormulario;
-      if(this.step==2){
+      if (this.step == 2) {
         this.viveNegocio(codigo);
       }
     });
   }
 
   viveNegocio(codigo: string): void {
-    let url=`generic/qry/tab-auto-completar-info-negocio/${codigo}`
+    let url = `generic/qry/tab-auto-completar-info-negocio/${codigo}`
     this._generic.getData(url).subscribe((res: any) => {
-      if(res){
+      if (res) {
         this.formTab2.controls['departamentoNombreNegocio'].setValue(res.departamento);
         this.formTab2.controls['departamentoNegocio'].setValue(res.codigoDepartamento);
         this.formTab2.controls['ciudadNombreNegocio'].setValue(res.ciudad);
@@ -375,7 +382,7 @@ export class DatoComplementarioPnaturalComponent implements OnInit {
         this.formTab2.controls['barrioNombreNegocio'].setValue(res.barrio);
         this.formTab2.controls['barrioNegocio'].setValue(res.codigo_barrio);
         this.formTab2.controls['direccionNegocio'].setValue(res.direccion);
-        this.viveNegocioCondicion=true;
+        this.viveNegocioCondicion = true;
       }
       // departamentoNombreNegocio: [""],
 

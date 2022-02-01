@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mensaje-error.component.scss']
 })
 export class MensajeErrorComponent implements OnInit {
+  infoauth: any;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.infoauth = JSON.parse(localStorage.getItem('infoauth') + '');
   }
 
 }
