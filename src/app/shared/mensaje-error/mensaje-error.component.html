@@ -9,8 +9,11 @@
         <a href="#">
           +575 387 28 28
         </a>
-        <button class="btn shadow btn-outline-secondary m-4" routerLink="/">
+        <button class="btn shadow btn-outline-secondary m-4" routerLink="/" *ngIf="!infoauth">
           Intentar nuevamente
+        </button>
+        <button class="btn shadow btn-outline-secondary m-4" routerLink="/main/listRequest" *ngIf="infoauth">
+          Volver al Listado
         </button>
       </div>
     </div>

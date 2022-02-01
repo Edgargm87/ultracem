@@ -48,7 +48,7 @@
                         <button mat-button class="bg-principal text-white w-100">Continuar</button>
                       </ng-container>
                       <ng-container *ngIf="mostrarDatos(item)">
-                        <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoReservado}}</div>
+                        <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoReservado | number}}</div>
                         <div class="subtitle">Cupo disponible</div>
                       </ng-container>
 
