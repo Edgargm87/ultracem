@@ -1,4 +1,5 @@
-<div class="container-ultracem" style="overflow: hidden;">
+<div class="container-ultracem" >
+  <app-boton-servicio-cliente></app-boton-servicio-cliente>
   <div class="row step-one" *ngIf="step == 1 && !cargando">
     <!--Es 1-->
     <div class="col-lg-4 fondo_imagen">
@@ -12,21 +13,21 @@
     </div>
     <div class="col-lg-8 l-derecho ">
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-11 mt-5">
           <h3 class="text-left">Únete y sé parte de los ferreteros que se están beneficiando de la alianza
             Ultracem/Fintra
             Logistics</h3>
         </div>
       </div>
       <div class="row justify-content-center">
-        <form class="col-11" [formGroup]="formInicial">
+        <form class="col-sm-10 col-lg-11" [formGroup]="formInicial">
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>¿Eres cliente de Ultracem ?</mat-label>
               <mat-select formControlName="cliente" [compareWith]="compareObjects">
                 <mat-option value="">Selecciona</mat-option>
-                <mat-option [value]="item.codigoOpcion" *ngFor="let item of siNo">{{item.descripcionOpcion}}
-                </mat-option>
+                <mat-option [value]="'S'" >Si </mat-option>
+                  <mat-option [value]="'N'" >No </mat-option>
               </mat-select>
               <mat-error *ngIf="validacionCamposRequerido('cliente')">Este campo es requerido.</mat-error>
             </mat-form-field>
@@ -91,10 +92,10 @@
     </div>
   </div>
   <div class="row justify-content-center step-two mt-3" *ngIf="cargando">
-    <div class="col-lg-6 alerts-content">
+    <div class="col-lg-12 alerts-content">
       <img src="../assets/img/loading.svg" alt="cargando ultracem" class="cargandoUltracem">
     </div>
-    <div class="col-lg-7 spinner">
+    <div class="col-lg-12 spinner">
       <div class="row justify-content-center">
         <div class="col-lg-2 content-spinner">
           <mat-spinner [color]="'accent'"></mat-spinner>
@@ -102,48 +103,9 @@
       </div>
     </div>
   </div>
-  <!--<div class="row justify-content-center step-two mt-3 row-mensaje" *ngIf="estadoSolicitud.error" >
-    <div class="col-lg-5 alerts-content">
-      <img src="assets/img/error.svg" alt="cargando ultracem"  class="imagen-mensaje">
-      <p class="text-center mt-3 texto-mensaje">Por favor comuníquese con nosotros a nuestra línea:</p>
-      <div class="d-flex chat justify-content-center align-items-center">
-        <img src="assets/icons/asesora.svg" alt="">
-        <a href="#">
-          +575 3782828
-        </a>
-      </div>
-    </div>
-  </div>-->
- <!-- <div class="row justify-content-center step-two mt-3 row-mensaje" *ngIf="estadoSolicitud.rechazado" >
-    <div class="col-lg-5 alerts-content">
-      <img src="assets/img/rechazado.svg" alt="cargando ultracem"  class="imagen-mensaje">
-      <p class="text-center mt-3 texto-mensaje" >En este momento no podemos procesar tu solicitud de crédito.
-        Si deseas conocer más información, comunícate:</p>
-      <div class="d-flex chat justify-content-center align-items-center">
-        <img src="assets/icons/asesora.svg" alt="">
-        <a href="#">
-          +575 3782828
-        </a>
-      </div>
-    </div>
-  </div>-->
- <!-- <div class="row justify-content-center mt-3 row-mensaje" *ngIf="estadoSolicitud.aprobado">
-    <div class="col-lg-12 alerts-content">
-      <img src="../assets/img/felicidades.svg" alt="cargando ultracem" class="imagen-mensaje">
-      <div class="row justify-content-center my-4">
-        <button mat-raised-button class="btn_siguiente inicio-sesion" routerLink="/login">Iniciar sesión</button>
-      </div>
-      <p class="text-center mt-3 texto-mensaje">Para completar tu solicitud de crédito, inicia sesión con tu
-        <span> usuario (correo registrado) y contraseña (cédula registrada)</span>
-      </p>
-    </div>
-  </div>-->
   <div class="row step-three" *ngIf="step == 2 && !cargando">
     <div class="col-lg-3 l-izquierdo m-auto">
-      
-      <app-boton-servicio-cliente></app-boton-servicio-cliente>
       <div class="logos">
-        <!-- <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start"> -->
         <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
       </div>
       <div class="row justify-content-center align-items-center">
@@ -155,7 +117,7 @@
     </div>
     <div class="col-lg-9 l-derecho pantalla_completa color_fondo overflow-auto">
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-11 mt-5">
           <h2 class="text-start">Datos básicos personales</h2>
         </div>
       </div>
@@ -270,7 +232,7 @@
                 Este campo es requerido.</mat-error>
             </mat-form-field>
             <section class="col-lg-6 checkp">
-             <div class="row">
+             <div class="row ml-5">
               <mat-checkbox formControlName="aceptaConsultaCentrales" class="col-lg-12 col-sm-12">
                 Autorizo que la información entregada sea
                   consultada en centrales de riesgos.
@@ -297,13 +259,10 @@
     </div>
   </div>
   <div class="row step-three" *ngIf="step == 3 && !cargando">
-    
-    <app-boton-servicio-cliente></app-boton-servicio-cliente>
-    <div class="logos">
-      <!-- <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start"> -->
-      <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
-    </div>
-    <div class="col-lg-4 l-izquierdo m-auto">
+    <div class="col-lg-3 l-izquierdo m-auto">
+      <div class="logos">
+        <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
+      </div>
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
           <li class="li-activo"><span>Identificación</span></li>
@@ -312,9 +271,9 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho pantalla_completa color_fondo">
+    <div class="col-lg-9 l-derecho pantalla_completa color_fondo">
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-11 mt-5">
           <h2 class="text-start">Datos de la empresa</h2>
         </div>
       </div>
@@ -430,14 +389,10 @@
     </div>
   </div>
   <div class="row step-three" *ngIf="step == 4 && !cargando">
-    
-    <app-boton-servicio-cliente></app-boton-servicio-cliente>
-    <div class="logos">
-      <!-- <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start"> -->
-      <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
-    </div>
-    <!--Es 4-->
-    <div class="col-lg-4 l-izquierdo m-auto">
+    <div class="col-lg-3 l-izquierdo m-auto">
+      <div class="logos">
+        <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
+      </div>
       <div class="row justify-content-center align-items-center">
         <ul class="col-lg-8">
           <li class="li-activo"><span>Identificación</span></li>
@@ -446,9 +401,9 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 l-derecho pantalla_completa color_fondo">
+    <div class="col-lg-9 l-derecho pantalla_completa color_fondo">
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-11 mt-5">
           <h2 class="text-start">Datos de representante legal</h2>
         </div>
       </div>

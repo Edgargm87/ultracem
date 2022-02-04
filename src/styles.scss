@@ -129,7 +129,7 @@ app-bottom-sheet{
   position: absolute;
   // right: 3em;
   top: 10px;
-
+  margin-left: 1vw
   // bottom: 1em
 }
 .pantalla_completa_responsive{
@@ -169,9 +169,16 @@ span.mat-slide-toggle-content{
 *::-webkit-scrollbar-thumb {
   background: #101689;
 }
+.container-ultracem{
+  overflow: hidden;
+}
 
 
 @media screen and (max-width: 991px) {
+  .container-ultracem{
+    overflow-y: auto !important;
+  }
+  
   .logos {
     position: relative;
     color: #fff;
@@ -181,11 +188,26 @@ span.mat-slide-toggle-content{
     
     // right: 3em;
     margin-top: 1em;
-    margin-left: 4em
+    margin-left: 1vw
   }
   .pantalla_completa_responsive{
     overflow-y:auto ;
     height: 100vh;
+  }
+
+  .mat-form-field{
+    padding-left: 3em;
+    padding-right: 3em;
+  }
+  .imagen_logo_ultracem{
+    width: 100vh;
+    margin-top: -9em;
+  }
+  .l-izquierdo{
+    display: none;
+  }
+  .imagen_logo_ultracem{
+    display: none;
   }
 }
 
