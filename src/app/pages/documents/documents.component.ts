@@ -151,6 +151,11 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         url = "/assets/documentos/pagare.pdf";
         nombre = "pagare"
         break;
+      case 4:
+        url = "/assets/documentos/terminosCondiciones.pdf";
+        nombre = "terminosCondiciones"
+        break;
+
     }
     let link = document.createElement('a');
     link.href = url;
