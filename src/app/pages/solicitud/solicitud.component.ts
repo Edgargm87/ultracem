@@ -603,7 +603,7 @@ export class solicitudComponent implements OnInit {
             this.formSolicitudRepresentante.patchValue({
               numeroSolicitud: (resp.data.numeroSolicitud).toString()
             });
-            this.openReconocer(datos.documento, datos.email, datos.celular, 'CC', resp.data.numeroSolicitud)
+            this.openReconocer(datos.documento, datos.email, datos.celular, 'NIT', resp.data.numeroSolicitud)
             this.cargando = false;
 
             // this.step = 4;
