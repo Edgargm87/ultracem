@@ -599,7 +599,7 @@ export class solicitudComponent implements OnInit {
             this.cargando = false;
             this.router.navigateByUrl('/IntenteNuevamente');
             break;
-          case 'APROBADO':
+          case 'PREAPROBADO':
             this.formSolicitudRepresentante.patchValue({
               numeroSolicitud: (resp.data.numeroSolicitud).toString()
             });
