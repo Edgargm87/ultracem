@@ -271,7 +271,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-9 l-derecho pantalla_completa color_fondo">
+    <div class="col-lg-9 l-derecho pantalla_completa color_fondo pantalla_completa_responsive">
       <div class="row justify-content-center">
         <div class="col-11 mt-5">
           <h2 class="text-start">Datos de la empresa</h2>
@@ -341,7 +341,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos" (change)="statusCorreo(formSolicitudNatural.value,2)">
+                [readonly]="existeDatos? existeDatos : existeDatos" (change)="statusCorreo(formSolicitudJuridica.value,2)">
               <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
               <mat-error> {{ mensajeErrorCorreo}}
               </mat-error>
