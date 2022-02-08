@@ -134,29 +134,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       }
     });
   }
-  descargar(type: number) {
-    let url = '';
-    let nombre
-    switch (type) {
-      case 1:
-        url = "/assets/documentos/solicitudCredito.pdf";
-        nombre = "Solicitud_de_crédito"
-        break;
-
-      case 2:
-        url = `/assets/documentos/centralesRiesgo${this.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}.pdf`;
-        nombre = `centralesRiesgo${this.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}`
-        break;
-      case 3:
-        url = "/assets/documentos/pagare.pdf";
-        nombre = "pagare"
-        break;
-      case 4:
-        url = "/assets/documentos/terminosCondiciones.pdf";
-        nombre = "terminosCondiciones"
-        break;
-
-    }
+  descargar(url:string, nombre:string) {
     let link = document.createElement('a');
     link.href = url;
     link.download = `${nombre}_${this.codigoSolicitud}.pdf`;
