@@ -134,11 +134,25 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       }
     });
   }
-  descargar(url:string, nombre:string) {
-    let link = document.createElement('a');
-    link.href = url;
-    link.download = `${nombre}_${this.codigoSolicitud}.pdf`;
-    link.dispatchEvent(new MouseEvent('click'));
+  descargar(url:string, nombre:string,id:number) {
+    if(url!="1"){
+      let link = document.createElement('a');
+      link.href = url;
+      link.download = `${nombre}_${this.codigoSolicitud}.pdf`;
+      link.dispatchEvent(new MouseEvent('click'));
+    }else{
+
+      let data = {
+        "numeroSolicitud": parseInt(this.codigoSolicitud),
+        "tipificacionId": id,
+        "unidadNegocio":32,
+      }
+      this._generiService.posData('credito/llenado-documentos-pdf', data).subscribe((res: any) => {
+        if (res.status == 200) {
+         console.log(res)
+        }
+      });
+    }
   }
   firmar() {
     // debugger;
