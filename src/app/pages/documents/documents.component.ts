@@ -147,9 +147,17 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         "tipificacionId": id,
         "unidadNegocio":32,
       }
+      Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._generiService.posData('credito/llenado-documentos-pdf', data).subscribe((res: any) => {
+        Swal.close();
         if (res.status == 200) {
          console.log(res)
+         const downloadLink = document.createElement('a');
+            document.body.appendChild(downloadLink);
+            downloadLink.href = res.data.base64;
+            downloadLink.target = '_self';
+            downloadLink.download = 'SolicitudCredito';
+            downloadLink.click();
         }
       });
     }
