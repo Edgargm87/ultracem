@@ -156,7 +156,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
             document.body.appendChild(downloadLink);
             downloadLink.href = res.data.base64;
             downloadLink.target = '_self';
-            downloadLink.download = 'SolicitudCredito';
+            downloadLink.download = 'SolicitudCredito_'+this.codigoSolicitud;
             downloadLink.click();
         }
       });
