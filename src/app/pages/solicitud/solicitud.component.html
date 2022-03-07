@@ -174,7 +174,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
               <input matInput formControlName="celular" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos">
+                [readonly]="editarDatos? editarDatos : editarDatos">
               <mat-error
                 *ngIf="(formSolicitudNatural.controls.celular.dirty || formSolicitudNatural.controls.celular.touched)">
                 <mat-error *ngIf="formSolicitudNatural.controls.celular.errors?.required ">Este campo es requerido.
@@ -190,7 +190,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email"
-                [readonly]="existeDatos? existeDatos : existeDatos" autocomplete="off" (change)="statusCorreo(formSolicitudNatural.value,1)">
+                [readonly]="editarDatos? editarDatos : editarDatos" autocomplete="off" (change)="statusCorreo(formSolicitudNatural.value,1)">
               <mat-error *ngIf="formSolicitudNatural.controls.email.errors">Este campo es requerido.</mat-error>
               <mat-error> {{ mensajeErrorCorreo}}
               </mat-error>
@@ -301,7 +301,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Teléfono</mat-label>
               <input matInput formControlName="telefono" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos">
+                [readonly]="editarDatos? editarDatos : editarDatos">
               <mat-error
                 *ngIf="(formSolicitudJuridica.controls.telefono.dirty || formSolicitudJuridica.controls.telefono.touched)">
                 <mat-error *ngIf="formSolicitudJuridica.controls.telefono.errors?.pattern">Solo se aceptan números.
@@ -315,7 +315,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Celular</mat-label>
               <input matInput formControlName="celular" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos">
+                [readonly]="editarDatos? editarDatos : editarDatos">
               <mat-error
                 *ngIf="(formSolicitudJuridica.controls.celular.dirty || formSolicitudJuridica.controls.celular.touched)">
                 <mat-error *ngIf="formSolicitudJuridica.controls.celular.errors?.required ">Este campo es requerido.
@@ -341,7 +341,7 @@
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off"
-                [readonly]="existeDatos? existeDatos : existeDatos" (change)="statusCorreo(formSolicitudJuridica.value,2)">
+                [readonly]="editarDatos? editarDatos : editarDatos" (change)="statusCorreo(formSolicitudJuridica.value,2)">
               <mat-error *ngIf="formSolicitudJuridica.controls.email.errors">Este campo es requerido.</mat-error>
               <mat-error> {{ mensajeErrorCorreo}}
               </mat-error>
