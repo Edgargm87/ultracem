@@ -135,12 +135,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     });
   }
   descargar(url:string, nombre:string,id:number) {
-    if(url!="1"){
-      let link = document.createElement('a');
-      link.href = url;
-      link.download = `${nombre}_${this.codigoSolicitud}.pdf`;
-      link.dispatchEvent(new MouseEvent('click'));
-    }else{
+
 
       let data = {
         "numeroSolicitud": parseInt(this.codigoSolicitud),
@@ -156,11 +151,11 @@ export class DocumentsComponent implements OnInit, OnDestroy {
             document.body.appendChild(downloadLink);
             downloadLink.href = res.data.base64;
             downloadLink.target = '_self';
-            downloadLink.download = 'SolicitudCredito_'+this.codigoSolicitud;
+            downloadLink.download = `${nombre}_${this.codigoSolicitud}.pdf`;
             downloadLink.click();
         }
       });
-    }
+    
   }
   firmar() {
     // debugger;
