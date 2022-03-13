@@ -47,6 +47,7 @@ export class solicitudComponent implements OnInit {
   public aplicaValidacionEntidad: boolean = false;
   public entidad: string = "";
   public mensajeErrorCorreo: string = "";
+  editarDatos: boolean=false;
 
   constructor(
     private fb: FormBuilder,
@@ -79,7 +80,8 @@ export class solicitudComponent implements OnInit {
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
-      telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
+      // telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
+      telefono: [''],
       digitoVerificacion: [''],
       fechaMatricula: ["", [Validators.required]],
 
@@ -392,6 +394,15 @@ export class solicitudComponent implements OnInit {
           this._creditService.preaprobado(this.formInicial.value).pipe(delay(500)).subscribe((resp) => {
             if (resp.data) {
               this.existeDatos = true;
+              if(resp.data.celular==0){
+                this.editarDatos=false
+              }
+              if(resp.data.telefono==0){
+                this.editarDatos=false
+              }
+              if(resp.data.email==0){
+                this.editarDatos=false
+              }
               if (this.formInicial.value.tipoDocumento == 'CC') {
                 this.formSolicitudNatural.patchValue({
                   tipoTercero: 'T',
