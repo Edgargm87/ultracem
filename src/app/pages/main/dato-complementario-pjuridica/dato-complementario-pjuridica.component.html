@@ -165,6 +165,13 @@
         <div class="row justify-content-center">
           <form class="col-11" [formGroup]="formTab2">
             <div class="row">
+              <mat-form-field class="col-lg-12" appearance="fill">
+                <mat-label>Nacionalidad</mat-label>
+                <input  matInput formControlName="nacionalidad">
+                <mat-error *ngIf="formTab2.controls.nacionalidad.errors">Este campo es requerido.</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
               <mat-form-field class="col-lg-6" appearance="fill">
                 <mat-label>Departamento de residencia</mat-label>
                 <input *ngIf="existeDatos" matInput formControlName="departamentoResidencia" [readonly]="true">

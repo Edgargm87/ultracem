@@ -32,7 +32,8 @@
           <div class="row">
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Nacionalidad</mat-label>
-              <input matInput autocomplete="off" formControlName="nacionalidad" (change)="noCambios()">
+              <input matInput autocomplete="off" formControlName="nacionalidad" >
+              <mat-error *ngIf="formTab1.controls.nacionalidad.errors">Este campo es requerido.</mat-error>
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Departamento de nacimiento</mat-label>

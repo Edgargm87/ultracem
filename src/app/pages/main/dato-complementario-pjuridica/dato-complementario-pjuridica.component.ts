@@ -76,6 +76,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       numeroSolicitud: ['', [Validators.required]],
     })
     this.formTab2 = this.fb.group({
+      nacionalidad: ["Colombia", [Validators.required]],
       departamentoResidencia: ["", [Validators.required]],
       ciudadResidencia: ["", [Validators.required]],
       barrioResidencia: ["", [Validators.required]],
@@ -237,6 +238,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     if (this.formTab2.valid) {
       const datos: any = this.formTab2.getRawValue();
       const {
+        nacionalidad,
         departamentoResidencia,
         ciudadResidencia,
         barrioResidencia,
@@ -249,6 +251,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
       } = datos;
 
       const formulario = {
+        nacionalidad:nacionalidad,
         departamentoResidencia: departamentoResidencia,
         ciudadResidencia: ciudadResidencia,
         barrioResidencia: String(barrioResidencia),
@@ -282,6 +285,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
     let url: string = 'credito/tk/formulario-solicitud-tabs';
     if (this.formTab2.valid) {
       const {
+        nacionalidad,
         departamentoResidencia,
         ciudadResidencia,
         barrioResidencia,
@@ -290,6 +294,7 @@ export class DatoComplementarioPjuridicaComponent implements OnInit {
         recurso
       } = this.formTab2_clonacion;
       let formularioClonado = {
+        nacionalidad:this.formTab2.controls.nacionalidad.value,
         departamentoResidencia: departamentoResidencia,
         ciudadResidencia: ciudadResidencia,
         barrioResidencia: String(barrioResidencia),
