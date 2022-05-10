@@ -50,6 +50,8 @@ export class CargoPublicoComponent implements OnInit {
     this.fechaValida();
   }
 
+
+  // Funcion  q que asigana formato de fecha a variable 
   fechaValida(): void {
     const anioActual = format(new Date(), "yyyy-MM-dd");
     this.fechaMaxima = anioActual;

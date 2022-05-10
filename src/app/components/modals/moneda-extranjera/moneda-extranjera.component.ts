@@ -19,6 +19,10 @@ export class MonedaExtranjeraComponent implements OnInit {
     public _generic: GenericService,
     @Inject(MAT_DIALOG_DATA) public data: any, private _Service: UtilityService) {
 
+
+      // validacion  requerida   de campos   de formulario 
+
+      
     this.formModal = this.fb.group({
      
       entidad: ['' ,[Validators.required]],

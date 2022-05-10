@@ -1,4 +1,4 @@
-
+// leemos las vaiables para cosumir el api
 export interface PersonaJuridicaInterface {
   recurso:             string;
   numeroSolicitud:     string;

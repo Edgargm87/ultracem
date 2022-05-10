@@ -123,7 +123,7 @@ export class LegalComponent implements OnInit {
       this.formTab2.controls['pregunta6'].setValue(false)
     }
   }
-
+//Cuneta  y carga valores  apartir d ela solicitud
   siguiente(index: any) {
     // this.step += 1;
     let url = '', data = {};

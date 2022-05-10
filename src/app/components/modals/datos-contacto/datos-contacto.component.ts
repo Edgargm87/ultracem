@@ -14,6 +14,7 @@ export class DatosContactoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) {
+    //validacion   
     this.form = this.fb.group({
       telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
       celular: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(11)]],
@@ -25,6 +26,7 @@ export class DatosContactoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // se obtiene  valores  de los controles aun estando deshabiliados  co el metodogetraw
   onActualizar(): void {
     const datos = this.form.getRawValue();
     datos.tipoDocumento = this.data.tipoDocumento;
