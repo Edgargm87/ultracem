@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { solicitudComponent } from './pages/solicitud/solicitud.component';
 import { RouterModule } from '@angular/router';
@@ -29,6 +29,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FirmarDocumentosComponent } from './components/modals/firmar-documentos/firmar-documentos.component';
+import { TerminosCondicionesComponent } from './components/modals/terminos-condiciones/terminos-condiciones.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { FirmarDocumentosComponent } from './components/modals/firmar-documentos
     LegalComponent,
     MonedaExtranjeraComponent,
     FirmarDocumentosComponent,
+    TerminosCondicionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { FirmarDocumentosComponent } from './components/modals/firmar-documentos
     MatMenuModule,
     MatDividerModule,
     MatListModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FormsModule
   ],
   providers: [
     CreditService,

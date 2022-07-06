@@ -157,7 +157,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       });
     
   }
-  firmar() {
+  validar() {
     // debugger;
     let contador = 0;
     for (const iterator of this.documentos) {
@@ -181,6 +181,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       });
       return;
     }
+
+  
+
     /**
    * @description: Metodo para firmar documentos
    * "PA": PREAPROBADO
@@ -190,7 +193,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     let data = {
       "numeroSolicitud": Number(this.codigoSolicitud),
       "estado": "PA",
-      "subEstado": "FC"
+      "subEstado": "DF"
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._generiService.posData(url, data).subscribe((res: any) => {
@@ -201,12 +204,18 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           'success'
         ).then(resultado => {
           if (resultado.isConfirmed) {
-            let url = `/finalizado`;
-            this.router.navigateByUrl(url);
+            this.firmar();
           }
         });
+        setTimeout(() => {
+          this.firmar();
+        }, 1000);
       }
     });
   }
 
+  firmar(){
+    let url = `/main/firmar/${this.typeSolicitud}/${this.codigoSolicitud}`;
+    this.router.navigateByUrl(url);  
+  }
 }

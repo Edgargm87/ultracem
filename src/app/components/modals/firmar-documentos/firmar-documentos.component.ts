@@ -6,6 +6,7 @@ import { CreditService } from "../../../services/credit.service";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { GenericService } from 'src/app/services/generic.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-firmar-documentos',
@@ -16,46 +17,163 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
 
   public unsubscribe$: Subject<any> = new Subject<any>();
   public cantidadDocumentos: any = []
-  adjuntoSolicitud: boolean=false;
-  adjuntoAutorizacion: boolean=false;
-  adjuntoPagare: boolean=false;
+  adjuntoSolicitud: boolean = false;
+  adjuntoAutorizacion: boolean = false;
+  adjuntoPagare: boolean = false;
+  paso: number = 3;
+  counter$: any;
+  secunds: number = 280;
+  documentosFirmar: any = [];
+  numeroOTP: String = '';
+  signingForm: FormGroup;
+  timeLeft: number = 280;
+  interval: any
+  codigoSolicitud: any = this.route.snapshot.paramMap.get('codigoSolicitud');
+  typeSolicitud: any = this.route.snapshot.paramMap.get('type');
   constructor(
-    public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    // public dialogRef: MatDialogRef<FirmarDocumentosComponent>,
     public _creditService: CreditService,
     private _generiService: GenericService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    // @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    this.signingForm = this.formBuilder.group({
+      conditions: ['', Validators.requiredTrue],
+      contrasena: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(8), this.numberValid, this.lowercaseUppercaseValid, this.repeatLetter]],
+      confirmcontrasena: ['', Validators.required]
+    }, { validator: this.confirmPassword });
+  }
 
   ngOnInit(): void {
 
+    // this.comenzarPaso2();
+    let url = `generic/qry/documento-a-firmar/${this.codigoSolicitud}`;
+    Swal.fire({ title: 'Cargando', html: 'Listando documentos...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.getData(url).subscribe((res: any) => {
+      Swal.close();
+      console.log(res);
+      this.documentosFirmar = res;
+    });
   }
 
   descargar(type: number) {
-    let url = '';
-    let nombre
     switch (type) {
-      case 1:
-        url = "/assets/documentos/solicitudCredito.pdf";
-        nombre = "Solicitud_de_crédito"
+      case 525:
+        this.verPagare();
+        break;
+      case 526:
+        this.verPagare();
         break;
 
-      case 2:
-        url = `/assets/documentos/centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}.pdf`;
-        nombre = `centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}`
-        break;
-      case 3:
-        url = "/assets/documentos/pagare.pdf";
-        nombre = "pagare"
+      default:
         break;
     }
-    let link = document.createElement('a');
-    link.href = url;
-    link.download = `${nombre}_${this.data.codigoSolicitud}.pdf`;
-    link.dispatchEvent(new MouseEvent('click'));
+  }
+
+  verPagare() {
+    let data = {
+      "numeroSolicitud": this.codigoSolicitud,
+      "tipoTercero": 'T'
+    }
+    Swal.fire({ title: 'Cargando', html: 'Generando pagare', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData('/deceval/deceval-mostrar-pagare-pdf', data).subscribe((res: any) => {
+      Swal.close();
+      if (res.status == 200) {
+        console.log(res)
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+        downloadLink.href = res.data.base64;
+        downloadLink.target = '_self';
+        downloadLink.download = `pagare_${this.codigoSolicitud}.pdf`;
+        downloadLink.click();
+      }
+    });
+  }
+
+  generaOTP() {
+    let data = {
+      "numeroSolicitud": Number(this.codigoSolicitud),
+      "tipoTercero": 'T'
+    }
+    Swal.fire({ title: 'Cargando', html: 'Generando OTP', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData('/firma/solicitud-generar-otp', data).subscribe((res: any) => {
+      Swal.close();
+      if (res.status == 200) {
+        console.log(res)
+        Swal.fire({
+          title: `${res.data.title} `,
+          icon: 'success',
+          html:
+            `${res.data.body} ` +
+            `<strong>${res.data.value} </strong>`,
+        }).then(resultado => {
+          if (resultado) {
+           
+          }
+
+        })
+        setTimeout(() => {
+          this.comenzarPaso2();
+        }, 1000);
+      }
+    });
+  }
+  comenzarPaso2() {
+    this.paso = 2;
+    this.startTimer();
+  }
+
+
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.timeLeft = 0;
+      }
+    }, 1000)
+  }
+
+
+  ValidarOTP() {
+    debugger;
+    let data = {
+      "numeroSolicitud": Number(this.codigoSolicitud),
+      "tipoTercero": 'T',
+      "numeroOTP": this.numeroOTP
+    }
+    Swal.fire({ title: 'Cargando', html: 'Validando OTP', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData('/firma/solicitud-validar-otp', data).subscribe((res: any) => {
+      Swal.close();
+      if (res.status == 200) {
+        this.paso = 3;
+
+      }
+    });
+  }
+
+  guardarContrasena() {
+    debugger;
+    let data = {
+      "numeroSolicitud": Number(this.codigoSolicitud),
+      "tipoTercero": 'T',
+      "claveFirma": "dfd"
+    }
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generiService.posData('/deceval/deceval-firmar-pagare', data).subscribe((res: any) => {
+      Swal.close();
+      if (res.status == 200) {
+        this.paso = 3;
+
+      }
+    });
   }
 
   subirSolicitud(input: any): void {
-    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Subir solicitud', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     let formulario: {};
     const files = input.target.files;
     console.log(files);
@@ -73,14 +191,14 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           extension: extension,
           fuente: 'archivo-multi',
           identificador: '',
-          numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC' ? 484 : 485,
+          numeroSolicitud: this.codigoSolicitud,
+          tipoArchivo: this.typeSolicitud === 'CC' ? 484 : 485,
           categoria: 79,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario,1);
+        this.guardarAdjunto(formulario, 1);
 
       }
 
@@ -106,14 +224,14 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           extension: extension,
           fuente: 'archivo-multi',
           identificador: '',
-          numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC' ? 483 : 482,
+          numeroSolicitud: this.codigoSolicitud,
+          tipoArchivo: this.typeSolicitud === 'CC' ? 483 : 482,
           categoria: 78,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario,2);
+        this.guardarAdjunto(formulario, 2);
       }
 
     }
@@ -138,14 +256,14 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           extension: extension,
           fuente: 'archivo-multi',
           identificador: '',
-          numeroSolicitud: this.data.codigoSolicitud,
-          tipoArchivo: this.data.typeSolicitud === 'CC' ? 487 : 488,
+          numeroSolicitud: this.codigoSolicitud,
+          tipoArchivo: this.typeSolicitud === 'CC' ? 487 : 488,
           categoria: 80,
           agencia: 'OP',
           tipo: 'negocio',
           base64: file
         };
-        this.guardarAdjunto(formulario,3);
+        this.guardarAdjunto(formulario, 3);
       }
     }
   }
@@ -156,7 +274,7 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
      */
     let url = `generic/cre-cambiar-estado-solicitud`;
     let data = {
-      "numeroSolicitud": Number(this.data.codigoSolicitud),
+      "numeroSolicitud": Number(this.codigoSolicitud),
       "estado": "FA",
       "subEstado": "C"
     }
@@ -178,7 +296,58 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
 
   }
 
-  private guardarAdjunto(data: any,type:number): void {
+  /**
+ * 
+ * @param group Es el formulario en el que se esta haciendo la validación
+ */
+  confirmPassword(group: FormGroup) {
+    const pass = group.controls.contrasena.value;
+    const confirmpass = group.controls.confirmcontrasena.value;
+    if (pass !== confirmpass) {
+      group.controls.confirmcontrasena.setErrors({ notSame: true });
+    }
+    return null;
+  }
+
+  /**
+* 
+* @param control El control sobre el cual se esta haciendo la validación
+*/
+  numberValid(control: FormControl): { [s: string]: boolean } {
+    const mayuscula = new RegExp('.*[0-9].*');
+    if (control.value !== '' && !control.value.match(mayuscula)) {
+      return { notNumber: true };
+    }
+    return { notNumber: false };
+  }
+
+  lowercaseUppercaseValid(control: FormControl): { [s: string]: boolean } {
+    const mayuscula = new RegExp('.*[a-zA-Z].*');
+    if (!control.value.match(mayuscula) && control.value !== '') {
+      return { notLowerUpper: true };
+    }
+    return { notLowerUpper: false };
+  }
+
+  repeatLetter(control: FormControl): { [s: string]: boolean } {
+    const repeat = new RegExp('.*([a-z])\\1{4,}.*');
+    if (control.value !== '' && control.value.match(repeat)) {
+      // if (control.value !== '' && repeat.test(control.value)) {
+      return { notRepite: true };
+    }
+    return { notRepite: false };
+  }
+
+  aceptarTerminos(event: Event) {
+    // event.preventDefault();
+    // const modalRef: NgbModalRef = this.modalService.open(ModalTermns, { backdrop: 'static', centered: true, size: 'xl' });
+    // modalRef.result.then(null, (acepted: any) => {
+    //   this.signingForm.patchValue({
+    //     conditions: acepted
+    //   })
+    // });
+  }
+  private guardarAdjunto(data: any, type: number): void {
     this._creditService.adjuntarDocumento(data)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
@@ -191,10 +360,10 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
             if (resultado.isConfirmed) {
               // this.getdocumentos();
               this.cantidadDocumentos.push(1);
-              switch (type) { 
-                case 1: this.adjuntoSolicitud=true; break;
-                case 2: this.adjuntoAutorizacion=true; break;
-                case 3: this.adjuntoPagare=true; break;
+              switch (type) {
+                case 1: this.adjuntoSolicitud = true; break;
+                case 2: this.adjuntoAutorizacion = true; break;
+                case 3: this.adjuntoPagare = true; break;
               }
             }
           });
@@ -207,6 +376,11 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
           'error',
         );
       })
+  }
+
+  atras() {
+    let url = `main/listRequest`;
+    this.router.navigateByUrl(url);
   }
 
   ngOnDestroy(): void {

@@ -41,7 +41,7 @@
 
 
                     <div class="col-lg-4">
-                      <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoTotal}}</div>
+                      <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoTotal | number}}</div>
                       <div class="subtitle">Cupo total</div>
                       <hr>
                       <ng-container *ngIf="!mostrarDatos(item)">
@@ -63,9 +63,7 @@
 
 
             </mat-card-content>
-            <!-- <mat-card-actions>
-              <button mat-button class="bg-principal text-white w-100">continuar con el proceso</button>
-            </mat-card-actions> -->
+            
           </mat-card>
 
 

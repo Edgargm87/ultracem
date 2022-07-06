@@ -1,65 +1,151 @@
-<!-- <h1 mat-dialog-title></h1> -->
-<div mat-dialog-content>
-  <p> Los siguientes documentos se requieren para legalizar tu crédito, acepta en los recuadro uno a uno los términos y
-    condiciones si estás de acuerdo.</p>
-  <mat-list>
-    <!-- <div mat-subheader>Folders</div> -->
-    <mat-list-item>
-      <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
-      <div mat-line>Solicitud de crédito</div>
-      <div mat-line class="text-Descarga" (click)="descargar(1)">Descargar</div>
-      <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
-             (change)="subirSolicitud($event)">
-      <button mat-raised-button
-              *ngIf="!adjuntoSolicitud"
-              (click)="fileInput.click()"
-              matTooltip="Firma y subir archivo"
-              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el documento</button>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-      <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
-      <div mat-line>Autorización de consulta</div>
-      <div mat-line class="text-Descarga" (click)="descargar(2)">Descargar</div>
-      <input type="file" #fileInputAut class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
-             (change)="subirAutorizacion($event)">
-      <button mat-raised-button
-              *ngIf="!adjuntoAutorizacion"
-              (click)="fileInputAut.click()"
-              matTooltip="Firma y subir archivo"
-              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el documento</button>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>
-      <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
-      <div mat-line>Pagaré y carta de instrucciones </div>
-      <div mat-line class="text-Descarga" (click)="descargar(3)">Descargar</div>
-      <input type="file" #fileInputPag class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
-             (change)="subirPagare($event)">
-      <button mat-raised-button
-              *ngIf="!adjuntoPagare"
-              (click)="fileInputPag.click()"
-              matTooltip="Firma y subir archivo"
-              class="btn_siguiente fondo_fintra bg-finalizar">Firma y sube el documento</button>
-    </mat-list-item>
-    <!-- <mat-divider></mat-divider> -->
-  </mat-list>
+<app-bottom-sheet></app-bottom-sheet>
+<app-boton-servicio-cliente></app-boton-servicio-cliente>
+<div class="container pt-5">
 
-  <p class="mt-4"> Confirmo que he leído, comprendido y estoy de acuerdo con los términos y condiciones planteados en
-    los documentos
-    anteriormente detallados.</p>
-</div>
-<div mat-dialog-actions>
-  <div class="text-center w-100">
-    <button mat-raised-button class="btn_siguiente  color-fintra bg-cancelar" [mat-dialog-close]="[]">Cancelar</button>
-    <button mat-raised-button
-            class="btn_siguiente fondo_fintra bg-finalizar"
-            (click)="onFirmar()"
-            [mat-dialog-close]="[]"
-            [disabled]="cantidadDocumentos.length < 3"
-    >
-      Finalizar
-    </button>
-  </div>
+
+  <ng-container *ngIf="paso==1">
+    <div class="row">
+      <h2 class="col-lg-12">Firma de documentos</h2>
+    </div>
+    <div>
+      <p> Los siguientes documentos se requieren para legalizar tu crédito, acepta en los recuadro uno a uno los
+        términos
+        y
+        condiciones si estás de acuerdo.</p>
+      <mat-selection-list class="py-5">
+        <mat-list-option *ngFor="let item of documentosFirmar" (click)="descargar(item.idArchivo)">
+          <div mat-list-icon class="icono-listado"><i class="fas fa-folder-open"></i></div>
+          <div mat-line>{{item.descripcionFe}}</div>
+        </mat-list-option>
+      </mat-selection-list>
+
+
+      <p class="mt-4"> Confirmo que he leído, comprendido y estoy de acuerdo con los términos y condiciones planteados
+        en
+        los documentos
+        anteriormente detallados.</p>
+    </div>
+    <div>
+      <div class="text-center w-100 mt-4">
+        <button mat-raised-button class="btn_siguiente  color-fintra bg-cancelar" (click)="atras()">Cancelar</button>
+        <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar" (click)="generaOTP()">
+          Generar OTP
+        </button>
+      </div>
+
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="paso==2">
+    <div class="row">
+      <h2 class="col-lg-12">Validación código OTP</h2>
+    </div>
+    <div>
+      <p class="text-center my-3">
+        <span class="segundos">{{timeLeft}}</span>
+        <br> <span class="texto">Segundos</span>
+      </p>
+      <div class="row mt-2 justify-content-center">
+        <div class="col-lg-6 text center">
+          <p> Ingrese clave dinámica de verificación enviada al celular.</p>
+
+        </div>
+      </div>
+
+      <div class="row mt-2 justify-content-center">
+        <mat-form-field class="col-lg-6 text-center" appearance="outline">
+          <input matInput type="text" placeholder="Clave dinámica de verificación" autocomplete="off"
+            [(ngModel)]="numeroOTP">
+        </mat-form-field>
+      </div>
+
+
+    </div>
+    <div>
+      <div class="text-center w-100">
+        <button mat-raised-button class="btn_siguiente  color-fintra bg-cancelar" (click)="generaOTP()">Reenviar
+          sms</button>
+        <button mat-raised-button class="btn_siguiente fondo_fintra bg-finalizar" (click)="ValidarOTP()">
+          Validar OTP
+        </button>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <!-- <h1 mat-dialog-title></h1> -->
+  <ng-container *ngIf="paso==3">
+    <div class="row">
+      <h2 class="col-lg-12">Contraseña de firma electronico</h2>
+    </div>
+    <div>
+      <p>Digite la clave que va a asignar para su firma electrónica</p>
+      <mat-list>
+
+        <mat-list-item>
+          <i mat-list-icon class="fa fa-check" aria-hidden="true"></i>
+          <div mat-line> Debe tener mínimo 8 caracteres y máximo 15</div>
+        </mat-list-item>
+        <mat-list-item>
+          <i mat-list-icon class="fa fa-check" aria-hidden="true"></i>
+          <div mat-line> Debe tener al
+            menos un (1) número</div>
+        </mat-list-item>
+        <mat-list-item>
+          <i mat-list-icon class="fa fa-check" aria-hidden="true"></i>
+          <div mat-line> Debe tener almenos dos letras de la a-z ya sea mayúsculas o minúsculas. Mínimo debe tener una
+            mayúscula </div>
+        </mat-list-item>
+        <mat-list-item>
+          <i mat-list-icon class="fa fa-check" aria-hidden="true"></i>
+          <div mat-line> No debe tener más de 5 caracteres seguidos con las misma letra (Ejemplo: aaaaa1)
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <form [formGroup]="signingForm">
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label for="password" class="form-label">Ingrese nueva clave</label>
+              <input type="password" class="form-control" formControlName="contrasena" id="password">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <label for="confirmpassword" class="form-label">Confirme nueva clave</label>
+              <input type="password" class="form-control" formControlName="confirmcontrasena" id="confirmpassword">
+              <div class="alert alert-danger" role="alert"
+                *ngIf="signingForm.get('confirmcontrasena')?.touched && signingForm.get('confirmcontrasena')?.errors?.notSame">
+                <span>Las contraseñas no coinciden</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" formControlName="conditions"
+            (click)="aceptarTerminos($event)">
+          <label class="form-check-label">
+            Acepto condiciones
+          </label>
+        </div>
+      </form>
+
+
+    </div>
+    <div>
+      <div class="text-center w-100">
+        <button mat-raised-button class="btn_siguiente  color-fintra bg-cancelar" (click)="generaOTP()">Atras </button>
+        <button mat-raised-button [disabled]="signingForm.invalid" class="btn_siguiente fondo_fintra bg-finalizar"
+          (click)="guardarContrasena()">
+         Finalizar proceso
+        </button>
+      </div>
+
+    </div>
+  </ng-container>
 
 </div>

@@ -1,7 +1,6 @@
 <div class="horizontal-timeline">
   <div class="horizontal-step"
     [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
-
     <div class="circle-step">
       <span>
         <i class="fas fa-clipboard-list"></i>
@@ -10,7 +9,6 @@
     <h6
       [ngClass]="{'current': oneStepNumber == currentStep, 'visited': oneStepNumber <  currentStep, 'future': oneStepNumber > currentStep }">
       Llena el formulario</h6>
-
   </div>
   <div class="line-step"></div>
   <div class="horizontal-step"
@@ -23,15 +21,23 @@
     </div>
     <h6
       [ngClass]="{'current': twoStepNumber == currentStep, 'visited': twoStepNumber <  currentStep, 'future': twoStepNumber > currentStep }">
-      Adjunta y firma tus documentos</h6>
-
-
+      Adjunta tus documentos</h6>
   </div>
-
+  <div class="line-step"></div>
+  <div class="horizontal-step"
+    [ngClass]="{'current': twofiveStepNumber == currentStep, 'visited': twofiveStepNumber <  currentStep, 'future': twofiveStepNumber > currentStep }">
+    <div class="circle-step pe">
+      <span>
+        <i class="fa-solid fa fa-file-signature " ></i> 
+      </span>
+    </div>
+    <h6
+      [ngClass]="{'current': twofiveStepNumber == currentStep, 'visited': twofiveStepNumber <  currentStep, 'future': twofiveStepNumber > currentStep }">
+      Firma tus documentos</h6>
+  </div>
   <div class="line-step"></div>
   <div class="horizontal-step"
     [ngClass]="{'current': thirdStepNumber == currentStep, 'visited': thirdStepNumber <  currentStep, 'future': thirdStepNumber > currentStep }">
-
     <div class="circle-step">
       <span>
         <i class="fas fa-hourglass-half"></i>
@@ -45,17 +51,4 @@
 
 </div>
 
-<!-- <aw-wizard class="custom-global-css" [navBarLayout]="'small'" [defaultStepIndex]="2">
-    <aw-wizard-step stepTitle="Llena el formulario" style="position: relative; display: block !important;">
-      <img [src]="getImage(1,'/assets/images/Icon_Llenar Formulario.svg')" class="image-step" >
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Adjunta tus documentos" style="position: relative; display: block !important;">
-      <img [src]="getImage(2,'/assets/images/Icon_Adjuntar Documentos.svg')" class="image-step" >
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Crédito aprobado en proceso" style="position: relative; display: block !important;">
-      <img [src]="getImage(3,'/assets/images/Icon_Aprobación en Proceso.svg')" class="image-step" >
-    </aw-wizard-step>
-    <aw-wizard-step stepTitle="Crédito desembolsado" style="position: relative; display: block !important;">
-      <img [src]="getImage(4,'/assets/images/Icon_Crédito Desembolsado.svg')" class="image-step" >
-    </aw-wizard-step>
-  </aw-wizard> -->
+

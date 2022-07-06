@@ -42,7 +42,7 @@ export class ListSolicitudComponent implements OnInit {
     })
   }
   gestion(x: number, type: string, stepPortal: string, stepFormulario: string) {
-
+    // let url;
     switch (stepPortal) {
       case "1":
         switch (stepFormulario) {
@@ -50,7 +50,6 @@ export class ListSolicitudComponent implements OnInit {
             let url = `/main/legal/${x}`;
             this.router.navigateByUrl(url);
             break;
-
           default:
             if (type == 'CC') {
               let url = `/main/personanatural/${x}`;
@@ -66,6 +65,11 @@ export class ListSolicitudComponent implements OnInit {
         let url = `/main/documents/${type}/${x}`;
         this.router.navigateByUrl(url);
         break;
+      case "2.5":
+        let url2 = `/main/firmar/${type}/${x}`;
+        this.router.navigateByUrl(url2);
+        break;
+
       default:
         break;
     }
@@ -78,8 +82,8 @@ export class ListSolicitudComponent implements OnInit {
         return img.replace('enValidacion.svg', 'pendientesDocumetos.svg')
       case "2":
         return img.replace('enValidacion.svg', 'pendientesDocumetos.svg')
-      case "3":
-        return img
+      case "2.5":
+          return img.replace('enValidacion.svg', 'pendientesDocumetos.svg')
       case "4":
         return img.replace('enValidacion.svg', 'noAprobado.svg')
       case "5":
@@ -96,6 +100,8 @@ export class ListSolicitudComponent implements OnInit {
         return "#32BEFA"
       case "2":
         return "#32BEFA"
+      case "2.5":
+          return "#32BEFA"
       case "3":
         return "#F9A826"
       case "4":
@@ -106,12 +112,12 @@ export class ListSolicitudComponent implements OnInit {
         return "#F9A826"
     }
   }
-  mostrarDatos(step:any){
-    if(
-      (step.stepPortal=="1")||(step.stepPortal=="2")
-      ){
+  mostrarDatos(step: any) {
+    if (
+      (step.stepPortal == "1") || (step.stepPortal == "2")
+    ) {
       return false;
-    }else{
+    } else {
       return true;
     }
 

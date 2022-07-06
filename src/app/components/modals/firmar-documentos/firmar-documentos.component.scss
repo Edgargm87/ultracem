@@ -1,36 +1,50 @@
 @import "/src/styles/vars/exports";
-.icono-listado{
-   color: #6c757d
+.icono-listado {
+    color: #6c757d;
 }
 
-.text-Descarga{
+.text-Descarga {
     text-decoration: underline;
     font-weight: 900;
     color: #6c757d;
     cursor: pointer;
 }
 
-.color_fintra{
+.color_fintra {
     color: $blue-primary !important;
 }
 
 .btn_siguiente {
-  
-  font-family: Josefin Sans;
-  font-weight: 600;
-  color: #fff;
+    font-family: Josefin Sans;
+    font-weight: 600;
+    color: #fff;
 }
 
-.bg-cancelar{
+.bg-cancelar {
     background: #6c757d;
-  
+    margin-right: 2em;
 }
 
-.bg-finalizar{
+.bg-finalizar {
     background: $blue-primary !important;
 }
 
 button.btn_siguiente.fondo_fintra.mat-button-base.mat-button-disabled.mat-focus-indicator.mat-raised-button:disabled {
     background: #111e6294;
     color: #fff !important;
-  }
+}
+
+.container {
+    min-height: 100vh;
+}
+
+.segundos {
+    color: #1c3d75;
+    font-size: 6em;
+    line-height: 1;
+}
+
+.texto{
+    color: #1c3d75;
+    font-weight: 600;
+}

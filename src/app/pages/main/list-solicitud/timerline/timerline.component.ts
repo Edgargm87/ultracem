@@ -10,6 +10,7 @@ export class TimerlineComponent implements OnInit {
   
   oneStepNumber: number = 1;
   twoStepNumber: number = 2;
+  twofiveStepNumber: number = 2.5;
   thirdStepNumber: number = 3;
   constructor() { }
 

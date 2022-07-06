@@ -13,6 +13,7 @@ import { MensajeErrorComponent } from './shared/mensaje-error/mensaje-error.comp
 import { MensajeFinalizadoComponent } from './shared/mensaje-finalizado/mensaje-finalizado.component';
 import { ReconocerComponent } from './shared/reconocer/reconocer.component';
 import { ExistenteComponent } from './shared/existente/existente.component';
+import { FirmarDocumentosComponent } from './components/modals/firmar-documentos/firmar-documentos.component';
 
 
 
@@ -67,6 +68,11 @@ const routes: Routes = [
   {
     path: 'existente',
     component: ExistenteComponent
+  },
+
+  {
+    path: 'main/firmar/:type/:codigoSolicitud',
+    component: FirmarDocumentosComponent
   },
 
   {
