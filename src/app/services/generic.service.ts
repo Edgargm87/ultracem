@@ -45,7 +45,7 @@ export class GenericService {
   }
 
   getAplicaValidacionIdentidad() {
-    return this._utility.posQueryServer(environment.urlApi, '/generic/aplica-reconocer','{"unidad":"ULTRACEM"}').pipe(map((result: any) => {
+    return this._utility.posQueryServer(environment.urlApi, 'generic/aplica-reconocer','{"unidad":"ULTRACEM"}').pipe(map((result: any) => {
       return result;
     }));
   }
