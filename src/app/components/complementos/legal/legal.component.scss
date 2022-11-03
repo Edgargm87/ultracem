@@ -27,7 +27,6 @@
 }
 
 .clasetextArea{
-
   height: 2em;
   width: 100%;
 }
@@ -56,7 +55,19 @@
 }
 
 .contenido{
-  height: 72vh;
+  height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.contenido-2{
+  height: 35vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.contenido-3{
+  height: 55vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
