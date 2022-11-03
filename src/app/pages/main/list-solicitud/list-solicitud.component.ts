@@ -33,7 +33,6 @@ export class ListSolicitudComponent implements OnInit {
 
   solicitudes() {
     Swal.fire({ title: 'Cargando', html: 'Cargando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    console.log(this.cedula);
     let url = `generic/qry/cre-solicitudes-cliente/${this.cedula}`;
     this._utilityService.getQuery(url, true).subscribe(resp => {
       Swal.close();
@@ -42,7 +41,6 @@ export class ListSolicitudComponent implements OnInit {
     })
   }
   gestion(x: number, type: string, stepPortal: string, stepFormulario: string) {
-
     switch (stepPortal) {
       case "1":
         switch (stepFormulario) {
@@ -62,10 +60,10 @@ export class ListSolicitudComponent implements OnInit {
             break;
         }
         break;
-      case "2":
-        let url = `/main/documents/${type}/${x}`;
-        this.router.navigateByUrl(url);
-        break;
+      // case "2":
+      //   let url = `/main/documents/${type}/${x}`;
+      //   this.router.navigateByUrl(url);
+      //   break;
       default:
         break;
     }

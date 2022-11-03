@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 import { ReconocerComponent } from '../../shared/reconocer/reconocer.component';
 import Swal from 'sweetalert2';
 import { ModalAceptoTerminosComponent } from "../../shared/modal-acepto-terminos/modal-acepto-terminos.component";
+import { ModalClausulaComponent } from 'src/app/shared/modal-clausula/modal-clausula.component';
 import { of } from "rxjs";
 @Component({
   selector: 'app-solicitud',
@@ -80,6 +81,7 @@ export class solicitudComponent implements OnInit {
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
+      aceptaClausulaVeracidad: [false, [Validators.requiredTrue]],
       // telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
       telefono: [''],
       digitoVerificacion: [''],
@@ -527,6 +529,18 @@ export class solicitudComponent implements OnInit {
   onAceptoTerminos(evento: MatCheckboxChange): void {
     if (evento.checked) {
       const dialogRef = this._matDialog.open(ModalAceptoTerminosComponent, {
+        minWidth: '100%',
+        height: '100%',
+      })
+      dialogRef.afterClosed().toPromise().then((res) => {
+        console.log('Cerrado');
+      });
+    }
+  }
+
+  onClausulaVeracidad(evento: MatCheckboxChange): void {
+    if (evento.checked) {
+      const dialogRef = this._matDialog.open(ModalClausulaComponent, {
         minWidth: '100%',
         height: '100%',
       })
