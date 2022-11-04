@@ -23,6 +23,7 @@ export class LegalComponent implements OnInit {
   ListOperaciones: any;
   formTab4: FormGroup;
   cantidadSI: number = 0;
+  detalle: any[] = [];
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
@@ -50,6 +51,7 @@ export class LegalComponent implements OnInit {
       familiar_fechaDesvinculacion: "",
       pregunta2: [false],
       pregunta3: [false],
+      pregunta4: [false],
     })
     this.formTab2 = this.fb.group({
       pregunta1: [false],
@@ -125,163 +127,71 @@ export class LegalComponent implements OnInit {
   }
 
   siguiente(index: any) {
-    this.step += 1;
-    // let url = '', data = {};
-    // url = 'credito/formulario-solicitud-tabs-ref';
-    // switch (this.step) {
-    //   case 1:
-    //     data = {
-    //       "detalle": [
-    //         {
-    //           "recurso": "tab-legal-pep-cargo-publico",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": this.formTab1.value.pregunta1 == true ? 'S' : 'N',
-    //           "cargo": this.formTab1.value.cargo,
-    //           "entidad": this.formTab1.value.entidad,
-    //           "vinculadoActualmente": this.formTab1.value.vinculadoActualmente,
-    //           "fechaDesvinculacion": this.formTab1.value.fechaDesvinculacion
-
-    //         },
-    //         {
-    //           "recurso": "tab-legal-pep-persona-expuesta",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": this.formTab1.value.pregunta2 == true ? 'S' : 'N',
-    //           "vinculacion": this.formTab1.value.familiar_vinculacion,
-    //           "nombre": this.formTab1.value.familiar_nombre,
-    //           "tipoId": this.formTab1.value.familiar_tipoId,
-    //           "identificacion": this.formTab1.value.familiar_identificacion,
-    //           "nacionalidad": this.formTab1.value.familiar_nacionalidad,
-    //           "Entidad": this.formTab1.value.familiar_Entidad,
-    //           "cargo": this.formTab1.value.familiar_cargo,
-    //           "vinculadoActualmente": this.formTab1.value.familiar_vinculadoActualmente,
-    //           "fechaDesvinculacion": this.formTab1.value.familiar_fechaDesvinculacion
-    //         },
-    //         {
-    //           "recurso": "tab-legal-pep-actividad-apnfd",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": this.formTab1.value.pregunta3 == true ? 'S' : 'N'
-    //         }
-    //       ]
-    //     }
-    //     break;
-    //   case 2:
-
-    //     url = 'credito/tk/formulario-solicitud-tabs';
-    //     data = {
-    //       "recurso": "tab-legal-declaracion-facta",
-    //       "numeroSolicitud": this.codigoSolicitud,
-    //       "factaUno": this.formTab2.value.pregunta1 == true ? 'S' : 'N',
-    //       "factaDos": this.formTab2.value.pregunta2 == true ? 'S' : 'N',
-    //       "factaTres": this.formTab2.value.pregunta3 == true ? 'S' : 'N',
-    //       "factaCuatro": this.formTab2.value.pregunta4 == true ? 'S' : 'N',
-    //       "factaCinco": this.formTab2.value.pregunta5 == true ? 'S' : 'N',
-    //       "factaSeis": this.formTab2.value.pregunta6 == true ? 'S' : 'N'
-    //     }
-    //     break;
-    //   case 3:
-    //     data = {
-    //       "detalle": [
-    //         {
-    //           "recurso": "tab-legal-cripto-moneda",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": this.formTab3.value.pregunta1,
-    //           "tipoOperacion": this.formTab3.value.pregunta2
-    //         },
-    //         {
-    //           "recurso": "tab-legal-moneda-extranjera",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": this.formTab3.value.pregunta3,
-    //           "tipoOperacion": this.formTab3.value.pregunta4,
-    //           "entidad": this.formTab3.value.entidad,
-    //           "tipoProducto": this.formTab3.value.tipoProducto,
-    //           "numeroProducto": this.formTab3.value.numeroProducto + '',
-    //           "ciudad": this.formTab3.value.ciudad,
-    //           "pais": this.formTab3.value.pais,
-    //           "moneda": this.formTab3.value.moneda,
-    //           "monto": Number(this.formTab3.value.monto)
-    //         }
-    //       ]
-
-    //     }
-    //     break;
-    //   case 4:
-    //     if (this.formTab4.value.descripcion == '' || this.formTab4.value.descripcion.length < 5) {
-    //       return;
-    //     }
-    //     data = {
-    //       "detalle": [
-    //         {
-    //           "recurso": "tab-legal-auto-declaracion",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": "S",
-    //           "descripcion": this.formTab4.value.descripcion,
-    //           "tipoOperacion": "D"
-    //         },
-    //       ]
-    //     }
-    //     break;
-    //   case 5:
-    //     data = {
-    //       "detalle": [
-    //         {
-    //           "recurso": "tab-legal-auto-declaracion",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": "S",
-    //           "descripcion": "",
-    //           "tipoOperacion": "A"
-    //         },
-    //       ]
-    //     }
-    //     break;
-    //   case 6:
-    //     data = {
-    //       "detalle": [
-    //         {
-    //           "recurso": "tab-legal-auto-declaracion",
-    //           "numeroSolicitud": this.codigoSolicitud,
-    //           "valor": "S",
-    //           "descripcion": "",
-    //           "tipoOperacion": "C"
-    //         }
-    //       ]
-    //     }
-    //     break;
-    //   default:
-    //     break;
-    // }
-    // Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    // this._generic.posData(url, data).subscribe((response: any) => {
-    //   Swal.close();
-    //   if (response) {
-    //     if (response.status == 200) {
-    //       Swal.fire(
-    //         '¡Información!',
-    //         `Se guardo el registro con éxito`,
-    //         'success'
-    //       ).then(resultado => {
-    //         if (resultado) {
-    //           if (this.step == 6) {
-    //             let url = `/main/listRequest`;
-    //             this.router.navigateByUrl(url);
-    //           }
-    //           this.step = response.data.stepLegal
-    //         }
-    //       });
-    //     } else {
-    //       Swal.fire(
-    //         'Información',
-    //         `Hubo un error en los datos enviados, favor evaluar`,
-    //         'error'
-    //       );
-    //     }
-    //   } else {
-    //     Swal.fire(
-    //       'Advertencia',
-    //       'Hubo un error en el envio de los datos, favor verificar',
-    //       'error'
-    //     );
-    //   }
-    // });
+    let url = '', data = {};
+    url = 'credito/tk/formulario-solicitud-tabs';
+    data = {
+      "recurso": "guardar-legales-solicitud",
+      "numeroSolicitud": this.codigoSolicitud,
+      "tipo": "T",
+      "legalCargoPublico": this.formTab1.value.pregunta1 == true ? 'S' : 'N',
+      "cargoPublico": this.formTab1.value.cargo,
+      "entidadPublico": this.formTab1.value.entidad,
+      "vinculadoActualPublico": this.formTab1.value.vinculadoActualmente,
+      "fechaDesvinculacionPublico": this.formTab1.value.fechaDesvinculacion == '' ? '0099-01-01':this.formTab1.value.fechaDesvinculacion,
+      "legalPersonalExpuesta": this.formTab1.value.pregunta2 == true ? 'S' : 'N',
+      "vinculacionExpuesta": this.formTab1.value.familiar_vinculacion,
+      "nombreExpuesta": this.formTab1.value.familiar_nombre,
+      "tipoIdentificacionExpuesta": this.formTab1.value.familiar_tipoId,
+      "identificacionExpuesta": this.formTab1.value.familiar_identificacion,
+      "nacionalidadExpuesta": this.formTab1.value.familiar_nacionalidad,
+      "entidadExpuesta": this.formTab1.value.familiar_Entidad,
+      "cargoExpuesta": this.formTab1.value.familiar_cargo,
+      "vinculadoActualExpuesta": this.formTab1.value.familiar_vinculadoActualmente,
+      "fechaDesvinculacionExpuesta": this.formTab1.value.familiar_fechaDesvinculacion == '' ? '0099-01-01':this.formTab1.value.familiar_fechaDesvinculacion,
+      "legalDesarrollaActividadApnfd": this.formTab1.value.pregunta4 == true ? 'S' : 'N',
+      "legalCargoPartidoPolitico": this.formTab1.value.pregunta3 == true ? 'S' : 'N',
+      "legalOperacionCriptomoneda": this.formTab3.value.pregunta1,
+      "tipoOperacionCriptomoneda": this.formTab3.value.pregunta2,
+      "legalOperacionExtranjera": this.formTab3.value.pregunta3,
+      "tipoOperacionExtranjera": this.formTab3.value.pregunta4,
+      "declaroIngresoDeclaracionAuto": this.formTab4.value.descripcion,
+      "otroIngresoDeclaracionAuto": "",
+      "autoricacionDatosPersonalClaracionAuto": "S",
+      "clausulaAnticurrupcionClaracionAuto": "S"
+    }
+    console.log(data)
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._generic.posData(url, data).subscribe((response: any) => {
+      Swal.close();
+      if (response) {
+        if (response.status == 200) {
+          Swal.fire(
+            '¡Información!',
+            `Se guardo el registro con éxito`,
+            'success'
+          ).then(resultado => {
+            if (resultado) {
+              let url = `/main/listRequest`;
+              this.router.navigateByUrl(url);
+              this.step = response.data.stepLegal
+              console.log(this.step)
+            }
+          });
+        } else {
+          Swal.fire(
+            'Información',
+            `Hubo un error en los datos enviados, favor evaluar`,
+            'error'
+          );
+        }
+      } else {
+        Swal.fire(
+          'Advertencia',
+          'Hubo un error en el envio de los datos, favor verificar',
+          'error'
+        );
+      }
+    });
   }
   mostrarMonedaExtranjera() {
     if (this.formTab3.value.pregunta3 == 'S') {

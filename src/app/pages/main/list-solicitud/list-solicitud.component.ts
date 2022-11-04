@@ -106,7 +106,7 @@ export class ListSolicitudComponent implements OnInit {
   }
   mostrarDatos(step:any){
     if(
-      (step.stepPortal=="1")||(step.stepPortal=="2")
+      (step.stepPortal=="1")
       ){
       return false;
     }else{

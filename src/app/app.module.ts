@@ -44,7 +44,7 @@ import { FirmarDocumentosComponent } from './components/modals/firmar-documentos
     DocumentsComponent,
     LegalComponent,
     MonedaExtranjeraComponent,
-    FirmarDocumentosComponent,
+    FirmarDocumentosComponent
   ],
   imports: [
     BrowserModule,

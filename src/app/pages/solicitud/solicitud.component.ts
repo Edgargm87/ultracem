@@ -81,7 +81,6 @@ export class solicitudComponent implements OnInit {
       antiguedadCompra: [0],
       aceptaTerminos: [false, [Validators.requiredTrue]],
       aceptaConsultaCentrales: [false, [Validators.requiredTrue]],
-      aceptaClausulaVeracidad: [false, [Validators.requiredTrue]],
       // telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(7)]],
       telefono: [''],
       digitoVerificacion: [''],
@@ -541,8 +540,7 @@ export class solicitudComponent implements OnInit {
   onClausulaVeracidad(evento: MatCheckboxChange): void {
     if (evento.checked) {
       const dialogRef = this._matDialog.open(ModalClausulaComponent, {
-        minWidth: '100%',
-        height: '100%',
+        minWidth: '30%',
       })
       dialogRef.afterClosed().toPromise().then((res) => {
         console.log('Cerrado');

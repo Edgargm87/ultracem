@@ -239,7 +239,7 @@
               </mat-checkbox>
               <mat-checkbox formControlName="aceptaTerminos" class="col-lg-12 col-sm-12" (change)="onAceptoTerminos($event)">
                 Acepto los términos y condiciones.</mat-checkbox>
-              <mat-checkbox formControlName="aceptaClausulaVeracidad" class="col-lg-12 col-sm-12" (change)="onClausulaVeracidad($event)">
+              <mat-checkbox class="col-lg-12 col-sm-12" (change)="onClausulaVeracidad($event)">
                 Cláusula de veracidad.
               </mat-checkbox>
              </div>
@@ -372,6 +372,9 @@
               </p>
               <p>
                 <mat-checkbox formControlName="aceptaTerminos" (change)="onAceptoTerminos($event)"> Acepto los términos y condiciones.</mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox (change)="onClausulaVeracidad($event)"> Cláusula de veracidad.</mat-checkbox>
               </p>
             </section>
           </div>
