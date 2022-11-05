@@ -17,7 +17,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 1">
+    <div class="col-lg-9 h-100 color_fondo overflow-auto" *ngIf="step == 1">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">
@@ -31,9 +31,7 @@
         <form [formGroup]="formTab1">
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto texto">
-              ¿Ha ocupado
-              cargos
-              públicos?
+              ¿Ha ocupado cargos públicos?
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
@@ -45,16 +43,23 @@
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto texto">
-              ¿Es familiar de
-              persona
-              expuesta
-              política y
-              públicamente?
+              ¿Es familiar de persona expuesta política y públicamente?
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
               <mat-slide-toggle name="pregunta2" formControlName="pregunta2"
                 (change)="openModalCargoPublico('F',formTab1.value.pregunta2)">
+                Si
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-9 texto texto">
+              ¿Tiene a su cargo la dirección de recursos en algún partido político?
+            </div>
+            <div class="col-lg-2">
+              <mat-label ngClass="labelBeforeSlide">No</mat-label>
+              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
                 Si
               </mat-slide-toggle>
             </div>
@@ -66,73 +71,48 @@
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
+              <mat-slide-toggle name="pregunta4" formControlName="pregunta4">
                 Si
               </mat-slide-toggle>
             </div>
           </div>
         </form>
       </section>
-
-      <div class="row justify-content-center mt-5">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente(1)">Acepto</button>
-      </div>
-    </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 2">
-      <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+      <!-- <div class="row justify-content-center">
+        <div class="col-lg-11 mt-3">
           <h2 class="text-start">Declaración FATCA</h2>
         </div>
-      </div>
-      <section class="contenido">
+      </div> -->
+      <!-- <section class="contenido">
         <form [formGroup]="formTab2">
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto">
-              He permanecido más de
-              183 días en el último año,
-              o 183 días durante los
-              últimos 3 años, dentro de
-              territorio de los Estados
-              Unidos.
+              He permanecido más de 183 días en el último año, o 183 días durante los últimos 3 años, dentro de
+              territorio de los Estados Unidos.
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
               <mat-slide-toggle name="pregunta1" formControlName="pregunta1" (change)="preguntasfacta()">
                 Si
               </mat-slide-toggle>
-              
             </div>
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto">
-              Soy poseedor de la tarjeta
-              verde o "Green Card" de
-              los Estados Unidos
-              (Tarjeta de Residencia)
+              Soy poseedor de la tarjeta verde o "Green Card" de los Estados Unidos (Tarjeta de Residencia)
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
               <mat-slide-toggle name="pregunta2" formControlName="pregunta2" (change)="preguntasfacta()">
                 Si
               </mat-slide-toggle>
-              
             </div>
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto">
-              Recibo cualquier pago de
-              intereses, dividendos,
-              rentas, salarios,honorarios, primas,
-              anualidades,
-              compensaciones,
-              remuneraciones,
-              emolumentos y otras
-              ganancias fijas u
-              ocasionales ingresos
-              (Ingresos FDAP**), si
-              dicho pago proviene de
-              fuentes dentro de los
-              Estados Unidos.
+              Recibo cualquier pago de intereses, dividendos, rentas, salarios,honorarios, primas, anualidades,
+              compensaciones, remuneraciones, emolumentos y otras ganancias fijas u ocasionales ingresos
+              (Ingresos FDAP**), si dicho pago proviene de fuentes dentro de los Estados Unidos.
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
@@ -143,14 +123,8 @@
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9 texto">
-              Recibo cualquier ingreso
-              bruto procedente de la
-              venta u otra disposición de
-              cualquier propiedad que
-              puede producir intereses o
-              dividendos cuya fuente se
-              encuentre dentro de los
-              Estados Unidos.
+              Recibo cualquier ingreso bruto procedente de la venta u otra disposición de cualquier propiedad que
+              puede producir intereses o dividendos cuya fuente se encuentre dentro de los Estados Unidos.
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
@@ -161,8 +135,10 @@
           </div>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-10">
-              <strong>NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en obligatorio tributario
-                U.S</strong>
+              <strong>
+                NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en obligatorio 
+                tributario U.S
+              </strong>
             </div>
           </div>
           <div class="row justify-content-center mt-4">
@@ -188,23 +164,17 @@
             </div>
           </div>
         </form>
-      </section>
-      <div class="row justify-content-center mt-3">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente(2)">Acepto</button>
-      </div>
-    </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 3">
+      </section> -->
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-lg-11 mt-3">
           <h2 class="text-start">Operaciones en moneda extranjera</h2>
         </div>
       </div>
-      <section >
+      <section>
         <form [formGroup]="formTab3">
           <div class="row justify-content-center mt-4">
             <mat-form-field class="col-5" appearance="fill">
               <mat-label> ¿Realiza operaciones con criptomoneda?</mat-label>
-              <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta1">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="S">Si</mat-option>
@@ -213,17 +183,14 @@
             </mat-form-field>
             <mat-form-field class="col-6" appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
               <mat-label> Tipo de operación </mat-label>
-              <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta2">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
                   {{item.descripcionOpcion}}</mat-option>
               </mat-select>
             </mat-form-field>
-
             <mat-form-field class="col-lg-5" appearance="fill">
               <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
-              <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta3" (selectionChange)="mostrarMonedaExtranjera()">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="S">Si</mat-option>
@@ -232,7 +199,6 @@
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
               <mat-label> Tipo de operación</mat-label>
-              <!-- <input matInput formControlName="declarante"> -->
               <mat-select formControlName="pregunta4">
                 <mat-option value="" disabled>SELECCIONA</mat-option>
                 <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
@@ -242,17 +208,12 @@
           </div>
         </form>
       </section>
-      <div class="row justify-content-center mt-3">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente(3)">Acepto</button>
-      </div>
-    </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 4">
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-5">
           <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
         </div>
       </div>
-      <section class="contenido">
+      <section class="contenido-2">
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
@@ -268,11 +229,10 @@
                 </mat-error>
               </mat-form-field>
             </form>
-
           </div>
         </div>
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 texto texto">
+        <div class="row justify-content-center">
+          <div class="col-lg-11 texto">
             2. Declaro que los recursos que entregue a FINTRA LOGISTICS S.A,S no provienen de ninguna actividad ilícita
             de las contempladas en el código penal colombiano o en cualquier norma que lo modifique o adicione, ni
             efectuaré transacciones destinadas a tales actividades.
@@ -288,20 +248,14 @@
           </div>
         </div>
       </section>
-      <div class="row justify-content-center mt-3">
-        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente(3)">Acepto</button>
-      </div>
-    </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 5">
-
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-lg-11 mt-4">
           <h2 class="text-start">
             Autorización de datos personales
           </h2>
         </div>
       </div>
-      <section class="contenido"> 
+      <section class="contenido-2"> 
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             Los datos personales adicionales para el estudio técnico del riesgo asegurable y reasegurable se tratarán
@@ -330,19 +284,14 @@
             leal, lícita, segura y confiable para los fines señalados en el presente documento. </div>
         </div>
       </section>
-      <div class="row justify-content-center mt-3">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente(5)">Acepto</button>
-      </div>
-    </div>
-    <div class="col-lg-9 color_fondo" *ngIf="step == 6">
       <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
+        <div class="col-lg-11">
           <h2 class="text-start">
             Cláusulas anticorrupción y antilavado
           </h2>
         </div>
       </div>
-      <section class="contenido">
+      <section class="contenido-3">
         <div class="row justify-content-center mt-4">
           <div class="col-lg-11 texto texto">
             <div>FINTRA LOGISTICS S.A,S., s&oacute;lo contratar&aacute; con
@@ -443,8 +392,8 @@
           </div>
         </div>
       </section>
-      <div class="row justify-content-center mt-3">
-        <button mat-raised-button class="btn_siguiente" (click)="siguiente(6)">Acepto</button>
+      <div class="row justify-content-center mb-5">
+        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente(1)">Acepto</button>
       </div>
     </div>
   </div>
@@ -474,7 +423,6 @@
           </li>
         </ol>
         <br> <br>
-
         <p><strong>Administradores (Ley 222 de 1995, art.22):</strong></p>
         <p>
           Son administradores, el representante legal, el liquidador, el factor, los miembros de juntas o consejos
@@ -484,7 +432,6 @@
           afinidad y primero civil de las personas p&uacute;blicamente expuestas.
         </p>
         <br> <br>
-
         <p><strong>Nota interpretativa: Recomendaci&oacute;n 24GAFI:</strong></p>
         <p>
           Como parte del proceso para asegurar que exista una transparencia adecuada sobre las personas
@@ -497,7 +444,6 @@
           en el pa&iacute;s.
         </p>
         <br> <br>
-
         <p><strong>PEP: </strong> <br></p>
         <p>
           Significa personas expuestas pol&iacute;ticamente, es decir, son los servidores p&uacute;blicos de cualquier
@@ -510,9 +456,7 @@
           inversi&oacute;n, pagos, liquidaciones, administraci&oacute;n de bienes muebles e inmuebles. Incluye
           tambi&eacute;n a las PEP Extranjeras y las PEP de Organizaciones Internacionales.
         </p>
-
         <br> <br>
-
         <p><strong>PEP de Organizaciones Internacionales: </strong></p>
         <p>
           Son aquellas personas naturales que ejercen funciones directivas en una organizaci&oacute;n internacional,
@@ -522,7 +466,6 @@
         <p>
           <br>
           <br>
-
           <p><strong>PEP Extranjeras: </strong></p>
           <p>
             Son aquellas personas naturales que desempe&ntilde;an funciones
@@ -558,9 +501,7 @@
               estatales).
             </li>
           </ol>
-
       </div>
-
     </div>
   </div>
 </div>
