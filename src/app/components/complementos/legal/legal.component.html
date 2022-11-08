@@ -78,93 +78,6 @@
           </div>
         </form>
       </section>
-      <!-- <div class="row justify-content-center">
-        <div class="col-lg-11 mt-3">
-          <h2 class="text-start">Declaración FATCA</h2>
-        </div>
-      </div> -->
-      <!-- <section class="contenido">
-        <form [formGroup]="formTab2">
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              He permanecido más de 183 días en el último año, o 183 días durante los últimos 3 años, dentro de
-              territorio de los Estados Unidos.
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta1" formControlName="pregunta1" (change)="preguntasfacta()">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              Soy poseedor de la tarjeta verde o "Green Card" de los Estados Unidos (Tarjeta de Residencia)
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta2" formControlName="pregunta2" (change)="preguntasfacta()">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              Recibo cualquier pago de intereses, dividendos, rentas, salarios,honorarios, primas, anualidades,
-              compensaciones, remuneraciones, emolumentos y otras ganancias fijas u ocasionales ingresos
-              (Ingresos FDAP**), si dicho pago proviene de fuentes dentro de los Estados Unidos.
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta3" formControlName="pregunta3" (change)="preguntasfacta()">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              Recibo cualquier ingreso bruto procedente de la venta u otra disposición de cualquier propiedad que
-              puede producir intereses o dividendos cuya fuente se encuentre dentro de los Estados Unidos.
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta4" formControlName="pregunta4" (change)="preguntasfacta()">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-10">
-              <strong>
-                NOTA: Si cumple con al menos uno de las anteriores literales, marque Si en obligatorio 
-                tributario U.S
-              </strong>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              ¿Es extranjero residente?
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta5" formControlName="pregunta5">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9 texto">
-              ¿Obligado tributario U.S?
-            </div>
-            <div class="col-lg-2">
-              <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta6" formControlName="pregunta6" [disabled]="cantidadSI>0">
-                Si
-              </mat-slide-toggle>
-            </div>
-          </div>
-        </form>
-      </section> -->
       <div class="row justify-content-center">
         <div class="col-lg-11 mt-3">
           <h2 class="text-start">Operaciones en moneda extranjera</h2>
@@ -393,7 +306,7 @@
         </div>
       </section>
       <div class="row justify-content-center mb-5">
-        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente(1)">Acepto</button>
+        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente()">Acepto</button>
       </div>
     </div>
   </div>

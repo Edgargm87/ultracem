@@ -43,7 +43,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this._creditService.getDocuments(this.typeSolicitud, this.codigoSolicitud).subscribe(resp => {
       Swal.close();
       this.documentos = resp.data;
-      console.log(this.documentos);
 
     })
   }

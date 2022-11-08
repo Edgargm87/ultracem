@@ -124,7 +124,7 @@ export class LegalComponent implements OnInit {
     }
   }
 
-  siguiente(index: any) {
+  siguiente() {
     let url = '', data = {};
     url = 'credito/tk/formulario-solicitud-tabs';
     data = {
