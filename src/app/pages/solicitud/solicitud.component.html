@@ -235,7 +235,7 @@
              <div class="row ml-5">
               <mat-checkbox formControlName="aceptaConsultaCentrales" class="col-lg-12 col-sm-12">
                 Autorizo que la información entregada sea
-                  consultada en centrales de riesgos.
+                  consultada en <a href="/assets/documentos/centralesRiesgoNatural.pdf" class="enlace" target="_blank">centrales de riesgos.</a>
               </mat-checkbox>
               <mat-checkbox formControlName="aceptaTerminos" class="col-lg-12 col-sm-12" (change)="onAceptoTerminos($event)"> Acepto los términos
                 y condiciones.</mat-checkbox>
@@ -368,7 +368,7 @@
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
-                  consultada en centrales de riesgos. </mat-checkbox>
+                  consultada en <a href="/assets/documentos/centralesRiesgoJuridica.pdf" class="enlace" target="_blank">centrales de riesgos.</a> </mat-checkbox>
               </p>
               <p>
                 <mat-checkbox formControlName="aceptaTerminos" (change)="onAceptoTerminos($event)"> Acepto los términos y condiciones.</mat-checkbox>
@@ -498,13 +498,6 @@
               <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" autocomplete="off">
               <mat-error *ngIf="formSolicitudRepresentante.controls.email.errors">Este campo es requerido.</mat-error>
-              <!-- <mat-hint>Errors appear instantly!</mat-hint>
-              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                Please enter a valid email address
-              </mat-error>
-              <mat-error *ngIf="emailFormControl.hasError('required')">
-                Email is <strong>required</strong>
-              </mat-error> -->
             </mat-form-field>
             <mat-form-field class="col-lg-6" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
@@ -520,11 +513,16 @@
             <section class="col-lg-6 checkp">
               <p>
                 <mat-checkbox formControlName="aceptaConsultaCentrales">Autorizo que la información entregada sea
-                  consultada en centrales de riesgos. </mat-checkbox>
+                  consultada en <a href="/assets/documentos/centralesRiesgoJuridica.pdf" class="enlace" target="_blank">centrales de riesgos.</a></mat-checkbox>
               </p>
               <p>
                 <mat-checkbox formControlName="aceptaTerminos" (change)="onAceptoTerminos($event)"> Acepto los términos
                   y condiciones.</mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox (change)="onClausulaVeracidad($event)">
+                  Cláusula de veracidad.
+                </mat-checkbox>
               </p>
             </section>
           </div>

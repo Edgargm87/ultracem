@@ -22,13 +22,13 @@ import { CargoPublicoComponent } from './components/modals/cargo-publico/cargo-p
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { LegalComponent } from './components/complementos/legal/legal.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { MonedaExtranjeraComponent } from './components/modals/moneda-extranjera/moneda-extranjera.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FirmarDocumentosComponent } from './components/modals/firmar-documentos/firmar-documentos.component';
+import { DeclaracionComponent } from './components/modals/declaracion/declaracion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,8 +43,8 @@ import { FirmarDocumentosComponent } from './components/modals/firmar-documentos
     CargoPublicoComponent,
     DocumentsComponent,
     LegalComponent,
-    MonedaExtranjeraComponent,
     FirmarDocumentosComponent,
+    DeclaracionComponent,
   ],
   imports: [
     BrowserModule,

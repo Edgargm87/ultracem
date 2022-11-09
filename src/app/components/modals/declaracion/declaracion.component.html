@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Declaraciones y autorizaciones</h1>
+<mat-dialog-content class="overflow-hidden">
+    <form [formGroup]="formTab4">
+        <div class="d-flex flex-row justify-content-between w-100 gap-5">
+            <div class="d-flex flex-column w-50">
+                <div class="w-100">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Declaro que mis ingresos provienen de:</mat-label>
+                        <mat-select formControlName="descripcion">
+                            <mat-option value="" disabled>SELECCIONA</mat-option>
+                            <mat-option *ngFor="let item of listDeclaraciones" [value]="item.codigoOpcion" (click)="habilitar(item.codigoOpcion)">{{item.descripcionOpcion}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="(formTab4.controls.descripcion.dirty || formTab4.controls.descripcion.touched)">
+                            <mat-error *ngIf="formTab4.controls.descripcion.errors?.required ">Este campo es requerido.</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="d-flex flex-column w-50">
+                <div class="w-100">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Otro</mat-label>
+                        <input matInput formControlName="otro" autocomplete="off">
+                        <mat-hint>En caso de seleccionar otro, ingrese de donde proviene sus ingresos.</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end mt-4">
+            <div class="col-lg-6 checkp">
+                <mat-checkbox formControlName="autorizacion">Autorización para tratamiento de <a href="/assets/documentos/datos_personales.pdf" target="_blank">datos personales.</a></mat-checkbox>
+                <mat-checkbox formControlName="clausula">Cláusula de <a href="/assets/documentos/anticorrupcion_lavado.pdf" target="_blank">anticorrupción y antilavado.</a></mat-checkbox>
+            </div>
+            <div class="col-lg-6">
+                <div class="d-flex justify-content-end gap-4">
+                    <button mat-button [mat-dialog-close]="false" class="btn_volver">Volver</button>
+                    <button mat-button class="permitir bloquear" (click)="siguiente()" [disabled]="formTab4.invalid">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

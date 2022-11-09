@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta3" formControlName="pregunta3">
+              <mat-slide-toggle formControlName="pregunta3">
                 Si
               </mat-slide-toggle>
             </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="col-lg-2">
               <mat-label ngClass="labelBeforeSlide">No</mat-label>
-              <mat-slide-toggle name="pregunta4" formControlName="pregunta4">
+              <mat-slide-toggle formControlName="pregunta4">
                 Si
               </mat-slide-toggle>
             </div>
@@ -85,228 +85,49 @@
       </div>
       <section>
         <form [formGroup]="formTab3">
-          <div class="row justify-content-center mt-4">
-            <mat-form-field class="col-5" appearance="fill">
-              <mat-label> ¿Realiza operaciones con criptomoneda?</mat-label>
-              <mat-select formControlName="pregunta1">
-                <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="S">Si</mat-option>
-                <mat-option value="N">No</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-6" appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
-              <mat-label> Tipo de operación </mat-label>
-              <mat-select formControlName="pregunta2">
-                <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
-                  {{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-lg-5" appearance="fill">
-              <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
-              <mat-select formControlName="pregunta3" (selectionChange)="mostrarMonedaExtranjera()">
-                <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="S">Si</mat-option>
-                <mat-option value="N">No</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-lg-6" appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
-              <mat-label> Tipo de operación</mat-label>
-              <mat-select formControlName="pregunta4">
-                <mat-option value="" disabled>SELECCIONA</mat-option>
-                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
-                  {{item.descripcionOpcion}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+          <div class="d-flex flex-row justify-content-center mt-4">
+            <div class="d-flex flex-column w-50 px-5">
+              <mat-form-field appearance="fill">
+                <mat-label> ¿Realiza operaciones con criptomoneda?</mat-label>
+                <mat-select formControlName="pregunta1">
+                  <mat-option value="" disabled>SELECCIONA</mat-option>
+                  <mat-option value="S">Si</mat-option>
+                  <mat-option value="N">No</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" *ngIf="formTab3.value.pregunta1=='S'">
+                <mat-label> Tipo de operación </mat-label>
+                <mat-select formControlName="pregunta2">
+                  <mat-option value="" disabled>SELECCIONA</mat-option>
+                  <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
+                    {{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="d-flex flex-column w-50 px-5">
+              <mat-form-field appearance="fill">
+                <mat-label> ¿Realiza operaciones con moneda extranjera?</mat-label>
+                <mat-select formControlName="pregunta3">
+                  <mat-option value="" disabled>SELECCIONA</mat-option>
+                  <mat-option value="S">Si</mat-option>
+                  <mat-option value="N">No</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" *ngIf="formTab3.value.pregunta3=='S'">
+                <mat-label> Tipo de operación</mat-label>
+                <mat-select formControlName="pregunta4">
+                  <mat-option value="" disabled>SELECCIONA</mat-option>
+                  <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListOperaciones">
+                    {{item.descripcionOpcion}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </form>
       </section>
-      <div class="row justify-content-center">
-        <div class="col-lg-11 mt-5">
-          <h2 class="text-start">Declaración de origen de bienes o fondos</h2>
-        </div>
-      </div>
-      <section class="contenido-2">
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 texto texto">
-            1. Los recursos que entrego provienen de las fuentes (detalle de la ocupación, actividad, oficio, negocio):
-          </div>
-        </div>
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 mb-5 texto">
-            <form [formGroup]="formTab4">
-              <mat-form-field class="clasetextArea" appearance="outline">
-                <textarea matInput placeholder="Escribe aquí" formControlName="descripcion" style="font-style: italic;"></textarea>
-                <mat-error *ngIf="formTab4.controls.descripcion.errors">Este campo es requerido.</mat-error>
-                <mat-error *ngIf="(formTab4.controls.descripcion.errors?.minlength)">Longitud mínima son 5 caracteres.
-                </mat-error>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-lg-11 texto">
-            2. Declaro que los recursos que entregue a FINTRA LOGISTICS S.A,S no provienen de ninguna actividad ilícita
-            de las contempladas en el código penal colombiano o en cualquier norma que lo modifique o adicione, ni
-            efectuaré transacciones destinadas a tales actividades.
-            <br>
-            <br>
-            Quien suscribe la siguiente declaración obrando en
-            nombre propio de manera voluntaria dando certeza que todo lo aquí consignado es totalmente cierto, realizo
-            la siguiente declaración de fuente de fondos a FINTRA LOGISTICS S.A,S con el proposito que se pueda dar
-            cumplimiento al respecto en la circular externa No 007 del año 1996 expedida por la Superfinanciera. El
-            estatuto órganico del sistema financiero (Decreto 663 de 1993), La ley 190 de 1995 "Estatuto anticorrupción
-            demás normas legales concordantes para abono de cuotas, abonos extraordinarios, cancelación de los créditos
-            y demás operaciones activas que se me otorguen.
-          </div>
-        </div>
-      </section>
-      <div class="row justify-content-center">
-        <div class="col-lg-11 mt-4">
-          <h2 class="text-start">
-            Autorización de datos personales
-          </h2>
-        </div>
-      </div>
-      <section class="contenido-2"> 
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 texto texto">
-            Los datos personales adicionales para el estudio técnico del riesgo asegurable y reasegurable se tratarán
-            observando las Leyes 1581 de 2012 y 1266 de 2008 según el caso.
-            <br>
-            <br>
-            Con la firma de este documento se entiende que el titular de los datos autoriza de manera expresa e
-            inequívoca a FINTRA LOGISTICS S.A,S, para mantener y manejar la información que se ha incorporado en las
-            bases de datos manejadas por la empresa, y especialmente para permitir su recolección, almacenamiento, uso,
-            supresión, procesamiento, compilación, tratamiento, actualización, para compartir y disponer de dichos datos
-            siendo tratados con la finalidad de gestión administrativa de la entidad, así como la gestión de carácter
-            comercial o envío de comunicaciones comerciales sobre nuestros productos y/o servicios, notarías, listas
-            OFAC y de terrorismo, abogados, etc./ Cumplimiento de decisiones judiciales, disposiciones administrativas y
-            legales, fiscales y regulatoria/Cumplimiento de Sistema Autocontrol y Gestión Integral del Riesgo Integral
-            de LA/FT. Transmisión de información y datos personales en procesos de auditorías/facturación. Los datos de
-            las personas que por virtud de un contrato adquiere FINTRA LOGISTICS S.A,S, son compilados, almacenados,
-            consultados y transmitidos para efectuar todas las actividades tendientes, efectuar las gestiones
-            pertinentes para el desarrollo de la etapa precontractual, contractual y poscontractual con FINTRA LOGISTICS
-            S.A,S, El Titular podrá ejercer en cualquier momento los derechos que le asisten, en especial: Conocer la
-            información, solicitar la actualización, rectificación y/o supresión o revocar el consentimiento otorgado
-            para el tratamiento de datos personales.
-            <br>
-            <br>
-            La presente autorización se solicita en cumplimiento de la Ley 1581 de 2012, reglamentada por el Decreto
-            1377 de 2013 y se expide para qué FINTRA LOGISTICS S.A,S., trate los datos personales recolectados de manera
-            leal, lícita, segura y confiable para los fines señalados en el presente documento. </div>
-        </div>
-      </section>
-      <div class="row justify-content-center">
-        <div class="col-lg-11">
-          <h2 class="text-start">
-            Cláusulas anticorrupción y antilavado
-          </h2>
-        </div>
-      </div>
-      <section class="contenido-3">
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-11 texto texto">
-            <div>FINTRA LOGISTICS S.A,S., s&oacute;lo contratar&aacute; con
-              quienes mantengan los m&aacute;s altos est&aacute;ndares de honestidad, &eacute;tica y
-              profesionalismo en la gesti&oacute;n de sus negocios. En tal sentido, FINTRA LOGISTICS S.A,S
-              Podr&aacute; investigar cualquier indicio, denuncia, sugerencia o evidencia que pudiera llevar
-              a suponer que <strong>EL CLIENTE</strong> est&eacute; involucrado en pr&aacute;cticas
-              prohibidas o indebidas de corrupci&oacute;n. Las partes acuerdan que, durante la vigencia del
-              presente contrato, cumplir&aacute;n y adoptar&aacute;n medidas razonables para asegurarse que
-              sus accionistas, directivos, ejecutivos, empleados, contratistas, subcontratistas, agentes u
-              otros terceros sujetos a su control o a su influencia determinante, cumplan con las
-              disposiciones siguientes:
-              <ol type="i">
-                <li>Con la suscripci&oacute;n de contratos, <strong>EL
-                    CLIENTE</strong>, se adhiere, conoce, acepta, y se compromete a cumplir el C&oacute;digo
-                  de Conducta y la Pol&iacute;tica para la Prevenci&oacute;n del Delito de
-                  Corrupci&oacute;n,
-                  lavado de Activos, la Financiaci&oacute;n del Terrorismo y financiaci&oacute;n de la
-                  proliferaci&oacute;n de armas de destrucci&oacute;n masiva <strong>(LA/FT/FPDMA)</strong>
-                  de
-                  <strong>FINTRA LOGISTICS S.A,S.</strong>, as&iacute; como, no vulnerar o intentar vulnerar
-                  el sistema o modelo de prevenci&oacute;n que se ha implementado en <strong>FINTRA
-                    LOGISTICS
-                    S.A,S. </strong></li>
-                <li>Las partes con relaci&oacute;n a funcionarios
-                  p&uacute;blicos a nivel internacional o nacional, no deber&aacute;n en forma directa o
-                  indirecta o inclusive a trav&eacute;s de terceros:
-                  <ol type="a">
-                    <li>Dar o recibir soborno, entendi&eacute;ndose como tal a
-                      cualquier oferta, regalo, pago, promesa o autorizaci&oacute;n de pago, de cualquier
-                      dinero o cualquier cosa de valor, para el uso o beneficio propio o de cualquier otra
-                      persona o entidad, con el fin de:
-                      <ol type="i">
-                        <li>Influir sobre cualquier acto, omisi&oacute;n o
-                          decisi&oacute;n del funcionario p&uacute;blico en el desarrollo de sus funciones.
-                        </li>
-                        <li>Inducir al funcionario p&uacute;blico a hacer o
-                          dejar de hacer cualquier acto en violaci&oacute;n de su obligaci&oacute;n legal.
-                        </li>
-                        <li>Obtener cualquier ventaja indebida.</li>
-                        <li>Inducir al funcionario p&uacute;blico a utilizar
-                          su
-                          influencia con alg&uacute;n organismo del gobierno para afectar o influir en
-                          cualquier acto o decisi&oacute;n de tal gobierno u organismo, con el fin de ayudar
-                          en forma indebida a obtener o retener negocios o cualquier otra ventaja indebida.
-                          La
-                          prohibici&oacute;n se&ntilde;alada en el p&aacute;rrafo anterior se hace extensiva
-                          a
-                          los familiares hasta el cuarto grado de consanguinidad y segundo de afinidad.</li>
-                      </ol>
-                    </li>
-                    <li>Realizar tr&aacute;fico de influencias,
-                      entendi&eacute;ndose como tal al ofrecimiento o requerimiento de ejercer influencia
-                      inapropiada, real o supuesta, sobre un funcionario p&uacute;blico, a fin de obtener un
-                      beneficio o ventaja indebida para el instigador del acto o para cualquier otra
-                      persona.
-                    </li>
-                  </ol>
-                </li>
-                <li><strong>EL CLIENTE</strong>, se obliga a ejecutar la
-                  Pol&iacute;tica para la Prevenci&oacute;n de Delito de Corrupci&oacute;n, lavado de
-                  Activos,
-                  la Financiaci&oacute;n del Terrorismo y financiaci&oacute;n de la proliferaci&oacute;n de
-                  armas de destrucci&oacute;n masiva <strong>(LA/FT/FPDMA) de FINTRA LOGISTICS
-                    S.A,S.,</strong> y cumplir plenamente con todas las leyes y reglamentos aplicables.</li>
-                <li><strong>EL CLIENTE</strong>, se obliga adem&aacute;s a que
-                  ni &eacute;l, ni sus propietarios, accionistas, funcionarios, empleados y otras personas
-                  que
-                  trabajan para ella directa o indirectamente, incluyendo, pero no limitado a sus
-                  contratistas
-                  y subcontratistas, realicen actos coercitivos indebidos, otorguen incentivos indebidos,
-                  presenten ofertas indebidas, practiquen chantaje o violencia; para obtener alg&uacute;n
-                  tipo
-                  de ventaja contractual. <strong>EL CLIENTE</strong> adem&aacute;s se obliga a tomar todas
-                  las medidas razonables para asegurar que ni &eacute;l ni las personas antes indicadas
-                  pudieran practicar los actos se&ntilde;alados.</li>
-                <li><strong>EL CLIENTE</strong>, se obliga a informar
-                  oportunamente a <strong>FINTRA LOGISTICS S.A,S.,</strong> a trav&eacute;s de la
-                  l&iacute;nea
-                  de &eacute;tica de la compa&ntilde;&iacute;a que se encuentra en la p&aacute;gina web de
-                  la
-                  empresa, <a href="https://www.fintralogistics.co" target="_blank">www.fintralogistics.co</a>, de
-                  cualquier
-                  acto indebido descrito en el presente numeral, en la medida que tome o tenga conocimiento
-                  o
-                  tenga motivos razonables para creer que ocurri&oacute;.</li>
-                <li><strong>EL CLIENTE</strong> ser&aacute; el &uacute;nico
-                  responsable de asegurar el cumplimiento de las normas anticorrupci&oacute;n y de las
-                  normas
-                  LA/FT/FPADM por parte de cualquiera de sus propietarios, accionistas, funcionarios,
-                  empleados, miembros, representantes, contratistas y subcontratistas. En ese sentido,
-                  <strong>EL CLIENTE</strong> se obliga a informar a sus accionistas, socios, directores,
-                  ejecutivos, funcionarios, abogados, asesores, representantes, agentes, representantes
-                  legales, apoderados, asesores y personal en general, acerca de la obligaci&oacute;n de
-                  cumplimiento de las normas.</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
       <div class="row justify-content-center mb-5">
-        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente()">Acepto</button>
+        <button mat-raised-button class="btn_siguiente" (click)="formTab4.controls.descripcion.markAllAsTouched(); siguiente()">Siguiente</button>
       </div>
     </div>
   </div>
