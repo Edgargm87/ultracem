@@ -7,5 +7,5 @@ export const environment = {
   password: btoa("123456"),
   reconocer:"https://recidaw.olimpiait.com",
   // apiCredit: "https://prometheus.fintra.co:8443/fintracredit",
-  apiCredit: 'https://ultracem.ngrok.io/api-fintra/api/',
+  apiCredit: ''https://2c01-181-57-229-82.ngrok.io/api-fintra/api/',
 };
