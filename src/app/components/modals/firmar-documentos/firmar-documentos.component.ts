@@ -40,8 +40,8 @@ export class FirmarDocumentosComponent implements OnInit, OnDestroy {
         break;
 
       case 2:
-        url = `/assets/documentos/centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}.pdf`;
-        nombre = `centralesRiesgo${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}`
+        url = `/assets/documentos/Centrales${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}.pdf`;
+        nombre = `Centrales${this.data.typeSolicitud == 'CC' ? 'Natural' : 'Juridica'}`
         break;
       case 3:
         url = "/assets/documentos/pagare.pdf";
