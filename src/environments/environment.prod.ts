@@ -1,12 +1,8 @@
 export const environment = {
   production: true,
-  // urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
-  // urlApi: 'http://192.168.190.237:8010/api-fintra/api/',
-  // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
-  urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api/',
+  urlApi: 'http://10.209.3.5:8084/api-fintra/api/',
   userName: "APPWEB",
   password: btoa("123456"),
   reconocer:"https://recidaw.olimpiait.com",
-  // apiCredit: "https://prometheus.fintra.co:8443/fintracredit",
-  apiCredit: 'https://ultracem.ngrok.io/api-fintra/api/',
+  apiCredit: 'http://10.209.3.5:8084/fintracredit',
 };
