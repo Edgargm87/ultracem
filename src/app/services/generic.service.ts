@@ -28,7 +28,7 @@ export class GenericService {
   }
 
   saveReconocerID(data: any){
-    return this._utility.putQuery(environment.apiCredit, '/webresources/form/save_reconocer', data)
+    return this._utility.putQuery(environment.urlApi, '/webresources/form/save_reconocer', data)
       .pipe(map((res: any) => {
         return res.data;
       }));
@@ -45,7 +45,7 @@ export class GenericService {
   }
 
   getAplicaValidacionIdentidad() {
-    return this._utility.posQueryServer(environment.urlApi, '/generic/aplica-reconocer','{"unidad":"ULTRACEM"}').pipe(map((result: any) => {
+    return this._utility.posQueryServer(environment.urlApi, 'generic/aplica-reconocer','{"unidad":"ULTRACEM"}').pipe(map((result: any) => {
       return result;
     }));
   }
