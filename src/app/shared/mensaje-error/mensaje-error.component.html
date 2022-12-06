@@ -1,0 +1,21 @@
+<div class="row justify-content-center row-mensaje">
+  <div class="col-lg-12 alerts-content m-auto">
+    <img src="../assets/img/error.svg" alt="cargando ultracem" class="imagen-mensaje">
+    <div class="row justify-content-center mt-neg">
+      <strong class="text-center  texto-mensaje">Por favor comuníquese con nosotros a nuestra línea:<br>
+      </strong>
+      <div class="d-flex chat justify-content-center align-items-center">
+        <img src="assets/icons/asesora.svg" alt="">
+        <a href="#">
+          +575 387 28 28
+        </a>
+        <button class="btn shadow btn-outline-secondary m-4" routerLink="/" *ngIf="!infoauth">
+          Intentar nuevamente
+        </button>
+        <button class="btn shadow btn-outline-secondary m-4" routerLink="/main/listRequest" *ngIf="infoauth">
+          Volver al Listado
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

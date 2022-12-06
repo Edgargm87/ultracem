@@ -1,0 +1,59 @@
+<h2 mat-dialog-title class="text-center">
+  Operación en moneda extranjera
+</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 ">
+  <div class="row">
+    <div class="bg-white col l12">
+      <div class="row justify-start ">
+        <div class="col-sm-12 col-lg-12">
+          <form [formGroup]="formModal">
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Nombre de la entidad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="entidad" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Tipo de producto</mat-label>
+                <input matInput type="text" placeholder="" formControlName="producto" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Número producto</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="numeroProducto" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Ciudad</mat-label>
+                <input matInput type="text" placeholder="" formControlName="ciudad" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>País</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="pais" autocomplete="off">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Moneda</mat-label>
+                <input matInput type="text" placeholder="" formControlName="moneda" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row mt-2">
+              <mat-form-field class="col-lg-6" appearance="outline">
+                <mat-label>Monto</mat-label>
+                <input matInput number type="text" placeholder="" formControlName="monto" autocomplete="off"
+                  (keyup)="formModal.controls['monto'].setValue(_generic.formatearNumero(formModal.value.monto)); ">
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+  <!-- <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button> -->
+  <button [disabled]="formModal.invalid" mat-raised-button class="btn_siguiente fondo_fintra text-white"
+    [mat-dialog-close]="[formModal]">Guardar</button>
+  <button mat-raised-button class="btn_siguiente bg-gray-400 color-fintra" [mat-dialog-close]="[]">Cancelar</button>
+</mat-dialog-actions>

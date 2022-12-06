@@ -1,0 +1,76 @@
+<nav class="navbar fixed-top navbar-light bg-light shadow justify-content-between px-5">
+  <div class="">
+    <div class="navbar-brand"> <small class="subtitle"> Nombre del cliente</small>
+      <br>
+      <strong>{{infoauth.nombre | titlecase}}</strong>
+    </div>
+  </div>
+  <button class="btn shadow btn-outline-secondary" (click)="onCerrar()">
+    <i class="fas fa-sign-out-alt"></i> <small class="texto-cerrar"> Cerrar sesión</small>
+  </button>
+</nav>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12 py-5">
+      <h5>
+        Solicitudes
+      </h5>
+      <div class="row ">
+        <div class="col-lg-12 p-3" *ngFor="let item of list"
+          (click)='gestion(item.numeroSolicitud,item.tipoDocumento,item.stepPortal,item.stepFormulario)'>
+          <mat-card class="example-card">
+            <mat-card-content>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-4 text-center">
+                      <img [src]="getImage(item,'/assets/images/estadoCredito/enValidacion.svg')" class="image-step">
+                      <div class="subtitle mt-2"> <strong
+                          [ngStyle]="{'color': capturarColor(item)}">{{item.estado}}</strong></div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="title"> <i class="icono fas fa-sliders-h"></i> {{item.numeroSolicitud}}</div>
+                      <div class="subtitle">Número de solicitud</div>
+                      <hr>
+                      <div class="title"> <i class="icono fas fa-calendar-alt"></i> {{item.emision}}</div>
+                      <div class="subtitle">Fecha de solicitud</div>
+                    </div>
+
+
+
+                    <div class="col-lg-4">
+                      <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoTotal}}</div>
+                      <div class="subtitle">Cupo total</div>
+                      <hr>
+                      <ng-container *ngIf="!mostrarDatos(item)">
+                        <button mat-button class="bg-principal text-white w-100">Continuar</button>
+                      </ng-container>
+                      <ng-container *ngIf="mostrarDatos(item)">
+                        <div class="title"> <i class="icono fas fa-money-bill-wave"></i> ${{item.cupoReservado | number}}</div>
+                        <div class="subtitle">Cupo disponible</div>
+                      </ng-container>
+
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-lg-6">
+                  <app-timerline [currentStep]="item.stepPortal"></app-timerline>
+                </div>
+              </div>
+
+
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button mat-button class="bg-principal text-white w-100">continuar con el proceso</button>
+            </mat-card-actions> -->
+          </mat-card>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

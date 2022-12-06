@@ -1,0 +1,440 @@
+<div class="container-fluid container-ultracem pantalla_completa_responsive" [ngStyle]="{'height': alto, 'width': ancho}">
+  <app-bottom-sheet></app-bottom-sheet>
+  <app-boton-servicio-cliente></app-boton-servicio-cliente>
+  <div class="logos">
+    <!-- <img src="assets/images/fintra-logistics.svg" class="imagen_logo_fintra rounded-start"> -->
+    <img src="assets/images/footer.svg" class="imagen_logo_ultracem rounded-start">
+  </div>
+
+
+  <div class="row step-three pantalla-completa" *ngIf="step == 1 && !cargando">
+    <div class="col-lg-3 l-izquierdo alinear-texto">
+      <div class="row justify-content-center align-items-center">
+        <ul class="col-lg-8">
+          <li  class="li-completado"><span>Datos personales complementarios</span></li>
+          <li  class="li-inactivo"><span>Información del negocio</span></li>
+          <li   class="li-inactivo"><span>Referencias</span></li>
+          <li  class="li-inactivo"><span>Legales</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9 l-derecho color_fondo parte_overflow">
+      <!-- <div class="row">
+        <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
+      </div> -->
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Datos personales complementarios</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formTab1">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Nacionalidad</mat-label>
+              <input matInput autocomplete="off" formControlName="nacionalidad" (change)="noCambios()">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento de nacimiento</mat-label>
+              <!-- <input matInput autocomplete="off" formControlName="departamentoNacionalidad"> -->
+              <mat-select formControlName="departamentoNacionalidad"
+                (selectionChange)="getListadosCiudades(formTab1.value.departamentoNacionalidad,1)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.departamentoNacionalidad.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio de nacimiento</mat-label>
+              <!-- <input matInput autocomplete="off" formControlName="ciudadNacionalidad"> -->
+              <mat-select formControlName="ciudadNacionalidad">
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNacionalidad " >{{item.nombre}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.ciudadNacionalidad.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento de residencia</mat-label>
+              <!-- <input matInput autocomplete="off" formControlName="departamentoResidencia"> -->
+              <mat-select formControlName="departamentoResidencia"
+                (selectionChange)="getListadosCiudades(formTab1.value.departamentoResidencia,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.departamentoResidencia.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio de residencia</mat-label>
+              <!-- <input matInput autocomplete="off"  formControlName="ciudadResidencia"> -->
+              <mat-select formControlName="ciudadResidencia"
+                (selectionChange)="getListadosBarrios(formTab1.value.departamentoResidencia,formTab1.value.ciudadResidencia,1)">
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesResidencia ">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.ciudadResidencia.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Barrio</mat-label>
+              <mat-select formControlName="barrioResidencia">
+                <mat-option value="">SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarrios ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.barrioResidencia.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Dirección de residencia</mat-label>
+              <input matInput autocomplete="off" formControlName="direccionResidencia" (keydown)="openModalDirection()" (click)="openModalDirection()">
+              <mat-error *ngIf="formTab1.controls.direccionResidencia.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Tipo de vivienda</mat-label>
+              <!-- <input matInput autocomplete="off"ormControlName="tipoVivienda">  -->
+              <mat-select formControlName="tipoVivienda">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListTipoVivienda ">{{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.tipoVivienda.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Nivel de estudio</mat-label>
+              <!-- <input matInput autocomplete="off" formControlName="nivelEstudio"> -->
+              <mat-select formControlName="nivelEstudio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigoOpcion}}" *ngFor="let item of ListNivelEstudio ">
+                  {{item.descripcionOpcion}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.nivelEstudio.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
+              <mat-select formControlName="viveEnNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab1.controls.viveEnNegocio.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button mat-raised-button class="btn_siguiente"
+              (click)="siguienteTab(1)">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three pantalla-completa" *ngIf="step == 2 && !cargando">
+    <div class="col-lg-3 l-izquierdo alinear-texto ">
+      <div class="row align-items-center">
+        <ul class="col-lg-8">
+          <li  class="li-activo"><span>Datos personales complementarios</span></li>
+          <div></div>
+          <li  class="li-completado"><span>Información del negocio</span></li>
+          <li   class="li-inactivo"><span>Referencias</span></li>
+          <li class="li-inactivo"><span>Legales</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9 l-derecho color_fondo parte_overflow">
+      <!-- <div class="row">
+        <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
+      </div> -->
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Ubicación del negocio</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formTab2">
+          <div class="row" *ngIf="viveNegocioCondicion==false">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento</mat-label>
+              <!-- <input matInput formControlName="departamentoNegocio"> -->
+              <mat-select formControlName="departamentoNegocio"
+                (selectionChange)="getListadosCiudades(formTab2.value.departamentoNegocio,3)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio</mat-label>
+              <!-- <input matInput formControlName="ciudadNegocio"> -->
+              <mat-select formControlName="ciudadNegocio"
+                (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row" *ngIf="viveNegocioCondicion==false">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Barrio</mat-label>
+              <!-- <input matInput formControlName="barrioNegocio"> -->
+              <!-- <mat-form-field class="col-lg-6" appearance="fill"> -->
+              <!-- <mat-label>Ciudad / municipio</mat-label> -->
+              <mat-select formControlName="barrioNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select>
+              <!-- </mat-form-field> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Dirección </mat-label>
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text"
+                (keydown)="openModalDirectionNegocio()" (click)="openModalDirectionNegocio()">
+            </mat-form-field>
+          </div>
+          <div class="row" *ngIf="viveNegocioCondicion==true">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento</mat-label>
+              <input matInput formControlName="departamentoNombreNegocio" readonly>
+              <!-- <mat-select formControlName="departamentoNegocio"
+                (selectionChange)="getListadosCiudades(formTab2.value.departamentoNegocio,3)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad / municipio</mat-label>
+              <input matInput formControlName="ciudadNombreNegocio" readonly>
+              <!-- <mat-select formControlName="ciudadNegocio"
+                (selectionChange)="getListadosBarrios(formTab2.value.departamentoNegocio,formTab2.value.ciudadNegocio,2)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCiudadesNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select> -->
+            </mat-form-field>
+          </div>
+          <div class="row" *ngIf="viveNegocioCondicion==true">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Barrio</mat-label>
+              <input matInput formControlName="barrioNombreNegocio" readonly>
+              <!-- <mat-form-field class="col-lg-6" appearance="fill"> -->
+              <!-- <mat-label>Ciudad / municipio</mat-label> -->
+              <!-- <mat-select formControlName="barrioNegocio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListBarriosNegocio ">{{item.nombre}}
+                </mat-option>
+              </mat-select> -->
+              <!-- </mat-form-field> -->
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Dirección </mat-label>
+              <input matInput autocomplete="off" formControlName="direccionNegocio" type="text" readonly >
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6 mb-3" appearance="fill">
+              <mat-label>Télefono</mat-label>
+              <input type="text" autocomplete="off" matInput formControlName="telefonoNegocio">
+              <mat-error *ngIf="(formTab2.controls.telefonoNegocio.dirty || formTab2.controls.telefonoNegocio.touched)">
+                <mat-error *ngIf="formTab2.controls.telefonoNegocio.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab2.controls.telefonoNegocio.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formTab2.controls.telefonoNegocio.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                <mat-error *ngIf="formTab2.controls.telefonoNegocio.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row ">
+            <div class="col-lg-11 ">
+              <h2 class="text-start">Información financiera</h2>
+            </div>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>¿Estas registrado en cámara de comercio?</mat-label>
+              <!-- <input matInput formControlName="camaraComercio"> -->
+              <mat-select formControlName="camaraComercio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">Si</mat-option>
+                <mat-option value="N">No</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab2.controls.camaraComercio.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill" *ngIf="formTab2.value.camaraComercio=='S'">
+              <mat-label>NIT</mat-label>
+              <input matInput formControlName="nit"
+                     autocomplete="off"
+                     matTooltip="Ingresar número sin dígito de verificación, ni separador de comas o puntos y su longitud mínima será de 9 dígitos.">
+              <mat-error *ngIf="(formTab2.controls.nit.dirty || formTab2.controls.nit.touched)">
+                <mat-error *ngIf="formTab2.controls.nit.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab2.controls.nit.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formTab2.controls.nit.errors?.minlength">Longitud mínima son 9 dígitos.</mat-error>
+                <mat-error *ngIf="formTab2.controls.nit.errors?.maxlength">Longitud máxima son 10 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-12" appearance="fill" *ngIf="formTab2.value.camaraComercio=='S'">
+              <mat-label>Nombre del negocio</mat-label>
+              <input matInput formControlName="nombreNegocio"
+                     autocomplete="off"
+                     type="text"
+                    >
+              
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>¿Es declarante?</mat-label>
+              <!-- <input matInput formControlName="declarante"> -->
+              <mat-select formControlName="declarante">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="S">SI</mat-option>
+                <mat-option value="N">NO</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab2.controls.declarante.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Activos ($) </mat-label>
+              <input matInput autocomplete="off" formControlName="activos" type="text"
+                (keyup)="formTab2.controls['activos'].setValue(_generic.formatearNumero(formTab2.value.activos)); "
+                matTooltip="Valor total de bienes inmuebles, vehículos, saldos de cuentas bancarias, etc.">
+              <mat-error *ngIf="formTab2.controls.activos.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Valor total de ventas mensuales ($)</mat-label>
+              <input type="text" autocomplete="off" matInput formControlName="ventasMensuales"
+                (keyup)="formTab2.controls['ventasMensuales'].setValue(_generic.formatearNumero(formTab2.value.ventasMensuales)); ">
+              <mat-error *ngIf="formTab2.controls.ventasMensuales.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button mat-raised-button class="btn_siguiente"
+              (click)="siguienteTab(2)">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row step-three pantalla-completa" *ngIf="step == 3 && !cargando">
+    <div class="col-lg-3 l-izquierdo alinear-texto ">
+      <div class="row align-items-center">
+        <ul class="col-lg-8">
+          <li  class="li-activo"><span>Datos personales complementarios</span></li>
+          <li  class="li-activo"><span>Información del negocio</span></li>
+          <li   class="li-completado"><span>Referencias</span></li>
+          <li class="li-inactivo"><span>Legales</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9 l-derecho color_fondo parte_overflow">
+      <!-- <div class="row">
+        <img src="assets/img/circle_left_icon.svg" alt="cargando ultracem" (click)="atras();" class="btn_atras">
+      </div> -->
+      <div class="row justify-content-center">
+        <div class="col-lg-11 mt-5">
+          <h2 class="text-start">Referencia personal</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-11" [formGroup]="formTab3">
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput autocomplete="off" formControlName="pPrimerNombre" type="text">
+              <mat-error *ngIf="formTab3.controls.pPrimerNombre.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo nombre (opcional) </mat-label>
+              <input matInput autocomplete="off" formControlName="pSegundoNombre" type="text">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput autocomplete="off" formControlName="pPrimerApellido" type="text">
+              <mat-error *ngIf="formTab3.controls.pPrimerApellido.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Segundo Apellido (opcional)</mat-label>
+              <input type="text" autocomplete="off" matInput formControlName="pSegundoApellido">
+            </mat-form-field>
+          </div>
+          <div class="row mb-3">
+            <mat-form-field class="col-lg-6 mb-3" appearance="fill">
+              <mat-label>Teléfono / celular</mat-label>
+              <input matInput autocomplete="off" formControlName="ptelefono" type="text" >
+              <mat-error *ngIf="(formTab3.controls.ptelefono.dirty || formTab3.controls.ptelefono.touched)">
+                <mat-error *ngIf="formTab3.controls.ptelefono.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab3.controls.ptelefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formTab3.controls.ptelefono.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                <mat-error *ngIf="formTab3.controls.ptelefono.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-lg-11 ml--2">
+              <h2 class="text-start">Referencia Comercial</h2>
+            </div>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Razón social</mat-label>
+              <input matInput formControlName="cRazonSocial" autocomplete="off">
+              <mat-error *ngIf="formTab3.controls.cRazonSocial.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Teléfono /celular</mat-label>
+              <input matInput formControlName="cCelular" autocomplete="off">
+              <mat-error *ngIf="(formTab3.controls.cCelular.dirty || formTab3.controls.cCelular.touched)">
+                <mat-error *ngIf="formTab3.controls.cCelular.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab3.controls.cCelular.errors?.pattern">Solo se aceptan números.</mat-error>
+                <mat-error *ngIf="formTab3.controls.cCelular.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                <mat-error *ngIf="formTab3.controls.cCelular.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Departamento </mat-label>
+              <!-- <input matInput formControlName="cDepartamento" type="text"> -->
+              <mat-select formControlName="cDepartamento"
+                (selectionChange)="getListadosCiudades(formTab3.value.cDepartamento,4)">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of Listdepartamentos ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab3.controls.cDepartamento.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Ciudad /municipio</mat-label>
+              <!-- <input type="text" matInput formControlName="cMunicipio"> -->
+              <mat-select formControlName="cMunicipio">
+                <mat-option value="" disabled>SELECCIONA</mat-option>
+                <mat-option value="{{item.codigo}}" *ngFor="let item of ListCMunicipio ">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formTab3.controls.cMunicipio.errors">Este campo es requerido.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+              <mat-label>Antigüedad de ser cliente (meses) </mat-label>
+              <input matInput formControlName="cAntiguedad" type="text" autocomplete="off">
+              <mat-error *ngIf="(formTab3.controls.cAntiguedad.dirty || formTab3.controls.cAntiguedad.touched)">
+                <mat-error *ngIf="formTab3.controls.cAntiguedad.errors?.required ">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="formTab3.controls.cAntiguedad.errors?.pattern">Solo se aceptan números.</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row justify-content-center mt-5">
+            <button mat-raised-button class="btn_siguiente"
+              (click)="siguienteTab(3)">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

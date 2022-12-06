@@ -1,0 +1,74 @@
+@import "../../../../styles/vars/exports";
+
+.color_fondo {
+  background-color: #eff4f6 !important;
+}
+.legal{
+  height: 100vh;
+}
+
+.btn_siguiente {
+  color: #fff;
+  background-color: $blue-primary;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 1.6em;
+  padding-top: 12px;
+  border-radius: 10px;
+  padding-bottom: 1px;
+  width: 9em;
+}
+
+.texto {
+  color: #949798;
+  font-size: 14px;
+  text-align: justify;
+  font-weight: 500;
+}
+
+.clasetextArea{
+
+  height: 2em;
+  width: 100%;
+}
+
+.clasetextArea:focus-visible{
+  outline: -webkit-focus-ring-color auto 0px !important;
+}
+
+.scrollPersonalizado {
+  overflow-y: auto;
+  height: 50%;
+  overflow-x: hidden;
+}
+
+.texto_canvas{
+  color: #949798;
+  font-size: 17.2px !important;
+  text-align: justify;
+  font-weight: 500;
+  // word-break: break-word;
+}
+.icono{
+  font-size: 13px;
+  margin-bottom: 1.3em;
+  color: $blue-primary;
+}
+
+.contenido{
+  height: 72vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.labelBeforeSlide {
+  vertical-align: top;
+  line-height: 24px; 
+  margin-right:0.5rem;
+  margin-bottom:0.5rem;
+}
+mat-label {
+  color: #949798;
+  font-weight: 700;
+}
+
