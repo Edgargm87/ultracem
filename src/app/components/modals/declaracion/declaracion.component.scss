@@ -1,0 +1,49 @@
+@import "../../../../styles/vars/exports";
+
+.texto {
+    color: #949798;
+    font-size: 14px;
+    text-align: justify;
+    font-weight: 500;
+}
+
+.clasetextArea{
+    height: 2em;
+    width: 100%;
+}
+
+.permitir:enabled {
+    color: #fff;
+    background-color: $blue-primary;
+    font-family: Josefin Sans;
+    font-weight: 600;
+    font-size: 1em;
+    padding-top: 5px;
+    border-radius: 10px;
+    padding-bottom: 1px;
+    width: 7em;
+}
+
+.bloquear:disabled {
+    color: #fff;
+    background-color: $light;
+    border: 5px;
+    font-family: Josefin Sans;
+    font-weight: 600;
+    font-size: 1em;
+    padding-top: 5px;
+    border-radius: 10px;
+    padding-bottom: 1px;
+    width: 7em;
+}
+
+.btn_volver {
+    color: $semi-light;
+    font-family: Josefin Sans;
+    font-weight: 600;
+    font-size: 1em;
+    padding-top: 5px;
+    border-radius: 10px;
+    padding-bottom: 1px;
+    width: 7em;
+}

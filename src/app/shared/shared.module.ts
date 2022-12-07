@@ -22,6 +22,7 @@ import { ReconocerComponent } from './reconocer/reconocer.component';
 import { ModalAceptoTerminosComponent } from './modal-acepto-terminos/modal-acepto-terminos.component';
 import { ExistenteComponent } from './existente/existente.component';
 import { BotonServicioClienteComponent } from './boton-servicio-cliente/boton-servicio-cliente.component';
+import { ModalClausulaComponent } from './modal-clausula/modal-clausula.component';
 
 @NgModule({
   imports: [MatInputModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, ReactiveFormsModule, CommonModule, RouterModule,MatBottomSheetModule],
@@ -36,7 +37,8 @@ import { BotonServicioClienteComponent } from './boton-servicio-cliente/boton-se
         ReconocerComponent,
         ModalAceptoTerminosComponent,
         ExistenteComponent,
-        BotonServicioClienteComponent
+        BotonServicioClienteComponent,
+        ModalClausulaComponent
 
     ],
     entryComponents: [DatosContactoComponent],
