@@ -44,6 +44,8 @@ export class solicitudComponent implements OnInit {
 
   fechaMaxima: any;
 
+  clausula:boolean = false;
+
   public formulario: any;
   public aplicaValidacionEntidad: boolean = false;
   public entidad: string = "";
@@ -476,7 +478,7 @@ export class solicitudComponent implements OnInit {
 
   SolicitudRepresentante(): void {
     // reconocer
-    if (this.formSolicitudRepresentante.valid) {
+    if (this.formSolicitudRepresentante.valid && this.clausula==true) {
       debugger
       let form = { ...this.formSolicitudRepresentante.value }
       form.fechaNacimiento = format(this.formSolicitudRepresentante.value.fechaNacimiento, 'yyyy-MM-dd');
@@ -488,7 +490,7 @@ export class solicitudComponent implements OnInit {
   }
 
   SolicitudNUltracem(): void {
-    if (this.formSolicitudNatural.valid) {
+    if (this.formSolicitudNatural.valid && this.clausula==true) {
       console.log('SSSS')
       let form = { ...this.formSolicitudNatural.value }
       form.fechaNacimiento = format(this.formSolicitudNatural.value.fechaNacimiento, 'yyyy-MM-dd');
@@ -506,7 +508,7 @@ export class solicitudComponent implements OnInit {
   }
 
   onActualizarNultracem(): void {
-    if (this.formSolicitudNatural.valid) {
+    if (this.formSolicitudNatural.valid && this.clausula==true) {
       let form = { ...this.formSolicitudNatural.value };
       const tipoDocumento = form.tipoDocumento
       this.openDialog(tipoDocumento);
@@ -516,7 +518,7 @@ export class solicitudComponent implements OnInit {
   }
 
   onActualizarJultracem(): void {
-    if (this.formSolicitudJuridica.valid) {
+    if (this.formSolicitudJuridica.valid && this.clausula==true) {
       let form = { ...this.formSolicitudJuridica.value };
       const tipoDocumento = form.tipoDocumento
       this.openDialog(tipoDocumento);
@@ -539,17 +541,20 @@ export class solicitudComponent implements OnInit {
 
   onClausulaVeracidad(evento: MatCheckboxChange): void {
     if (evento.checked) {
+      this.clausula = true;
       const dialogRef = this._matDialog.open(ModalClausulaComponent, {
         minWidth: '30%',
       })
       dialogRef.afterClosed().toPromise().then((res) => {
         console.log('Cerrado');
       });
+    }else{
+      this.clausula = false;
     }
   }
 
   SolicitudJUltracem(): void {
-    if (this.formSolicitudJuridica.valid) {
+    if (this.formSolicitudJuridica.valid && this.clausula==true) {
       let form = { ...this.formSolicitudJuridica.value }
       form.antiguedadNegocio = 0;
       form.fechaMatricula = format(this.formSolicitudJuridica.value.fechaMatricula, 'yyyy-MM-dd');
@@ -571,23 +576,23 @@ export class solicitudComponent implements OnInit {
 
   private guardarSolicitudUltracem(datos: any): void {
     this.cargando = true;
-    this._creditService.solicitudUltracem(datos).pipe(delay(500))
-      .subscribe(resp => {
+    this._creditService.solicitudUltracem(datos).pipe(delay(500)).subscribe(resp => {
         console.log(resp);
         switch (resp.data.estado) {
           case 'RECHAZADO':
             this.estadoSolicitud.rechazado = true;
             this.cargando = false;
+            this.clausula = false;
             this.router.navigateByUrl('/IntenteNuevamente');
             break;
           case 'PREAPROBADO':
             // this.openReconocer()
             this.cargando = false;
+            this.clausula = false;
             this.openReconocer(datos.documento, datos.email, datos.celular, 'CC', resp.data.numeroSolicitud)
           // this.estadoSolicitud.aprobado = true;
           // this.cargando = false;
           // this.router.navigateByUrl('/aprobado');
-
         }
       }, error => {
         this.router.navigateByUrl('/error');
@@ -604,7 +609,7 @@ export class solicitudComponent implements OnInit {
           numeroSolicitud: (resp.data.numeroSolicitud).toString()
         });
         this.cargando = false;
-
+        this.clausula = false;
         this.step = 4;
         console.log(resp);
         console.log('representante', this.formSolicitudRepresentante.value);
@@ -620,6 +625,7 @@ export class solicitudComponent implements OnInit {
           case 'RECHAZADO':
             this.estadoSolicitud.rechazado = true;
             this.cargando = false;
+            this.clausula = false;
             this.router.navigateByUrl('/IntenteNuevamente');
             break;
           case 'PREAPROBADO':
@@ -628,7 +634,7 @@ export class solicitudComponent implements OnInit {
             });
             this.openReconocer(datos.documento, datos.email, datos.celular, 'NIT', resp.data.numeroSolicitud)
             this.cargando = false;
-
+            this.clausula = false;
             // this.step = 4;
             // console.log(resp);
             // console.log('representante', this.formSolicitudRepresentante.value);
