@@ -9,7 +9,7 @@ export const environment = {
   // urlApi: 'http://192.168.190.237:8010/api-fintra/api/',
   // urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api/',
   // urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
-  urlApi: 'https://ed4e-181-57-229-82.ngrok.io/api-fintra/api/',
+  urlApi: 'https://a0cb-181-57-229-82.ngrok.io/api-fintra/api/',
   // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
   // urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
   userName: "APPWEB",
