@@ -182,13 +182,13 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
     /**
    * @description: Metodo para firmar documentos
-   * "PA": PREAPROBADO
+   * "ES": ESTUDIO
    * "FC": FABRICA COMPLETACIÓN
    */
     let url = `generic/cre-cambiar-estado-solicitud`;
     let data = {
       "numeroSolicitud": Number(this.codigoSolicitud),
-      "estado": "PA",
+      "estado": "ES",
       "subEstado": "FC"
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
