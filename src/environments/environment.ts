@@ -6,7 +6,7 @@
 
 export const environment = {
   production: false,
-  urlApi: 'https://a0cb-181-57-229-82.ngrok.io/api-fintra/api/',
+  urlApi: 'http://10.209.3.5:8084/api-fintra/api/',
   userName: "APPWEB",
   password: btoa("123456"),
   reconocer:"https://recidaw.olimpiait.com",
