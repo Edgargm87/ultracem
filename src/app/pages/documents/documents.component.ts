@@ -182,7 +182,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
     /**
    * @description: Metodo para firmar documentos
-   * "ES": ESTUDIO
+   * "ES": PREAPROBADO
    * "FC": FABRICA COMPLETACIÓN
    */
     let url = `generic/cre-cambiar-estado-solicitud`;
